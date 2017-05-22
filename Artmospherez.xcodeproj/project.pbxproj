@@ -14,6 +14,7 @@
 		43F2C0C11ED330A10023567A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 43F2C0BF1ED330A10023567A /* LaunchScreen.storyboard */; };
 		43F2C0CC1ED330A10023567A /* ArtmospherezTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43F2C0CB1ED330A10023567A /* ArtmospherezTests.swift */; };
 		43F2C0D71ED331450023567A /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43F2C0D61ED331450023567A /* DetailViewController.swift */; };
+		43F2C0D91ED338530023567A /* Secrets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43F2C0D81ED338530023567A /* Secrets.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -38,6 +39,7 @@
 		43F2C0CB1ED330A10023567A /* ArtmospherezTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtmospherezTests.swift; sourceTree = "<group>"; };
 		43F2C0CD1ED330A10023567A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		43F2C0D61ED331450023567A /* DetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
+		43F2C0D81ED338530023567A /* Secrets.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Secrets.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -86,6 +88,7 @@
 				43F2C0BF1ED330A10023567A /* LaunchScreen.storyboard */,
 				43F2C0C21ED330A10023567A /* Info.plist */,
 				43F2C0D61ED331450023567A /* DetailViewController.swift */,
+				43F2C0D81ED338530023567A /* Secrets.swift */,
 			);
 			path = Artmospherez;
 			sourceTree = "<group>";
@@ -205,6 +208,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				43F2C0D71ED331450023567A /* DetailViewController.swift in Sources */,
+				43F2C0D91ED338530023567A /* Secrets.swift in Sources */,
 				43F2C0B91ED330A10023567A /* ViewController.swift in Sources */,
 				43F2C0B71ED330A10023567A /* AppDelegate.swift in Sources */,
 			);
