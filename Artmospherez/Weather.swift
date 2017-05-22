@@ -8,16 +8,31 @@
 
 import Foundation
 
+enum WeatherKind: String {
+    case sunny = "sunny"
+    case rainy = "rainy"
+    case windy = "windy"
+    case thunderstorm = "thunderstorm"
+    case tornado = "tornado"
+    case cloudy = "cloudy"
+    case gray = "gray"
+    case foggy = "foggy"
+    case snowy = "snowy"
+    case blizzard = "blizzard"
+    case hurricane = "hurricane"
+    case apocalyptic = "apocalyptic"
+}
+
 struct Weather {
-    var name : String
+    var kind: WeatherKind
     var image: WeatherImage
 
-    init (nameForWeather: String) {
-        name = nameForWeather
-        image = self.generateWeatherImageForWeatherForWeatherTypeName(nameForWeather)
+    init (weatherKind: WeatherKind) {
+        kind = weatherKind
+        image = self.generateWeatherImageForWeatherForWeatherTypeName(weatherKind)
     }
 
-    func generateWeatherImageForWeatherForWeatherTypeName(_ typeName: String) -> WeatherImage {
+    func generateWeatherImageForWeatherForWeatherTypeName(_ weatherKind: WeatherKind) -> WeatherImage {
         
     }
 }

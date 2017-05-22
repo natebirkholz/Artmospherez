@@ -22,6 +22,7 @@
 		43F2C0E41ED33BB40023567A /* City.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43F2C0E31ED33BB40023567A /* City.swift */; };
 		43F2C0E61ED33C2D0023567A /* Weather.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43F2C0E51ED33C2D0023567A /* Weather.swift */; };
 		43F2C0E81ED33CA50023567A /* WeatherImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43F2C0E71ED33CA50023567A /* WeatherImage.swift */; };
+		43F2C0ED1ED35A900023567A /* JsonParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43F2C0EC1ED35A900023567A /* JsonParser.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -54,6 +55,7 @@
 		43F2C0E31ED33BB40023567A /* City.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = City.swift; sourceTree = "<group>"; };
 		43F2C0E51ED33C2D0023567A /* Weather.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Weather.swift; sourceTree = "<group>"; };
 		43F2C0E71ED33CA50023567A /* WeatherImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WeatherImage.swift; path = ../WeatherImage.swift; sourceTree = "<group>"; };
+		43F2C0EC1ED35A900023567A /* JsonParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JsonParser.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -152,6 +154,7 @@
 				43F2C0DF1ED33B1E0023567A /* LocationController.swift */,
 				43F2C0DD1ED33AF80023567A /* NetworkController.swift */,
 				43F2C0B81ED330A10023567A /* ViewController.swift */,
+				43F2C0EC1ED35A900023567A /* JsonParser.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -270,6 +273,7 @@
 				43F2C0B91ED330A10023567A /* ViewController.swift in Sources */,
 				43F2C0E01ED33B1E0023567A /* LocationController.swift in Sources */,
 				43F2C0E41ED33BB40023567A /* City.swift in Sources */,
+				43F2C0ED1ED35A900023567A /* JsonParser.swift in Sources */,
 				43F2C0B71ED330A10023567A /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

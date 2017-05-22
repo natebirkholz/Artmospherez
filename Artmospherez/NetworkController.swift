@@ -24,7 +24,7 @@ class NetworkController {
     /// Only works in USA
     var apiURL: String {
         let location = locationController.currentZipCode
-        return "http://api.openweathermap.org/data/2.5/forecast/daily?zip=\(location),us&units=imperial&cnt=7&APPID=3e15652a662d33a186fdcf5567cf1f66"
+        return "http://api.openweathermap.org/data/2.5/forecast/daily?zip=\(location),us&units=imperial&cnt=7&APPID=\(APIKey)"
     }
 
     /// Used to determine the device's current location for the API call
