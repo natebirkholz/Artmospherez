@@ -25,14 +25,14 @@ enum WeatherKind: String {
 
 struct Weather {
     var kind: WeatherKind
-    var image: WeatherImage
+    var image: WeatherImage? = nil
 
     init (weatherKind: WeatherKind) {
         kind = weatherKind
-        image = self.generateWeatherImageForWeatherForWeatherTypeName(weatherKind)
+//        image = self.generateWeatherImageForWeatherForWeatherTypeName(weatherKind)
     }
 
-    func generateWeatherImageForWeatherForWeatherTypeName(_ weatherKind: WeatherKind) -> WeatherImage {
-        
-    }
+//    func generateWeatherImageForWeatherForWeatherTypeName(_ weatherKind: WeatherKind) -> WeatherImage {
+//        
+//    }
 }

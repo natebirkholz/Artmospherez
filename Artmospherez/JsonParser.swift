@@ -38,7 +38,46 @@ class JsonParser {
                             let forecastMin = tempDictionary["min"] as? Int {
                             let forecastType = parseWeatherTypeIntoForecastType(forecastIDCode)
                             let day = parseDateCodeIntoDay(forecastDateCode)
-                            let newForecast = Forecast(day: day, typeOfForecast: forecastType, humidity: forecastHumidity, maxTemp: forecastMax, minTemp: forecastMin)
+                            let newForecast = Forecast(dayValue: day, weatherID: Weather(weatherKind: .sunny), humidityValue: forecastHumidity, maxTempValue: forecastMax, minTempValue: forecastMin)
+                            arrayOfForecasts.append(newForecast)
+                        } else {
+                            throw ParseError.unableToParse
+                        }
+                    }
+
+                    return arrayOfForecasts
+
+                } else {
+                    throw ParseError.unableToParse
+                }
+            } else {
+                throw ParseError.unableToParse
+            }
+        } catch {
+            throw ParseError.unableToParse
+        }
+    }
+
+    func parseJSONIntoCurrentWeather(_ rawJSONData: Data) throws -> [Forecast] {
+        do {
+            if let dictionaryFromJSON = try JSONSerialization.jsonObject(with: rawJSONData, options: JSONSerialization.ReadingOptions.allowFragments) as? [String: Any] {
+                var arrayOfForecasts = [Forecast]()
+
+                if let arrayFromJSON = dictionaryFromJSON["list"] as? [Any] {
+                    for JSONDictionary in arrayFromJSON {
+                        // long `let` block, if first two succeed this should all succeed
+                        if let forecastDictionary = JSONDictionary as? [String: Any],
+                            let weatherArray = forecastDictionary["weather"] as? [Any],
+                            let weatherDictionary = weatherArray.first as? [String: Any],
+                            let tempDictionary = forecastDictionary["temp"] as? [String: Any],
+                            let forecastDateCode = forecastDictionary["dt"] as? Double,
+                            let forecastIDCode = weatherDictionary["id"] as? Int,
+                            let forecastHumidity = forecastDictionary["humidity"] as? Int,
+                            let forecastMax = tempDictionary["max"] as? Int,
+                            let forecastMin = tempDictionary["min"] as? Int {
+                            let forecastType = parseWeatherTypeIntoForecastType(forecastIDCode)
+                            let day = parseDateCodeIntoDay(forecastDateCode)
+                            let newForecast = Forecast(dayValue: day, weatherID: Weather(weatherKind: .sunny), humidityValue: forecastHumidity, maxTempValue: forecastMax, minTempValue: forecastMin)
                             arrayOfForecasts.append(newForecast)
                         } else {
                             throw ParseError.unableToParse
