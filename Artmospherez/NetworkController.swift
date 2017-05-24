@@ -22,9 +22,14 @@ class NetworkController {
 
     /// Dynamically returns the url for the API call by addin the current zip code.
     /// Only works in USA
-    var apiURL: String {
+    var apiURLForecasts: String {
         let location = locationController.currentZipCode
         return "http://api.openweathermap.org/data/2.5/forecast/daily?zip=\(location),us&units=imperial&cnt=7&APPID=\(APIKey)"
+    }
+
+    var apiURLWeather: String {
+        let location = locationController.currentZipCode
+        return "http://api.openweathermap.org/data/2.5/weather?zip=\(location),us&units=imperial&APPID=\(APIKey)"
     }
 
     /// Used to determine the device's current location for the API call
@@ -34,14 +39,10 @@ class NetworkController {
     ///
     /// - Parameter completionHandler: returns an optional array of forecasts of successful, a optional NetworkControllerError error if unsuccessful
     func getJSONForForecasts(_ completionHandler: @escaping (_ forecasts: [Forecast]?, _ error: NetworkControllerError?) -> ()) {
-        fetchJSONFromURL(apiURL, completionHandler: { (maybeDataFromURL, maybeError) -> () in
+        fetchJSONFromURL(apiURLForecasts, completionHandler: { (maybeDataFromURL, maybeError) -> () in
             DispatchQueue.main.async {
                 guard let dataResult = maybeDataFromURL else {
-                    if let error = maybeError {
-                        completionHandler(nil, error)
-                    } else {
-                        completionHandler(nil, .unknownError)
-                    }
+                    completionHandler(nil, maybeError ?? .unknownError)
                     return
                 }
 
@@ -58,7 +59,22 @@ class NetworkController {
     }
 
     func getCurrentWeather(_ completionHandler: @escaping (_ currentWeather: CurrentWeather?, _ error: NetworkControllerError?) -> ()) {
-        
+        fetchJSONFromURL(apiURLWeather) { (maybeData, maybeError) in
+            DispatchQueue.main.async {
+                guard let dataResult = maybeData else {
+                    completionHandler(nil, maybeError ?? .unknownError)
+                    return
+                }
+
+                do{
+                    let parser = JsonParser()
+                    let currentWeather = try parser.parseJSONIntoCurrentWeather(dataResult)
+                    completionHandler(currentWeather, nil)
+                } catch {
+                    completionHandler(nil, .parseError)
+                }
+            }
+        }
     }
 
     /// Creates the newtork call to the API to fetch the JSON as data

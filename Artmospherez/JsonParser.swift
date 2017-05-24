@@ -58,34 +58,25 @@ class JsonParser {
         }
     }
 
-    func parseJSONIntoCurrentWeather(_ rawJSONData: Data) throws -> [Forecast] {
+    func parseJSONIntoCurrentWeather(_ rawJSONData: Data) throws -> CurrentWeather {
         do {
             if let dictionaryFromJSON = try JSONSerialization.jsonObject(with: rawJSONData, options: JSONSerialization.ReadingOptions.allowFragments) as? [String: Any] {
-                var arrayOfForecasts = [Forecast]()
-
-                if let arrayFromJSON = dictionaryFromJSON["list"] as? [Any] {
-                    for JSONDictionary in arrayFromJSON {
-                        // long `let` block, if first two succeed this should all succeed
-                        if let forecastDictionary = JSONDictionary as? [String: Any],
-                            let weatherArray = forecastDictionary["weather"] as? [Any],
-                            let weatherDictionary = weatherArray.first as? [String: Any],
-                            let tempDictionary = forecastDictionary["temp"] as? [String: Any],
-                            let forecastDateCode = forecastDictionary["dt"] as? Double,
-                            let forecastIDCode = weatherDictionary["id"] as? Int,
-                            let forecastHumidity = forecastDictionary["humidity"] as? Int,
-                            let forecastMax = tempDictionary["max"] as? Int,
-                            let forecastMin = tempDictionary["min"] as? Int {
-                            let forecastType = parseWeatherTypeIntoForecastType(forecastIDCode)
-                            let day = parseDateCodeIntoDay(forecastDateCode)
-                            let newForecast = Forecast(dayValue: day, weatherID: Weather(weatherKind: .sunny), humidityValue: forecastHumidity, maxTempValue: forecastMax, minTempValue: forecastMin)
-                            arrayOfForecasts.append(newForecast)
-                        } else {
-                            throw ParseError.unableToParse
-                        }
-                    }
-
-                    return arrayOfForecasts
-
+                if let weatherArray = dictionaryFromJSON["weather"] as? [Any],
+                    let weatherDictionary = weatherArray[0] as? [String: Any],
+                    let weatherId = weatherDictionary["id"] as? Int,
+                    let mainDictionary = dictionaryFromJSON["main"] as? [String: Any],
+                    let currentTemp = mainDictionary["temp"] as? Int,
+                    let humidity = mainDictionary["humidity"] as? Int,
+                    let minTemp = mainDictionary["temp_min"] as? Int,
+                    let maxTemp = mainDictionary["temp_max"] as? Int,
+                    let windDictionary = dictionaryFromJSON["wind"] as? [String: Any],
+                    let windSpeed = windDictionary["speed"] as? Int,
+                    let windDirection = windDictionary["deg"] as? Int,
+                    let sysDictionary = dictionaryFromJSON["sys"] as? [String: Any],
+                    let cityName = sysDictionary["name"] as? String {
+                        let type = parseWeatherTypeIntoForecastType(weatherId)
+                        let currentWeather = CurrentWeather(kind: type, humidity: humidity, maxTemp: maxTemp, minTemp: minTemp, currentTemp: currentTemp, windSpeed: windSpeed, windDirection: windDirection, cityName: cityName)
+                        return currentWeather
                 } else {
                     throw ParseError.unableToParse
                 }
