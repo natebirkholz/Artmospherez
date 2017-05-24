@@ -23,16 +23,3 @@ enum WeatherKind: String {
     case apocalyptic = "Apocalyptic!"
 }
 
-struct Weather {
-    var kind: WeatherKind
-    var image: WeatherImage? = nil
-
-    init (weatherKind: WeatherKind) {
-        kind = weatherKind
-//        image = self.generateWeatherImageForWeatherForWeatherTypeName(weatherKind)
-    }
-
-//    func generateWeatherImageForWeatherForWeatherTypeName(_ weatherKind: WeatherKind) -> WeatherImage {
-//        
-//    }
-}

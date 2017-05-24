@@ -10,12 +10,12 @@ import Foundation
 import CoreLocation
 
 protocol LocationControllerDelegate: class {
-    func didAuthorizeLocations()
+    func refreshLocations()
 }
 
 class LocationController: NSObject, CLLocationManagerDelegate {
 
-    var currentZipCode: String = "92102"
+    var currentZipCode: String = ""
     /// Instance of a CLLocationManager
     var locationManager = CLLocationManager()
 
@@ -87,7 +87,7 @@ class LocationController: NSObject, CLLocationManagerDelegate {
             locationManager.requestWhenInUseAuthorization()
         case .authorizedWhenInUse:
             locationManager.startUpdatingLocation()
-            delegate?.didAuthorizeLocations()
+            delegate?.refreshLocations()
         default:
             break
         }

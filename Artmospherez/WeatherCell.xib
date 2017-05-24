@@ -12,44 +12,36 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="64" id="KGk-i7-Jjw" customClass="WeatherCell" customModule="Artmospherez" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="320" height="63"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="128" id="KGk-i7-Jjw" customClass="WeatherCell" customModule="Artmospherez" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="127"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="320" height="63"/>
+                <rect key="frame" x="0.0" y="0.0" width="320" height="127"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Swv-nv-i1T">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="63"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="126.5"/>
                     </imageView>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="UGk-mt-uJu">
-                        <rect key="frame" x="280" y="8" width="32" height="32"/>
-                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstAttribute="width" constant="32" id="5xd-Hw-Xln"/>
-                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="32" id="6eF-31-rVR"/>
-                            <constraint firstAttribute="height" constant="32" id="ZnF-s7-4Zz"/>
-                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="32" id="nHa-Wr-8CQ"/>
-                        </constraints>
-                    </imageView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Weather" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Lg7-7n-Xl2">
-                        <rect key="frame" x="98" y="8" width="124" height="21"/>
+                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Weather" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Lg7-7n-Xl2">
+                        <rect key="frame" x="127.5" y="8" width="65" height="21"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="21" id="ZEb-hq-Ijf"/>
-                            <constraint firstAttribute="width" constant="124" id="vTl-bS-1cB"/>
                         </constraints>
                         <fontDescription key="fontDescription" name="Didot" family="Didot" pointSize="17"/>
                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Details" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qof-9E-oqM">
-                        <rect key="frame" x="8" y="33.5" width="256" height="21"/>
+                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Details" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qof-9E-oqM">
+                        <rect key="frame" x="8" y="97.5" width="47.5" height="21"/>
                         <constraints>
-                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="21" id="GW6-sk-CQP"/>
                             <constraint firstAttribute="height" constant="21" id="JBn-NF-mm9"/>
-                            <constraint firstAttribute="width" constant="256" id="r00-xC-M3M"/>
-                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="256" id="zYO-Wn-lhj"/>
                         </constraints>
+                        <fontDescription key="fontDescription" name="Didot" family="Didot" pointSize="15"/>
+                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Temperature" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GFQ-ba-tzi">
+                        <rect key="frame" x="111" y="33" width="98" height="22"/>
                         <fontDescription key="fontDescription" name="Didot" family="Didot" pointSize="17"/>
                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
@@ -61,21 +53,21 @@
                     <constraint firstItem="Lg7-7n-Xl2" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" id="3u7-0A-Q58"/>
                     <constraint firstItem="Swv-nv-i1T" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="4pl-WT-vGh"/>
                     <constraint firstAttribute="bottom" secondItem="qof-9E-oqM" secondAttribute="bottom" constant="8" id="LNW-y4-ZP2"/>
-                    <constraint firstItem="UGk-mt-uJu" firstAttribute="trailing" secondItem="H2p-sc-9uM" secondAttribute="trailingMargin" id="OpC-Le-Oh8"/>
-                    <constraint firstItem="UGk-mt-uJu" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" id="S0z-H1-fRJ"/>
                     <constraint firstItem="Lg7-7n-Xl2" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="W1i-A6-oll"/>
                     <constraint firstItem="qof-9E-oqM" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="8" id="kPH-xX-Ojg"/>
                     <constraint firstAttribute="trailing" secondItem="Swv-nv-i1T" secondAttribute="trailing" id="mKx-Kk-eVm"/>
+                    <constraint firstItem="GFQ-ba-tzi" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="ogZ-Bs-qyQ"/>
                     <constraint firstItem="Swv-nv-i1T" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="pvF-Ha-gMN"/>
+                    <constraint firstItem="GFQ-ba-tzi" firstAttribute="top" secondItem="Lg7-7n-Xl2" secondAttribute="bottom" constant="4" id="yHz-3w-aWJ"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
                 <outlet property="weatherDetailLabel" destination="qof-9E-oqM" id="qaI-wL-xGm"/>
-                <outlet property="weatherIconView" destination="UGk-mt-uJu" id="dPs-FD-n3r"/>
                 <outlet property="weatherImageview" destination="Swv-nv-i1T" id="Q5l-l9-tU0"/>
                 <outlet property="weatherLabel" destination="Lg7-7n-Xl2" id="XIG-rn-lQV"/>
+                <outlet property="weatherTemp" destination="GFQ-ba-tzi" id="gIw-AD-Zii"/>
             </connections>
-            <point key="canvasLocation" x="34" y="63.5"/>
+            <point key="canvasLocation" x="34" y="95.5"/>
         </tableViewCell>
     </objects>
 </document>
