@@ -211,12 +211,12 @@
 			children = (
 				43F2C0B61ED330A10023567A /* AppDelegate.swift */,
 				430C52201ED5FEEC00971849 /* DetailViewControllerForecast.swift */,
+				430C522A1ED6112900971849 /* DetailViewControllerWeather.swift */,
 				43F2C0EC1ED35A900023567A /* JsonParser.swift */,
 				43F2C0DF1ED33B1E0023567A /* LocationController.swift */,
 				43F2C0DD1ED33AF80023567A /* NetworkController.swift */,
 				43F2C0B81ED330A10023567A /* ViewController.swift */,
 				430C520D1ED557A400971849 /* WeatherImageController.swift */,
-				430C522A1ED6112900971849 /* DetailViewControllerWeather.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
