@@ -30,7 +30,6 @@ class WeatherImage {
             let file = Bundle.main.url(forResource: id, withExtension: "txt")
             guard let fileURL = file else { return "(No Description)" }
             let textFromFile = try String(contentsOf: fileURL)
-            print("text from file: ", textFromFile)
             return textFromFile
         } catch let error {
             print(error.localizedDescription)

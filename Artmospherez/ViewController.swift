@@ -110,7 +110,11 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             let weatherText = self.currentWeather?.kind.rawValue ?? "Unknown"
             cell.weatherLabel?.text = " \(weatherText) "
             cell.weatherLabel?.sizeToFit()
-            cell.weatherImageview.image = weatherImageController.sunnyImages[indexPath.row % weatherImageController.sunnyImages.count].image
+            if let kind = currentWeather?.kind {
+                let weatherImageForCell = generateImageFor(weather: kind, row: indexPath.row)
+                cell.weatherImageview.image = weatherImageForCell.image
+            }
+
             let temperature = currentWeather?.currentTemp ?? 70
             cell.weatherTemp.text = " \(temperature)° "
             cell.weatherTemp.sizeToFit()
@@ -127,8 +131,12 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: "FORECAST_CELL", for: indexPath) as! ForecastCell
             if forecasts.count > 0 {
-                cell.weatherImageView.image = weatherImageController.rainyImages[indexPath.row % weatherImageController.rainyImages.count].image
                 let forecast = forecasts[indexPath.row + 1]
+                print(forecast.kind)
+
+                let weatherImageForCell = generateImageFor(weather: forecast.kind, row: indexPath.row)
+                cell.weatherImageView.image = weatherImageForCell.image
+
                 let day = forecast.day
                 let weatherType = forecast.kind.rawValue
                 let max = forecast.maxTemp
@@ -172,6 +180,19 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             self.currentWeather = current
             self.tableView.reloadData()
             self.tableView.refreshControl?.endRefreshing()
+        }
+    }
+
+    func generateImageFor(weather: WeatherKind, row: Int) -> WeatherImage {
+        switch weather {
+        case .sunny:
+            return weatherImageController.sunnyImages[row % weatherImageController.sunnyImages.count]
+        case .cloudy:
+            return weatherImageController.cloudyImages[row % weatherImageController.cloudyImages.count]
+        case .rainy:
+            return weatherImageController.rainyImages[row % weatherImageController.rainyImages.count]
+        default:
+            return weatherImageController.sunnyImages[row % weatherImageController.sunnyImages.count]
         }
     }
 
