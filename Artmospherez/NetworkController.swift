@@ -35,6 +35,12 @@ class NetworkController {
     /// Used to determine the device's current location for the API call
     let locationController = LocationController()
 
+    weak var locationControllerDelegate: LocationControllerDelegate? {
+        didSet {
+            locationController.delegate = locationControllerDelegate
+        }
+    }
+
     /// Fetches the JSON from the API using rhe apiURL property
     ///
     /// - Parameter completionHandler: returns an optional array of forecasts of successful, a optional NetworkControllerError error if unsuccessful

@@ -9,17 +9,24 @@
 import Foundation
 import CoreLocation
 
+protocol LocationControllerDelegate: class {
+    func didAuthorizeLocations()
+}
+
 class LocationController: NSObject, CLLocationManagerDelegate {
 
     var currentZipCode: String = "92102"
-    /// Instance of a CLLocaationManager
+    /// Instance of a CLLocationManager
     var locationManager = CLLocationManager()
+
+    weak var delegate: LocationControllerDelegate?
 
     override init() {
         super.init()
         locationManager.delegate = self
         locationManager.distanceFilter = kCLDistanceFilterNone
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        delegate = nil
         switch CLLocationManager.authorizationStatus() {
         case .notDetermined:
             locationManager.requestWhenInUseAuthorization()
@@ -28,6 +35,11 @@ class LocationController: NSObject, CLLocationManagerDelegate {
         default:
             break
         }
+    }
+
+    convenience init(locationControllerDelegate: LocationControllerDelegate) {
+        self.init()
+        delegate = locationControllerDelegate
     }
 
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
@@ -75,6 +87,7 @@ class LocationController: NSObject, CLLocationManagerDelegate {
             locationManager.requestWhenInUseAuthorization()
         case .authorizedWhenInUse:
             locationManager.startUpdatingLocation()
+            delegate?.didAuthorizeLocations()
         default:
             break
         }

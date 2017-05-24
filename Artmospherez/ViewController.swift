@@ -19,6 +19,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        networkController.locationControllerDelegate = self
+
         tableView.dataSource = self
         tableView.delegate = self
 
@@ -108,5 +110,11 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         }
     }
 
+}
+
+extension ViewController: LocationControllerDelegate {
+    func didAuthorizeLocations() {
+        tableView.reloadData()
+    }
 }
 
