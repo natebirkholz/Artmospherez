@@ -10,6 +10,8 @@ import UIKit
 
 class DetailViewControllerForecast: UIViewController {
 
+    var forecast: Forecast!
+
     override func viewDidLoad() {
         super.viewDidLoad()
 

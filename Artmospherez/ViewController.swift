@@ -149,6 +149,30 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         }
     }
 
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if indexPath.section == 0 {
+            performSegue(withIdentifier: "WEATHER_SEGUE", sender: self)
+        } else if indexPath.section == 1 {
+            performSegue(withIdentifier: "FORECAST_SEGUE", sender: self)
+        }
+    }
+
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "WEATHER_SEGUE" {
+            guard let indexPathForWeather = tableView.indexPathForSelectedRow else { return }
+            let detailVC = segue.destination as! DetailViewControllerWeather
+            let detailWeather = currentWeather
+            let cell = tableView.cellForRow(at: indexPathForWeather) as! WeatherCell
+            let image = cell.weatherImageview.image
+            detailVC.weather = detailWeather
+            detailVC.image = image
+        }
+    }
+
+    override func performSegue(withIdentifier identifier: String, sender: Any?) {
+        super.performSegue(withIdentifier: identifier, sender: sender)
+    }
+
     dynamic func refresh() {
         networkController.getJSONForForecasts { (maybeForecasts, maybeError) in
             guard maybeError == nil else {
