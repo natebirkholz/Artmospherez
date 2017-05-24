@@ -20,7 +20,7 @@ enum NetworkControllerError {
 
 class NetworkController {
 
-    /// Dynamically returns the url for the API call by addin the current zip code.
+    /// Dynamically returns the url for the API call by adding the current zip code.
     /// Only works in USA
     var apiURLForecasts: String {
         let location = locationController.currentZipCode
