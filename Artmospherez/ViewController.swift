@@ -15,6 +15,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     var forecasts = [Forecast]()
     var currentWeather: CurrentWeather?
     let networkController = NetworkController()
+    let weatherImageController = WeatherImageController()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -61,7 +62,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             return 1
         } else {
 //            return forecasts.count
-            return 5
+            return 6
         }
     }
 
@@ -93,16 +94,14 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         if indexPath.section == 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "WEATHER_CELL", for: indexPath) as! WeatherCell
             cell.weatherLabel?.text = self.currentWeather?.kind.rawValue ?? "Unknown"
-            cell.weatherImageview.image = UIImage(named: "sun1")
+            cell.weatherImageview.image = weatherImageController.sunnyImages[indexPath.row % weatherImageController.sunnyImages.count].image
 
             return cell
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: "FORECAST_CELL", for: indexPath) as! ForecastCell
-            cell.weatherLabel?.text = "FORECAST"
-            if indexPath.row % 2 == 0 {
-                cell.weatherImageView.image = UIImage(named: "rain1")
-            } else {
-                cell.weatherImageView.image = UIImage(named: "sun1")
+            if forecasts.count > 0 {
+                cell.weatherLabel?.text = forecasts[indexPath.row + 1].kind.rawValue
+                cell.weatherImageView.image = weatherImageController.rainyImages[indexPath.row % weatherImageController.rainyImages.count].image
             }
 
 

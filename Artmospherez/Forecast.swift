@@ -10,12 +10,12 @@ import Foundation
 
 struct Forecast {
     var day : String
-    var kind : Weather
+    var kind : WeatherKind
     var humidity : Int
     var maxTemp : Int
     var minTemp : Int
 
-    init (dayValue: String, weatherID: Weather, humidityValue: Int, maxTempValue: Int, minTempValue: Int) {
+    init (dayValue: String, weatherID: WeatherKind, humidityValue: Int, maxTempValue: Int, minTempValue: Int) {
         day = dayValue
         kind = weatherID
         humidity = humidityValue

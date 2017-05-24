@@ -9,68 +9,32 @@
 import UIKit
 
 class WeatherImage {
-    var image : UIImage!
-    var imageId : Int!
-    var typeName : String
-    var artist : String!
-    var title : String!
-    var description : String!
+    let id: String
+    var image: UIImage
+    var artist: String
+    var title: String
+    var description: String!
 
-    init (typeName: String) {
-        self.typeName = typeName
-        let imageIdForWeatherImage = self.getRandomIdForTypeName(typeName)
-        self.imageId = imageIdForWeatherImage
-        self.image = self.getImageFromId(imageIdForWeatherImage)
-        self.artist = self.getArtistNameFromId(imageIdForWeatherImage)
-        self.title = self.getTitleNameFromId(imageIdForWeatherImage)
-        self.description = self.getDescriptionStringFromId(imageIdForWeatherImage)
+    init(id: String, image: UIImage, artist: String, title: String) {
+        self.id = id
+        self.image = image
+        self.artist = artist
+        self.title = title
+        self.description = self.getDescriptionStringFromId(id)
     }
 
-    init (idForImage: Int, imageForWeather: UIImage, typeName: String, artistName: String, titleName: String, descriptionString: String) {
-        self.imageId = idForImage
-        self.image = imageForWeather
-        self.typeName = typeName
-        self.artist = artistName
-        self.title = titleName
-        self.description = descriptionString
-    }
 
-    func assembleThis() {
-        let imageIdForWeatherImage = self.getRandomIdForTypeName(typeName)
-        self.imageId = imageIdForWeatherImage
-        self.image = self.getImageFromId(imageIdForWeatherImage)
-        self.artist = self.getArtistNameFromId(imageIdForWeatherImage)
-        self.title = self.getTitleNameFromId(imageIdForWeatherImage)
-        self.description = self.getDescriptionStringFromId(imageIdForWeatherImage)
-    }
-
-    func getRandomIdForTypeName(_ typeName: String) -> Int {
-        // add randomizer here
-
-        return 1
-    }
-
-    func getImageFromId(_ idFor: Int) -> UIImage {
-        // get proper image
-
-        return UIImage(named: "sunsetX3.PNG")!
-    }
-
-    func getArtistNameFromId(_ idFor: Int) -> String {
-        // get proper name
-
-        return "Bobby Jimbo"
-    }
-
-    func getTitleNameFromId(_ idFor: Int) -> String {
-        // get proper title
-        
-        return "so pretty"
-    }
-    
-    func getDescriptionStringFromId(_ idFor: Int) -> String {
+    func getDescriptionStringFromId(_ id: String) -> String {
         // get proper description
-        
-        return "Lorem ipsum yadda yadda ya"
+        do {
+            let file = Bundle.main.path(forResource: id, ofType: "txt")
+            guard let filePath = file else { return "(No Description)" }
+            let textFromFile = try String(contentsOfFile: filePath)
+            print("text from file: ", textFromFile)
+            return textFromFile
+        } catch let error {
+            print(error.localizedDescription)
+            return "(No Description)"
+        }
     }
 }

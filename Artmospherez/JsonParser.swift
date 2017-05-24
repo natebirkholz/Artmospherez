@@ -36,9 +36,9 @@ class JsonParser {
                             let forecastHumidity = forecastDictionary["humidity"] as? Int,
                             let forecastMax = tempDictionary["max"] as? Int,
                             let forecastMin = tempDictionary["min"] as? Int {
-                            let forecastType = parseWeatherTypeIntoForecastType(forecastIDCode)
+                            let forecastType = parseWeatherTypeIntoWeatherKind(forecastIDCode)
                             let day = parseDateCodeIntoDay(forecastDateCode)
-                            let newForecast = Forecast(dayValue: day, weatherID: Weather(weatherKind: .sunny), humidityValue: forecastHumidity, maxTempValue: forecastMax, minTempValue: forecastMin)
+                            let newForecast = Forecast(dayValue: day, weatherID: forecastType, humidityValue: forecastHumidity, maxTempValue: forecastMax, minTempValue: forecastMin)
                             arrayOfForecasts.append(newForecast)
                         } else {
                             throw ParseError.unableToParse
@@ -71,9 +71,9 @@ class JsonParser {
                     let maxTemp = mainDictionary["temp_max"] as? Int,
                     let windDictionary = dictionaryFromJSON["wind"] as? [String: Any],
                     let windSpeed = windDictionary["speed"] as? Int,
-                    let windDirection = windDictionary["deg"] as? Int,
                     let cityName = dictionaryFromJSON["name"] as? String {
-                        let type = parseWeatherTypeIntoForecastType(weatherId)
+                        let type = parseWeatherTypeIntoWeatherKind(weatherId)
+                        let windDirection = windDictionary["deg"] as? Int ?? 0
                         let currentWeather = CurrentWeather(kind: type, humidity: humidity, maxTemp: maxTemp, minTemp: minTemp, currentTemp: currentTemp, windSpeed: windSpeed, windDirection: windDirection, cityName: cityName)
                         return currentWeather
                 } else {
@@ -103,7 +103,7 @@ class JsonParser {
     ///
     /// - Parameter forecastIDCode: 3 digit code from API denoting forecast
     /// - Returns: ForecastType associated wth the forecast
-    func parseWeatherTypeIntoForecastType(_ forecastIDCode: Int) -> WeatherKind {
+    func parseWeatherTypeIntoWeatherKind(_ forecastIDCode: Int) -> WeatherKind {
         switch forecastIDCode {
         case 200...299, 960, 961:
             return .thunderstorm
