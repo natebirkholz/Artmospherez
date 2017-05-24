@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		430C520C1ED505DE00971849 /* CurrentWeather.swift in Sources */ = {isa = PBXBuildFile; fileRef = 430C520B1ED505DE00971849 /* CurrentWeather.swift */; };
 		43F2C0B71ED330A10023567A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43F2C0B61ED330A10023567A /* AppDelegate.swift */; };
 		43F2C0B91ED330A10023567A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43F2C0B81ED330A10023567A /* ViewController.swift */; };
 		43F2C0BC1ED330A10023567A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 43F2C0BA1ED330A10023567A /* Main.storyboard */; };
@@ -40,7 +41,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		430C520A1ED4B22D00971849 /* Base */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Base; path = Base.lproj/CurrentWeather.swift; sourceTree = "<group>"; };
+		430C520B1ED505DE00971849 /* CurrentWeather.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrentWeather.swift; sourceTree = "<group>"; };
 		43F2C0B31ED330A10023567A /* Artmospherez.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Artmospherez.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		43F2C0B61ED330A10023567A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		43F2C0B81ED330A10023567A /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -138,11 +139,11 @@
 			isa = PBXGroup;
 			children = (
 				43F2C0E31ED33BB40023567A /* City.swift */,
-				430C52091ED4B22D00971849 /* CurrentWeather.swift */,
 				43F2C0E11ED33B550023567A /* Forecast.swift */,
 				43F2C0E51ED33C2D0023567A /* Weather.swift */,
 				43F2C0E71ED33CA50023567A /* WeatherImage.swift */,
 				43F2C0BD1ED330A10023567A /* Assets.xcassets */,
+				430C520B1ED505DE00971849 /* CurrentWeather.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -290,6 +291,7 @@
 				43F2C0E61ED33C2D0023567A /* Weather.swift in Sources */,
 				43F2C0B91ED330A10023567A /* ViewController.swift in Sources */,
 				43F2C0E01ED33B1E0023567A /* LocationController.swift in Sources */,
+				430C520C1ED505DE00971849 /* CurrentWeather.swift in Sources */,
 				43F2C0E41ED33BB40023567A /* City.swift in Sources */,
 				43F2C0ED1ED35A900023567A /* JsonParser.swift in Sources */,
 				43F2C0B71ED330A10023567A /* AppDelegate.swift in Sources */,
@@ -315,14 +317,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		430C52091ED4B22D00971849 /* CurrentWeather.swift */ = {
-			isa = PBXVariantGroup;
-			children = (
-				430C520A1ED4B22D00971849 /* Base */,
-			);
-			name = CurrentWeather.swift;
-			sourceTree = "<group>";
-		};
 		43F2C0BA1ED330A10023567A /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (

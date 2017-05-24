@@ -57,6 +57,10 @@ class NetworkController {
         })
     }
 
+    func getCurrentWeather(_ completionHandler: @escaping (_ currentWeather: CurrentWeather?, _ error: NetworkControllerError?) -> ()) {
+        
+    }
+
     /// Creates the newtork call to the API to fetch the JSON as data
     ///
     /// - Parameters:

@@ -13,6 +13,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     @IBOutlet weak var tableView: UITableView!
 
     var forecasts = [Forecast]()
+    let networkController = NetworkController()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,6 +25,13 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         tableView.register((UINib(nibName: "WeatherCell", bundle: Bundle.main)), forCellReuseIdentifier: "WEATHER_CELL")
 
         self.view.bringSubview(toFront: tableView)
+
+        networkController.getJSONForForecasts { (maybeForecasts, maybeError) in
+            guard maybeError == nil else { return }
+            guard let forecasts = maybeForecasts  else { return }
+
+            self.forecasts = forecasts
+        }
 
     }
 
