@@ -73,7 +73,7 @@ class JsonParser {
                     let windSpeed = windDictionary["speed"] as? Int,
                     let cityName = dictionaryFromJSON["name"] as? String {
                         let type = parseWeatherTypeIntoWeatherKind(weatherId)
-                        let windDirection = windDictionary["deg"] as? Int ?? 0
+                        let windDirection = windDictionary["deg"] as? Int ?? 0 // Wind direction seems to not always be present
                         let currentWeather = CurrentWeather(kind: type, humidity: humidity, maxTemp: maxTemp, minTemp: minTemp, currentTemp: currentTemp, windSpeed: windSpeed, windDirection: windDirection, cityName: cityName)
                         return currentWeather
                 } else {

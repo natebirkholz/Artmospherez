@@ -27,9 +27,9 @@ class WeatherImage {
     func getDescriptionStringFromId(_ id: String) -> String {
         // get proper description
         do {
-            let file = Bundle.main.path(forResource: id, ofType: "txt")
-            guard let filePath = file else { return "(No Description)" }
-            let textFromFile = try String(contentsOfFile: filePath)
+            let file = Bundle.main.url(forResource: id, withExtension: "txt")
+            guard let fileURL = file else { return "(No Description)" }
+            let textFromFile = try String(contentsOf: fileURL)
             print("text from file: ", textFromFile)
             return textFromFile
         } catch let error {
