@@ -15,11 +15,11 @@ struct CurrentWeather {
     var maxTemp: Int
     var minTemp: Int
     var currentTemp: Int
-    var windSpeed: Double
-    var windDirection: Double
+    var windSpeed: Int
+    var windDirection: Int
     var cityName: String
 
-    init(kind: WeatherKind, humidity: Int, maxTemp: Int, minTemp: Int, currentTemp: Int, windSpeed: Double, windDirection: Double, cityName: String) {
+    init(kind: WeatherKind, humidity: Int, maxTemp: Int, minTemp: Int, currentTemp: Int, windSpeed: Int, windDirection: Int, cityName: String) {
         self.kind = kind
         self.humidity = humidity
         self.maxTemp = maxTemp
