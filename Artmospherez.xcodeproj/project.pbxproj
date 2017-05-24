@@ -139,11 +139,11 @@
 			isa = PBXGroup;
 			children = (
 				43F2C0E31ED33BB40023567A /* City.swift */,
+				430C520B1ED505DE00971849 /* CurrentWeather.swift */,
 				43F2C0E11ED33B550023567A /* Forecast.swift */,
 				43F2C0E51ED33C2D0023567A /* Weather.swift */,
 				43F2C0E71ED33CA50023567A /* WeatherImage.swift */,
 				43F2C0BD1ED330A10023567A /* Assets.xcassets */,
-				430C520B1ED505DE00971849 /* CurrentWeather.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";

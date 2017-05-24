@@ -13,6 +13,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     @IBOutlet weak var tableView: UITableView!
 
     var forecasts = [Forecast]()
+    var currentWeather: CurrentWeather?
     let networkController = NetworkController()
 
     override func viewDidLoad() {
@@ -31,6 +32,16 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             guard let forecasts = maybeForecasts  else { return }
 
             self.forecasts = forecasts
+            self.tableView.reloadData()
+        }
+
+        networkController.getCurrentWeather { (maybeWeather, maybeError) in
+            guard maybeError == nil else { return }
+            guard let current = maybeWeather else { return }
+            print(current)
+
+            self.currentWeather = current
+            self.tableView.reloadData()
         }
 
     }
@@ -79,7 +90,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.section == 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "WEATHER_CELL", for: indexPath) as! WeatherCell
-            cell.weatherLabel?.text = "WEATHER"
+            cell.weatherLabel?.text = self.currentWeather?.kind.rawValue ?? "Unknown"
             cell.weatherImageview.image = UIImage(named: "sun1")
 
             return cell

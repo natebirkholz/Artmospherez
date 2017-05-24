@@ -72,8 +72,7 @@ class JsonParser {
                     let windDictionary = dictionaryFromJSON["wind"] as? [String: Any],
                     let windSpeed = windDictionary["speed"] as? Int,
                     let windDirection = windDictionary["deg"] as? Int,
-                    let sysDictionary = dictionaryFromJSON["sys"] as? [String: Any],
-                    let cityName = sysDictionary["name"] as? String {
+                    let cityName = dictionaryFromJSON["name"] as? String {
                         let type = parseWeatherTypeIntoForecastType(weatherId)
                         let currentWeather = CurrentWeather(kind: type, humidity: humidity, maxTemp: maxTemp, minTemp: minTemp, currentTemp: currentTemp, windSpeed: windSpeed, windDirection: windDirection, cityName: cityName)
                         return currentWeather
@@ -115,7 +114,7 @@ class JsonParser {
         case 600, 601, 603...621:
             return .snowy
         case 701, 741:
-            return.foggy
+            return .foggy
         case 711, 762:
             return .apocalyptic
         case 781, 900:
@@ -125,7 +124,7 @@ class JsonParser {
         case 802...803:
             return .cloudy
         case 804:
-            return .gray
+            return .overcast
         case 901, 902, 962:
             return .hurricane
         case 905, 956...959:

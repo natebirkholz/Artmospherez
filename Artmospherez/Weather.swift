@@ -9,18 +9,18 @@
 import Foundation
 
 enum WeatherKind: String {
-    case sunny = "sunny"
-    case rainy = "rainy"
-    case windy = "windy"
-    case thunderstorm = "thunderstorm"
-    case tornado = "tornado"
-    case cloudy = "cloudy"
-    case gray = "gray"
-    case foggy = "foggy"
-    case snowy = "snowy"
-    case blizzard = "blizzard"
-    case hurricane = "hurricane"
-    case apocalyptic = "apocalyptic"
+    case sunny = "Sunny"
+    case rainy = "Rainy"
+    case windy = "Windy"
+    case thunderstorm = "Thunderstorm"
+    case tornado = "Tornado"
+    case cloudy = "Cloudy"
+    case overcast = "Overcast"
+    case foggy = "Foggy"
+    case snowy = "Snowy"
+    case blizzard = "Blizzard"
+    case hurricane = "Hurricane"
+    case apocalyptic = "Apocalyptic!"
 }
 
 struct Weather {
