@@ -14,6 +14,8 @@ enum ParseError: Error {
 
 class JsonParser {
 
+    // MARK: - Parsers
+
     /// Parses JSON into an array of Forecast objects from the API JSON response
     ///
     /// - Parameter rawJSONData: the raw JSON data as Data
@@ -58,6 +60,11 @@ class JsonParser {
         }
     }
 
+    /// Parses JSON into a CurrentWeather object
+    ///
+    /// - Parameter rawJSONData: the raw JSON data as Data
+    /// - Returns: returns a CurrentWeather obect
+    /// - Throws: Throws a ParseError upon failure to parse
     func parseJSONIntoCurrentWeather(_ rawJSONData: Data) throws -> CurrentWeather {
         do {
             if let dictionaryFromJSON = try JSONSerialization.jsonObject(with: rawJSONData, options: JSONSerialization.ReadingOptions.allowFragments) as? [String: Any] {
@@ -86,6 +93,8 @@ class JsonParser {
             throw ParseError.unableToParse
         }
     }
+
+    // MARK: - Utilities
 
     /// Takes a date code from the API JSON and converts it to a day of the week
     ///

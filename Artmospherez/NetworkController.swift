@@ -20,13 +20,17 @@ enum NetworkControllerError {
 
 class NetworkController {
 
-    /// Dynamically returns the url for the API call by adding the current zip code.
+    // MARK: - Properties
+
+    /// Dynamically returns the url for the forecasts API call by adding the current zip code.
     /// Only works in USA
     var apiURLForecasts: String {
         let location = locationController.currentZipCode
         return "http://api.openweathermap.org/data/2.5/forecast/daily?zip=\(location),us&units=imperial&cnt=7&APPID=\(APIKey)"
     }
 
+    /// Dynamically returns the url for the current weather API call by adding the current zip code.
+    /// Only works in USA
     var apiURLWeather: String {
         let location = locationController.currentZipCode
         return "http://api.openweathermap.org/data/2.5/weather?zip=\(location),us&units=imperial&APPID=\(APIKey)"
@@ -41,7 +45,9 @@ class NetworkController {
         }
     }
 
-    /// Fetches the JSON from the API using rhe apiURL property
+    // MARK: - Methods
+
+    /// Fetches forecasts JSON from the API using rhe apiURLForecasts property
     ///
     /// - Parameter completionHandler: returns an optional array of forecasts of successful, a optional NetworkControllerError error if unsuccessful
     func getJSONForForecasts(_ completionHandler: @escaping (_ forecasts: [Forecast]?, _ error: NetworkControllerError?) -> ()) {
@@ -64,6 +70,9 @@ class NetworkController {
         })
     }
 
+    /// Fetches current weather JSON from the apiURLWeather property
+    ///
+    /// - Parameter completionHandler: <#completionHandler description#>
     func getCurrentWeather(_ completionHandler: @escaping (_ currentWeather: CurrentWeather?, _ error: NetworkControllerError?) -> ()) {
         fetchJSONFromURL(apiURLWeather) { (maybeData, maybeError) in
             DispatchQueue.main.async {
@@ -83,7 +92,7 @@ class NetworkController {
         }
     }
 
-    /// Creates the newtork call to the API to fetch the JSON as data
+    /// Creates a network call to the API to fetch JSON as data
     ///
     /// - Parameters:
     ///   - aURL: the url for the api call

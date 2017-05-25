@@ -9,17 +9,21 @@
 import Foundation
 import CoreLocation
 
+/// Calls delegate when location has changed
 protocol LocationControllerDelegate: class {
     func refreshLocations()
 }
 
 class LocationController: NSObject, CLLocationManagerDelegate {
 
+    // MARK: - Properties
+
     var currentZipCode: String = ""
-    /// Instance of a CLLocationManager
     var locationManager = CLLocationManager()
 
     weak var delegate: LocationControllerDelegate?
+
+    // MARK: - Initialization
 
     override init() {
         super.init()
@@ -42,24 +46,37 @@ class LocationController: NSObject, CLLocationManagerDelegate {
         delegate = locationControllerDelegate
     }
 
+    // MARK: - CLLocationManagerDelegate
+
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         CLGeocoder().reverseGeocodeLocation(locations[0], completionHandler: {(places, error) -> Void in
             if error != nil { return }
-
             if let count = places?.count, count > 0 {
                 if let place = places?[0], let code = place.postalCode {
                     self.currentZipCode = code
                 }
-            } else {
-                print("Problem with the data received from CLGeocoder")
             }
         })
     }
 
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        switch CLLocationManager.authorizationStatus() {
+        case .notDetermined:
+            locationManager.requestWhenInUseAuthorization()
+        case .authorizedWhenInUse:
+            locationManager.startUpdatingLocation()
+            delegate?.refreshLocations()
+        default:
+            break
+        }
+    }
+
+    // MARK: - Utilities
+
     /// Updates the currentZipCode by explicit call instead of in locationManager: didUpdateLocations:
     ///
     /// - Parameter completionHandler: callback upon completion
-    func updadeLocation(completionHandler: @escaping ()->()) {
+    func updateLocation(completionHandler: @escaping ()->()) {
         if let  thisLocation = locationManager.location {
             CLGeocoder().reverseGeocodeLocation(thisLocation, completionHandler: {(places, error) -> Void in
                 if error != nil {
@@ -74,22 +91,9 @@ class LocationController: NSObject, CLLocationManagerDelegate {
                         completionHandler()
                     }
                 } else {
-                    print("Problem with the data received from CLGeocoder")
                     completionHandler()
                 }
             })
-        }
-    }
-
-    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
-        switch CLLocationManager.authorizationStatus() {
-        case .notDetermined:
-            locationManager.requestWhenInUseAuthorization()
-        case .authorizedWhenInUse:
-            locationManager.startUpdatingLocation()
-            delegate?.refreshLocations()
-        default:
-            break
         }
     }
 }

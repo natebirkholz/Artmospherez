@@ -48,7 +48,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         print(date)
         UserDefaults.standard.set(date, forKey: Constants.dateKey)
 
-        networkController.locationController.updadeLocation {
+        networkController.locationController.updateLocation {
             self.networkController.getJSONForForecasts { (maybeForecasts, maybeError) in
                 UIView.animate(withDuration: 0.3, animations: { 
                     self.tableView.alpha = 1.0
