@@ -10,13 +10,12 @@ import UIKit
 
 class DetailViewControllerForecast: UIViewController {
 
+    // MARK: - Properties
+
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var mainLabel: WeatherLabel!
     @IBOutlet weak var maxMinLabel: WeatherLabel!
     @IBOutlet weak var infoButton: UIButton!
-
-
-
 
     var forecast: Forecast!
     var weatherImage: WeatherImage!
@@ -29,8 +28,12 @@ class DetailViewControllerForecast: UIViewController {
 
     override var prefersStatusBarHidden: Bool { return true }
 
+    // MARK: - Lifecycle
+
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        // Gesture recognizers
 
         let downRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(dismissSelf))
         downRecognizer.direction = .down
@@ -51,6 +54,8 @@ class DetailViewControllerForecast: UIViewController {
         view.addGestureRecognizer(tapRecognizer)
         tapViewRecognizer = tapRecognizer
 
+        // Views
+        
         imageView.image = image
 
         let mainText = " \(forecast.day), \(forecast.kind.rawValue) "
@@ -78,6 +83,7 @@ class DetailViewControllerForecast: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
+        // infoView needs more room on iPad because it displayes at 1x dimensions
         let heightForInfoView: CGFloat
         if UIDevice.current.model.hasPrefix("iPad") {
             heightForInfoView = 116.0
@@ -93,11 +99,9 @@ class DetailViewControllerForecast: UIViewController {
         infoView = info
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
+    // MARK: - Actions
 
+    /// Display the infoView if not shown, otherwise dismiss the infoView
     func showInfo() {
         if infoView?.isPresented == false {
             UIView.animate(withDuration: 0.5, animations: {
@@ -114,6 +118,7 @@ class DetailViewControllerForecast: UIViewController {
         }
     }
 
+    /// If the infoView is showing, dismiss it. Otherwise dismiss the detail view
     func didTap() {
         if let presented = infoView?.isPresented {
             if presented {
@@ -126,6 +131,7 @@ class DetailViewControllerForecast: UIViewController {
         }
     }
 
+    /// Dismiss the detail view
     func dismissSelf() {
         navigationController?.popViewController(animated: true)
     }

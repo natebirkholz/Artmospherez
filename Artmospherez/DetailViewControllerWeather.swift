@@ -10,6 +10,7 @@ import UIKit
 
 class DetailViewControllerWeather: UIViewController, UINavigationControllerDelegate {
 
+    // MARK: - Properties
 
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var mainLabel: WeatherLabel!
@@ -28,11 +29,13 @@ class DetailViewControllerWeather: UIViewController, UINavigationControllerDeleg
 
     override var prefersStatusBarHidden: Bool { return true }
 
+    // MARK: - Lifecycle
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        imageView.image = image
-
+        // Gesture recognizers
+        
         let downRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(dismissSelf))
         downRecognizer.direction = .down
         view.addGestureRecognizer(downRecognizer)
@@ -51,6 +54,10 @@ class DetailViewControllerWeather: UIViewController, UINavigationControllerDeleg
         let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(didTap))
         view.addGestureRecognizer(tapRecognizer)
         tapViewRecognizer = tapRecognizer
+
+        // Views
+
+        imageView.image = image
 
         let mainLabelText = " \(weather.kind.rawValue), \(weather.currentTemp)° "
         mainLabel.text = mainLabelText
@@ -89,6 +96,7 @@ class DetailViewControllerWeather: UIViewController, UINavigationControllerDeleg
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
+        // infoView needs more room on iPad because it displayes at 1x dimensions
         let heightForInfoView: CGFloat
         if UIDevice.current.model.hasPrefix("iPad") {
             heightForInfoView = 116.0
@@ -104,6 +112,9 @@ class DetailViewControllerWeather: UIViewController, UINavigationControllerDeleg
         infoView = info
     }
 
+    // MARK: - Actions
+
+    /// Display the infoView if not shown, otherwise dismiss the infoView
     func showInfo() {
         print("INFO")
         print(weatherImage)
@@ -123,6 +134,7 @@ class DetailViewControllerWeather: UIViewController, UINavigationControllerDeleg
         }
     }
 
+    /// If the infoView is showing, dismiss it. Otherwise dismiss the detail view
     func didTap() {
         if let presented = infoView?.isPresented {
             if presented {
@@ -135,6 +147,7 @@ class DetailViewControllerWeather: UIViewController, UINavigationControllerDeleg
         }
     }
     
+    /// Dismiss the detail view
     func dismissSelf() {
         navigationController?.popViewController(animated: true)
     }
