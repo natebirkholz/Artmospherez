@@ -8,7 +8,7 @@
 
 import UIKit
 
-class DetailViewControllerWeather: UIViewController {
+class DetailViewControllerWeather: UIViewController, UINavigationControllerDelegate {
 
 
     @IBOutlet weak var imageView: UIImageView!
@@ -68,7 +68,7 @@ class DetailViewControllerWeather: UIViewController {
     }
 
     func dismissSelf(_ sender: UIGestureRecognizer) {
-        self.dismiss(animated: true, completion: nil)
+        navigationController?.popViewController(animated: true)
     }
 
 }
