@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		430C520C1ED505DE00971849 /* CurrentWeather.swift in Sources */ = {isa = PBXBuildFile; fileRef = 430C520B1ED505DE00971849 /* CurrentWeather.swift */; };
-		430C520E1ED557A400971849 /* WeatherImageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 430C520D1ED557A400971849 /* WeatherImageController.swift */; };
+		430C520E1ED557A400971849 /* WeatherImageFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 430C520D1ED557A400971849 /* WeatherImageFactory.swift */; };
 		430C52111ED55B9000971849 /* rain1.txt in Resources */ = {isa = PBXBuildFile; fileRef = 430C52101ED55B9000971849 /* rain1.txt */; };
 		430C52131ED5609800971849 /* sun1.txt in Resources */ = {isa = PBXBuildFile; fileRef = 430C52121ED5609800971849 /* sun1.txt */; };
 		430C52171ED5822500971849 /* WeatherLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 430C52161ED5822500971849 /* WeatherLabel.swift */; };
@@ -57,7 +57,7 @@
 
 /* Begin PBXFileReference section */
 		430C520B1ED505DE00971849 /* CurrentWeather.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrentWeather.swift; sourceTree = "<group>"; };
-		430C520D1ED557A400971849 /* WeatherImageController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeatherImageController.swift; sourceTree = "<group>"; };
+		430C520D1ED557A400971849 /* WeatherImageFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = WeatherImageFactory.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		430C52101ED55B9000971849 /* rain1.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = rain1.txt; sourceTree = "<group>"; };
 		430C52121ED5609800971849 /* sun1.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = sun1.txt; sourceTree = "<group>"; };
 		430C52161ED5822500971849 /* WeatherLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeatherLabel.swift; sourceTree = "<group>"; };
@@ -75,7 +75,7 @@
 		430C52341ED6566F00971849 /* gray2.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = gray2.txt; sourceTree = "<group>"; };
 		43F2C0B31ED330A10023567A /* Artmospherez.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Artmospherez.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		43F2C0B61ED330A10023567A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		43F2C0B81ED330A10023567A /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		43F2C0B81ED330A10023567A /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = ViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		43F2C0BB1ED330A10023567A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		43F2C0BD1ED330A10023567A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		43F2C0C01ED330A10023567A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -222,7 +222,7 @@
 				43F2C0DF1ED33B1E0023567A /* LocationController.swift */,
 				43F2C0DD1ED33AF80023567A /* NetworkController.swift */,
 				43F2C0B81ED330A10023567A /* ViewController.swift */,
-				430C520D1ED557A400971849 /* WeatherImageController.swift */,
+				430C520D1ED557A400971849 /* WeatherImageFactory.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -347,7 +347,7 @@
 			files = (
 				43F2C0DE1ED33AF80023567A /* NetworkController.swift in Sources */,
 				430C52191ED584CD00971849 /* Constants.swift in Sources */,
-				430C520E1ED557A400971849 /* WeatherImageController.swift in Sources */,
+				430C520E1ED557A400971849 /* WeatherImageFactory.swift in Sources */,
 				430C52211ED5FEEC00971849 /* DetailViewControllerForecast.swift in Sources */,
 				43F2C0E81ED33CA50023567A /* WeatherImage.swift in Sources */,
 				43F2C0E21ED33B550023567A /* Forecast.swift in Sources */,

@@ -43,7 +43,7 @@ class DetailViewControllerWeather: UIViewController {
         mainLabel.sizeToFit()
         mainLabel.frame.size.width += 6.0
         mainLabel.clipsToBounds = true
-        mainLabel.layer.cornerRadius = 10.0
+        mainLabel.layer.cornerRadius = 8.0
         mainLabel.backgroundColor = Constants.labelColor
 
         let windLabelText = " wind: \(weather.windCompassDirection) \(weather.windSpeed) mph "

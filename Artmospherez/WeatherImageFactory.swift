@@ -1,5 +1,5 @@
 //
-//  WeatherImageController.swift
+//  WeatherImageFactory.swift
 //  Artmospherez
 //
 //  Created by Nathan Birkholz on 5/23/17.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class WeatherImageController {
+class WeatherImageFactory {
     var sunnyImages = [WeatherImage]()
     var rainyImages = [WeatherImage]()
     var windyImages = [WeatherImage]()
@@ -62,7 +62,13 @@ class WeatherImageController {
     }
 
     private func createWindyImages() {
+        guard let image1 = UIImage(named: "wind1") else { return }
+        let windy1 =  WeatherImage(id: "wind1", image: image1, artist: "Albert Bierstadt", title: "Wind River Country")
+        windyImages.append(windy1)
 
+        guard let image2 = UIImage(named: "wind2") else { return }
+        let windy2 = WeatherImage(id: "wind2", image: image2, artist: "John Constable", title: "Wivenhoe Park")
+        windyImages.append(windy2)
     }
 
     private func createThunderstormImages() {

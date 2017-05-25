@@ -22,7 +22,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="0UO-ZR-AbI">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="0UO-ZR-AbI">
                                 <rect key="frame" x="0.0" y="20" width="375" height="647"/>
                                 <color key="backgroundColor" red="0.21639536149999999" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <prototypes>
@@ -78,12 +78,44 @@
                     <view key="view" contentMode="scaleToFill" id="66G-4c-t9s">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="2a0-60-8td">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="MainLabel" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VdV-vc-cBd" customClass="WeatherLabel" customModule="Artmospherez" customModuleProvider="target">
+                                <rect key="frame" x="243" y="617" width="116" height="30"/>
+                                <fontDescription key="fontDescription" name="Didot" family="Didot" pointSize="24"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="min/max" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7C6-Ck-g0t" customClass="WeatherLabel" customModule="Artmospherez" customModuleProvider="target">
+                                <rect key="frame" x="292" y="587" width="67" height="22"/>
+                                <fontDescription key="fontDescription" name="Didot" family="Didot" pointSize="17"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="2a0-60-8td" firstAttribute="leading" secondItem="66G-4c-t9s" secondAttribute="leading" id="36J-7c-YtB"/>
+                            <constraint firstAttribute="trailing" secondItem="2a0-60-8td" secondAttribute="trailing" id="B0o-Xq-KJI"/>
+                            <constraint firstItem="mej-r2-dVr" firstAttribute="top" secondItem="VdV-vc-cBd" secondAttribute="bottom" constant="20" id="BWm-Fc-6j1"/>
+                            <constraint firstItem="VdV-vc-cBd" firstAttribute="trailing" secondItem="66G-4c-t9s" secondAttribute="trailingMargin" id="F4F-Dm-XTW"/>
+                            <constraint firstItem="7C6-Ck-g0t" firstAttribute="trailing" secondItem="66G-4c-t9s" secondAttribute="trailingMargin" id="GsU-1b-Lmj"/>
+                            <constraint firstItem="2a0-60-8td" firstAttribute="top" secondItem="66G-4c-t9s" secondAttribute="top" id="Pyt-18-WhT"/>
+                            <constraint firstItem="VdV-vc-cBd" firstAttribute="top" secondItem="7C6-Ck-g0t" secondAttribute="bottom" constant="8" id="Q8M-jK-Tzu"/>
+                            <constraint firstItem="mej-r2-dVr" firstAttribute="top" secondItem="2a0-60-8td" secondAttribute="bottom" id="kro-bD-4Wb"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="imageView" destination="2a0-60-8td" id="5RP-Bo-MEA"/>
+                        <outlet property="mainLabel" destination="VdV-vc-cBd" id="xMY-w7-ICw"/>
+                        <outlet property="maxMinLabel" destination="7C6-Ck-g0t" id="bj0-Yu-8eu"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="IMq-17-Tes" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1009" y="367"/>
+            <point key="canvasLocation" x="1008.8" y="366.56671664167919"/>
         </scene>
         <!--Detail View Controller Weather-->
         <scene sceneID="PaP-Ng-NPs">

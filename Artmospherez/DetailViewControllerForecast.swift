@@ -10,12 +10,47 @@ import UIKit
 
 class DetailViewControllerForecast: UIViewController {
 
+    @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet weak var mainLabel: WeatherLabel!
+    @IBOutlet weak var maxMinLabel: WeatherLabel!
+
+
+
+
     var forecast: Forecast!
+    var image: UIImage!
+    var swipeDown: UISwipeGestureRecognizer?
+    var tap: UITapGestureRecognizer?
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        let downRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(dismissSelf(_:)))
+        downRecognizer.direction = .down
+        view.addGestureRecognizer(downRecognizer)
+        swipeDown = downRecognizer
+
+        let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissSelf(_:)))
+        view.addGestureRecognizer(tapRecognizer)
+        tap = tapRecognizer
+
+        imageView.image = image
+
+        let mainText = " \(forecast.day), \(forecast.kind.rawValue) "
+        mainLabel.text = mainText
+        mainLabel.sizeToFit()
+        mainLabel.layer.cornerRadius = 8.0
+        mainLabel.backgroundColor = Constants.labelColor
+        mainLabel.clipsToBounds = true
+
+        let maxMinText = " \(forecast.maxTemp)°/\(forecast.minTemp)° "
+        maxMinLabel.text = maxMinText
+        maxMinLabel.sizeToFit()
+        maxMinLabel.layer.cornerRadius = Constants.cornerRadius
+        maxMinLabel.backgroundColor = Constants.labelColor
+        maxMinLabel.clipsToBounds = true
+
+
     }
 
     override func didReceiveMemoryWarning() {
@@ -24,14 +59,8 @@ class DetailViewControllerForecast: UIViewController {
     }
     
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    func dismissSelf(_ sender: UIGestureRecognizer) {
+        self.dismiss(animated: true, completion: nil)
     }
-    */
 
 }

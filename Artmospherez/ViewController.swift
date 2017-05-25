@@ -15,7 +15,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     var forecasts = [Forecast]()
     var currentWeather: CurrentWeather?
     let networkController = NetworkController()
-    let weatherImageController = WeatherImageController()
+    let weatherImageFactory = WeatherImageFactory()
 
 
     override func viewDidLoad() {
@@ -71,18 +71,9 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         if section == 0 {
             return 1
         } else {
-//            return forecasts.count
             return 6
         }
     }
-
-//    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-//        if section == 1 {
-//            return 12
-//        }
-//
-//        return 0
-//    }
 
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         if section == 1 {
@@ -166,6 +157,14 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             let image = cell.weatherImageview.image
             detailVC.weather = detailWeather
             detailVC.image = image
+        } else if segue.identifier == "FORECAST_SEGUE" {
+            guard let indexPathForForecast = tableView.indexPathForSelectedRow else { return }
+            let detailVC = segue.destination as! DetailViewControllerForecast
+            let detailForecast = forecasts[indexPathForForecast.row + 1]
+            let cell = tableView.cellForRow(at: indexPathForForecast) as! ForecastCell
+            let image = cell.weatherImageView.image
+            detailVC.forecast = detailForecast
+            detailVC.image = image
         }
     }
 
@@ -210,19 +209,21 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     func generateImageFor(weather: WeatherKind, row: Int) -> WeatherImage {
         switch weather {
         case .sunny:
-            return weatherImageController.sunnyImages[row % weatherImageController.sunnyImages.count]
+            return weatherImageFactory.sunnyImages[row % weatherImageFactory.sunnyImages.count]
         case .cloudy:
-            return weatherImageController.cloudyImages[row % weatherImageController.cloudyImages.count]
+            return weatherImageFactory.cloudyImages[row % weatherImageFactory.cloudyImages.count]
         case .rainy:
-            return weatherImageController.rainyImages[row % weatherImageController.rainyImages.count]
+            return weatherImageFactory.rainyImages[row % weatherImageFactory.rainyImages.count]
         case .cloudy:
-            return weatherImageController.cloudyImages[row % weatherImageController.cloudyImages.count]
+            return weatherImageFactory.cloudyImages[row % weatherImageFactory.cloudyImages.count]
         case .foggy:
-            return weatherImageController.foggyImages[row % weatherImageController.foggyImages.count]
+            return weatherImageFactory.foggyImages[row % weatherImageFactory.foggyImages.count]
         case .overcast:
-            return weatherImageController.overcastImages[row % weatherImageController.overcastImages.count]
+            return weatherImageFactory.overcastImages[row % weatherImageFactory.overcastImages.count]
+        case .windy:
+            return weatherImageFactory.windyImages[row % weatherImageFactory.windyImages.count]
         default:
-            return weatherImageController.sunnyImages[row % weatherImageController.sunnyImages.count]
+            return weatherImageFactory.sunnyImages[row % weatherImageFactory.sunnyImages.count]
         }
     }
 
