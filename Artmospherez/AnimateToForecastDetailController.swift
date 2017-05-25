@@ -29,13 +29,14 @@ class AnimateToForecastDetailController: NSObject, UIViewControllerAnimatedTrans
             assertionFailure("Unable to fetch the selected cell's weatherImageView.image")
             return
         }
-        let weatherSnapshot = UIImageView(image: weatherImage)
-        weatherSnapshot.clipsToBounds = true
-        weatherSnapshot.contentMode = .scaleAspectFill
 
-        weatherSnapshot.frame = containerView.convert(selectedCell.weatherImageView.bounds, from: fromViewController.tableView.cellForRow(at: selectedRow))
+        // Set up cellProxy, a copy of the selected cell to then animate moving into position and growing into the size of the final image
+        let cellProxy = UIImageView(image: weatherImage)
+        cellProxy.clipsToBounds = true
+        cellProxy.contentMode = .scaleAspectFill
+        cellProxy.frame = containerView.convert(selectedCell.weatherImageView.bounds, from: fromViewController.tableView.cellForRow(at: selectedRow))
+        
         selectedCell.contentView.isHidden = true
-
         toViewController.view.frame = transitionContext.finalFrame(for: toViewController)
         toViewController.imageView.alpha = 0
         toViewController.view.isHidden = true
@@ -44,13 +45,15 @@ class AnimateToForecastDetailController: NSObject, UIViewControllerAnimatedTrans
         toViewController.view.layoutIfNeeded()
 
         containerView.addSubview(toViewController.view)
-        containerView.addSubview(weatherSnapshot)
+        containerView.addSubview(cellProxy)
+
+        // Move cellProxy, then fire second animation to blend into final vieww
         UIView.animate(withDuration: duration, animations: { () -> Void in
             // Update layout to set proper target for final frame of animation, Size Classes issue
             toViewController.view.setNeedsLayout()
             toViewController.view.layoutIfNeeded()
 
-            weatherSnapshot.frame = toViewController.view.frame
+            cellProxy.frame = toViewController.view.frame
             toViewController.imageView.alpha = 1.0
 
         }, completion: { (finished) -> Void in
@@ -58,7 +61,7 @@ class AnimateToForecastDetailController: NSObject, UIViewControllerAnimatedTrans
                 toViewController.view.isHidden = false
                 toViewController.imageView.isHidden = false
                 selectedCell.weatherImageView.isHidden = false
-                weatherSnapshot.removeFromSuperview()
+                cellProxy.removeFromSuperview()
                 toViewController.view.setNeedsLayout()
                 toViewController.view.layoutIfNeeded()
                 selectedCell.contentView.isHidden = false
@@ -67,5 +70,4 @@ class AnimateToForecastDetailController: NSObject, UIViewControllerAnimatedTrans
             })
         })
     }
-    
-} // End
+}
