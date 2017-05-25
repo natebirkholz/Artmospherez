@@ -39,6 +39,10 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 
         tableView.alpha = 0.0
 
+        let date = Date()
+        print(date)
+        UserDefaults.standard.set(date, forKey: Constants.dateKey)
+
         networkController.locationController.updadeLocation {
             self.networkController.getJSONForForecasts { (maybeForecasts, maybeError) in
                 UIView.animate(withDuration: 0.3, animations: { 
@@ -206,7 +210,18 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         return intFor
     }
 
+    /// Check the back end for new data.
     dynamic func refresh() {
+        // *Only* refesh if it has been more than 15 minutes since last call, this prevents overuse of API.
+        let then = UserDefaults.standard.object(forKey: Constants.dateKey) as! Date
+        let now = Date()
+        let secondsBetween = abs(Int(now.timeIntervalSince(then)))
+        guard secondsBetween > 900 else {
+            tableView.refreshControl?.endRefreshing()
+            return
+        }
+        UserDefaults.standard.set(now, forKey: Constants.dateKey)
+
         networkController.getJSONForForecasts { (maybeForecasts, maybeError) in
             guard maybeError == nil else {
                 self.tableView.refreshControl?.endRefreshing()

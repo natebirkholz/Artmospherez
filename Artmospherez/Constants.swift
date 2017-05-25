@@ -9,6 +9,7 @@
 import UIKit
 
 struct Constants {
+    static let dateKey = "DateKeyForDefaults"
     static let labelColor = UIColor.black.withAlphaComponent(0.45)
     static let labelColorDark = Constants.labelColor.withAlphaComponent(0.66)
     static let cornerRadius = CGFloat(5.0)
