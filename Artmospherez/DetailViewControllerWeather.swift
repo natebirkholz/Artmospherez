@@ -17,7 +17,8 @@ class DetailViewControllerWeather: UIViewController, UINavigationControllerDeleg
     @IBOutlet weak var windLabel: WeatherLabel!
     @IBOutlet weak var maxMinLabel: WeatherLabel!
     @IBOutlet weak var infoButton: UIButton!
-
+    @IBOutlet weak var ghostButton: UIButton!
+    
     var weather: CurrentWeather!
     var weatherImage: WeatherImage!
     var image: UIImage!
@@ -83,6 +84,9 @@ class DetailViewControllerWeather: UIViewController, UINavigationControllerDeleg
         maxMinLabel.layer.cornerRadius = Constants.cornerRadius
         maxMinLabel.frame.size.width += 24.0
         maxMinLabel.backgroundColor = Constants.labelColor
+
+        // Has a larger hit area than the visible button
+        ghostButton.addTarget(self, action: #selector(showInfo), for: .touchUpInside)
 
         infoButton.backgroundColor = Constants.labelColor
         infoButton.layer.cornerRadius = 14.0
