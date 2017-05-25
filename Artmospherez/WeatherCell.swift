@@ -10,7 +10,7 @@ import UIKit
 
 class WeatherCell: MasterCell {
 
-    @IBOutlet weak var weatherImageview: UIImageView!
+    @IBOutlet weak var weatherImageView: UIImageView!
     @IBOutlet weak var weatherLabel: UILabel!
     @IBOutlet weak var weatherDetailLabel: UILabel!
     @IBOutlet weak var weatherTemp: UILabel!

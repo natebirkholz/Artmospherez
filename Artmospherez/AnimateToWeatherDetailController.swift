@@ -25,7 +25,7 @@ class AnimateToWeatherDetailController: NSObject, UIViewControllerAnimatedTransi
             return
         }
         let selectedCell = fromViewController.tableView.cellForRow(at: selectedRow) as! WeatherCell
-        guard let weatherImage = selectedCell.weatherImageview.image else {
+        guard let weatherImage = selectedCell.weatherImageView.image else {
             assertionFailure("Unable to fetch the selected cell's weatherImageView.image")
             return
         }
@@ -33,7 +33,7 @@ class AnimateToWeatherDetailController: NSObject, UIViewControllerAnimatedTransi
         weatherSnapshot.clipsToBounds = true
         weatherSnapshot.contentMode = .scaleAspectFill
 
-        weatherSnapshot.frame = containerView.convert(selectedCell.weatherImageview.bounds, from: fromViewController.tableView.cellForRow(at: selectedRow))
+        weatherSnapshot.frame = containerView.convert(selectedCell.weatherImageView.bounds, from: fromViewController.tableView.cellForRow(at: selectedRow))
         selectedCell.contentView.isHidden = true
 
         toViewController.view.frame = transitionContext.finalFrame(for: toViewController)
@@ -57,7 +57,7 @@ class AnimateToWeatherDetailController: NSObject, UIViewControllerAnimatedTransi
             UIImageView.animate(withDuration: 0.5, animations: { 
                 toViewController.view.isHidden = false
                 toViewController.imageView.isHidden = false
-                selectedCell.weatherImageview.isHidden = false
+                selectedCell.weatherImageView.isHidden = false
                 weatherSnapshot.removeFromSuperview()
                 toViewController.view.setNeedsLayout()
                 toViewController.view.layoutIfNeeded()

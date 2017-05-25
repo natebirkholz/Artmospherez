@@ -122,7 +122,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                 let idx = getDay() // use the current day of the year to get the index of the image, ensures daily variety
                 let weatherImageForCell = generateImageFor(weather: kind, indexOrRow: idx)
                 cell.weatherImage = weatherImageForCell
-                cell.weatherImageview.image = weatherImageForCell.image
+                cell.weatherImageView.image = weatherImageForCell.image
             }
 
             let temperature = currentWeather?.currentTemp ?? 70
@@ -174,7 +174,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             let detailVC = segue.destination as! DetailViewControllerWeather
             let detailWeather = currentWeather
             let cell = tableView.cellForRow(at: indexPathForWeather) as! WeatherCell
-            let image = cell.weatherImageview.image
+            let image = cell.weatherImageView.image
             detailVC.weather = detailWeather
             detailVC.weatherImage = cell.weatherImage
             detailVC.image = image
