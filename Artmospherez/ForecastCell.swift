@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ForecastCell: UITableViewCell {
+class ForecastCell: MasterCell {
 
     @IBOutlet weak var weatherImageView: UIImageView!
     @IBOutlet weak var weatherLabel: UILabel!
@@ -18,6 +18,10 @@ class ForecastCell: UITableViewCell {
 
         weatherLabel.layer.cornerRadius = Constants.cornerRadius
         weatherLabel.backgroundColor = Constants.labelColor
+
+        if let indicator = activity {
+            contentView.bringSubview(toFront: indicator)
+        }
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

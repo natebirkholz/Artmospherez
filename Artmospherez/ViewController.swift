@@ -36,8 +36,13 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 
         self.view.bringSubview(toFront: tableView)
 
+        tableView.alpha = 0.0
+
         networkController.locationController.updadeLocation {
             self.networkController.getJSONForForecasts { (maybeForecasts, maybeError) in
+                UIView.animate(withDuration: 0.3, animations: { 
+                    self.tableView.alpha = 1.0
+                })
                 guard maybeError == nil else { return }
                 guard let forecasts = maybeForecasts  else { return }
 
@@ -54,8 +59,17 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                 self.tableView.reloadData()
             }
         }
+    }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        for cell in tableView.visibleCells {
+            cell.setSelected(false, animated: false)
+        }
+    }
 
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
 
     }
 

@@ -24,6 +24,8 @@ class DetailViewControllerWeather: UIViewController {
     var swipeDown: UISwipeGestureRecognizer?
     var tap: UITapGestureRecognizer?
 
+    override var prefersStatusBarHidden: Bool { return true }
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -63,11 +65,6 @@ class DetailViewControllerWeather: UIViewController {
         maxMinLabel.frame.size.width += 24.0
         maxMinLabel.backgroundColor = Constants.labelColor
 
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
 
     func dismissSelf(_ sender: UIGestureRecognizer) {

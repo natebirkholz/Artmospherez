@@ -26,6 +26,9 @@
 		4322A7F91ED66B5800F2FD64 /* rain4.txt in Resources */ = {isa = PBXBuildFile; fileRef = 4322A7F81ED66B5800F2FD64 /* rain4.txt */; };
 		4322A7FB1ED66BFD00F2FD64 /* wind1.txt in Resources */ = {isa = PBXBuildFile; fileRef = 4322A7FA1ED66BFD00F2FD64 /* wind1.txt */; };
 		4322A7FD1ED66C0600F2FD64 /* wind2.txt in Resources */ = {isa = PBXBuildFile; fileRef = 4322A7FC1ED66C0600F2FD64 /* wind2.txt */; };
+		4322A7FF1ED6764400F2FD64 /* MasterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4322A7FE1ED6764400F2FD64 /* MasterCell.swift */; };
+		4322A8011ED6820400F2FD64 /* tstorm1.txt in Resources */ = {isa = PBXBuildFile; fileRef = 4322A8001ED6820400F2FD64 /* tstorm1.txt */; };
+		4322A8031ED6820B00F2FD64 /* tstorm2.txt in Resources */ = {isa = PBXBuildFile; fileRef = 4322A8021ED6820B00F2FD64 /* tstorm2.txt */; };
 		43F2C0B71ED330A10023567A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43F2C0B61ED330A10023567A /* AppDelegate.swift */; };
 		43F2C0B91ED330A10023567A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43F2C0B81ED330A10023567A /* ViewController.swift */; };
 		43F2C0BC1ED330A10023567A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 43F2C0BA1ED330A10023567A /* Main.storyboard */; };
@@ -77,6 +80,9 @@
 		4322A7F81ED66B5800F2FD64 /* rain4.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = rain4.txt; sourceTree = "<group>"; };
 		4322A7FA1ED66BFD00F2FD64 /* wind1.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = wind1.txt; sourceTree = "<group>"; };
 		4322A7FC1ED66C0600F2FD64 /* wind2.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = wind2.txt; sourceTree = "<group>"; };
+		4322A7FE1ED6764400F2FD64 /* MasterCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MasterCell.swift; sourceTree = "<group>"; };
+		4322A8001ED6820400F2FD64 /* tstorm1.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = tstorm1.txt; sourceTree = "<group>"; };
+		4322A8021ED6820B00F2FD64 /* tstorm2.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = tstorm2.txt; sourceTree = "<group>"; };
 		43F2C0B31ED330A10023567A /* Artmospherez.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Artmospherez.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		43F2C0B61ED330A10023567A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		43F2C0B81ED330A10023567A /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = ViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
@@ -135,6 +141,8 @@
 				4322A7F81ED66B5800F2FD64 /* rain4.txt */,
 				430C52121ED5609800971849 /* sun1.txt */,
 				430C521A1ED5F67800971849 /* sun2.txt */,
+				4322A8001ED6820400F2FD64 /* tstorm1.txt */,
+				4322A8021ED6820B00F2FD64 /* tstorm2.txt */,
 				4322A7FA1ED66BFD00F2FD64 /* wind1.txt */,
 				4322A7FC1ED66C0600F2FD64 /* wind2.txt */,
 			);
@@ -214,6 +222,7 @@
 				43F2C0F21ED3CDD70023567A /* WeatherCell.swift */,
 				43F2C0F31ED3CDD70023567A /* WeatherCell.xib */,
 				430C52161ED5822500971849 /* WeatherLabel.swift */,
+				4322A7FE1ED6764400F2FD64 /* MasterCell.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -321,6 +330,7 @@
 				43F2C0F11ED3CDAE0023567A /* ForecastCell.xib in Resources */,
 				430C52271ED6093C00971849 /* fog1.txt in Resources */,
 				43F2C0C11ED330A10023567A /* LaunchScreen.storyboard in Resources */,
+				4322A8011ED6820400F2FD64 /* tstorm1.txt in Resources */,
 				430C521D1ED5FA4B00971849 /* clouds1.txt in Resources */,
 				430C52291ED60BA900971849 /* fog2.txt in Resources */,
 				4322A7F91ED66B5800F2FD64 /* rain4.txt in Resources */,
@@ -333,6 +343,7 @@
 				430C52111ED55B9000971849 /* rain1.txt in Resources */,
 				4322A7FD1ED66C0600F2FD64 /* wind2.txt in Resources */,
 				430C52351ED6566F00971849 /* gray2.txt in Resources */,
+				4322A8031ED6820B00F2FD64 /* tstorm2.txt in Resources */,
 				430C521F1ED5FA6600971849 /* clouds2.txt in Resources */,
 				430C521B1ED5F67800971849 /* sun2.txt in Resources */,
 				43F2C0F51ED3CDD70023567A /* WeatherCell.xib in Resources */,
@@ -358,6 +369,7 @@
 				430C520E1ED557A400971849 /* WeatherImageFactory.swift in Sources */,
 				430C52211ED5FEEC00971849 /* DetailViewControllerForecast.swift in Sources */,
 				43F2C0E81ED33CA50023567A /* WeatherImage.swift in Sources */,
+				4322A7FF1ED6764400F2FD64 /* MasterCell.swift in Sources */,
 				43F2C0E21ED33B550023567A /* Forecast.swift in Sources */,
 				43F2C0F41ED3CDD70023567A /* WeatherCell.swift in Sources */,
 				43F2C0F01ED3CDAE0023567A /* ForecastCell.swift in Sources */,

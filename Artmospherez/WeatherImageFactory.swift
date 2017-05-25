@@ -72,11 +72,19 @@ class WeatherImageFactory {
     }
 
     private func createThunderstormImages() {
+        guard let image1 = UIImage(named: "tstorm1") else { return }
+        let storm1 =  WeatherImage(id: "tstorm1", image: image1, artist: "Albert Bierstadt", title: "A Storm in the Rocky Mountains, Mt. Rosalie")
+        thunderstormImages.append(storm1)
 
+        guard let image2 = UIImage(named: "tstorm2") else { return }
+        let storm2 = WeatherImage(id: "tstorm2", image: image2, artist: "Francisque Millet", title: "Mountain Landscape with Lightning")
+        thunderstormImages.append(storm2)
     }
 
     private func createTornadoImages() {
-
+        guard let image1 = UIImage(named: "tornado1") else { return }
+        let tornado1 = WeatherImage(id: "tornado1", image: image1, artist: "Julius Holm", title: "Tornado over St. Paul")
+        tornadoImages.append(tornado1)
     }
 
     private func createCloudyImages() {

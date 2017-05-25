@@ -110,7 +110,8 @@ class JsonParser {
         case 300...599:
             return .rainy
         case 602, 622:
-            return .blizzard
+//            return .blizzard
+            return .snowy
         case 600, 601, 603...621:
             return .snowy
         case 701, 741:
@@ -126,7 +127,8 @@ class JsonParser {
         case 804:
             return .overcast
         case 901, 902, 962:
-            return .hurricane
+//            return .hurricane
+            return .thunderstorm
         case 905, 956...959:
             return .windy
         default:
