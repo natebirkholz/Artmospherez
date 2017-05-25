@@ -63,11 +63,11 @@ class WeatherImageFactory {
 
     private func createWindyImages() {
         guard let image1 = UIImage(named: "wind1") else { return }
-        let windy1 =  WeatherImage(id: "wind1", image: image1, artist: "Albert Bierstadt", title: "Wind River Country")
+        let windy1 =  WeatherImage(id: "wind1", image: image1, artist: "Vinvent van Gogh", title: "Wheat Field Behind Saint-Paul")
         windyImages.append(windy1)
 
         guard let image2 = UIImage(named: "wind2") else { return }
-        let windy2 = WeatherImage(id: "wind2", image: image2, artist: "John Constable", title: "Wivenhoe Park")
+        let windy2 = WeatherImage(id: "wind2", image: image2, artist: "David Cox the Elder", title: "Shepherding the Flock, Windy Day")
         windyImages.append(windy2)
     }
 
