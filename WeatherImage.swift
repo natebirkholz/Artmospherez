@@ -20,7 +20,7 @@ class WeatherImage {
         self.image = image
         self.artist = artist
         self.title = title
-        self.detail = self.getDescriptionStringFromId(id)
+        self.detail = getDescriptionStringFromId(id)
     }
 
 

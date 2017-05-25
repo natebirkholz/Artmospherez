@@ -10,6 +10,8 @@ import UIKit
 
 class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
+    // MARK: - Properties
+
     @IBOutlet weak var tableView: UITableView!
 
     var forecasts = [Forecast]()
@@ -17,6 +19,9 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     let networkController = NetworkController()
     let weatherImageFactory = WeatherImageFactory()
 
+    override var prefersStatusBarHidden: Bool { return true }
+
+    // MARK: - Lifecycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -80,9 +85,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 
     }
 
-    override var prefersStatusBarHidden: Bool {
-        return true
-    }
+    // MARK: - TableView methods
 
     func numberOfSections(in tableView: UITableView) -> Int {
         return 2
@@ -172,6 +175,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         }
     }
 
+    // MARK: - Segues
+
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "WEATHER_SEGUE" {
             guard let indexPathForWeather = tableView.indexPathForSelectedRow else { return }
@@ -198,13 +203,16 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         super.performSegue(withIdentifier: identifier, sender: sender)
     }
 
+    // MARK: - Utilities
+
+    /// Get the day of the year (day n of 365/366).
+    ///
+    /// - Returns: Int value of the day of the year
     func getDay() -> Int {
         let date = Date()
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "D"
-
         let string = dateFormatter.string(from: date)
-
         let intFor = Int(string) ?? 1
 
         return intFor
@@ -255,6 +263,13 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         }
     }
 
+    /// Fetches an image appropriate to the weather for the day in question. Non-random, prevents adjacent
+    /// cells from having identical images.
+    ///
+    /// - Parameters:
+    ///   - weather: the WeatherKind for the day
+    ///   - idx: Index or tableView row to modulo and return an image from those available.
+    /// - Returns: WeatherImage for the WeathrKind
     func generateImageFor(weather: WeatherKind, indexOrRow idx: Int) -> WeatherImage {
         switch weather {
         case .sunny:
@@ -278,11 +293,15 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 
 }
 
+// MARK: - LocationControllerDelegate
+
 extension ViewController: LocationControllerDelegate {
     func refreshLocations() {
         refresh()
     }
 }
+
+// MARK: - UINavigationControllerDelegate
 
 extension ViewController: UINavigationControllerDelegate {
     func navigationController(_ navigationController: UINavigationController, animationControllerFor operation: UINavigationControllerOperation, from fromVC: UIViewController, to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {

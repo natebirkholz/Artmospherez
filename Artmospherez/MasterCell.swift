@@ -20,7 +20,7 @@ class MasterCell: UITableViewCell {
         contentView.addSubview(indicator)
         indicator.center = contentView.center
         indicator.hidesWhenStopped = true
-        self.activity = indicator
+        activity = indicator
 
     }
 
