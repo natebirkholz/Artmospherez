@@ -20,10 +20,11 @@ class DetailViewControllerWeather: UIViewController, UINavigationControllerDeleg
     var weather: CurrentWeather!
     var weatherImage: WeatherImage!
     var image: UIImage!
-    var swipeDown: UISwipeGestureRecognizer?
-    var swipeRight: UISwipeGestureRecognizer?
-    var swipeUp: UISwipeGestureRecognizer?
-    var tap: UITapGestureRecognizer?
+    var swipeDownRecognizer: UISwipeGestureRecognizer?
+    var swipeRightRecognizer: UISwipeGestureRecognizer?
+    var swipeUpRecognizer: UISwipeGestureRecognizer?
+    var tapViewRecognizer: UITapGestureRecognizer?
+    var infoView: InfoView?
 
     override var prefersStatusBarHidden: Bool { return true }
 
@@ -32,24 +33,24 @@ class DetailViewControllerWeather: UIViewController, UINavigationControllerDeleg
 
         imageView.image = image
 
-        let downRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(dismissSelf(_:)))
+        let downRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(dismissSelf))
         downRecognizer.direction = .down
         view.addGestureRecognizer(downRecognizer)
-        swipeDown = downRecognizer
+        swipeDownRecognizer = downRecognizer
 
-        let upRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(dismissSelf(_:)))
+        let upRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(dismissSelf))
         upRecognizer.direction = .up
         view.addGestureRecognizer(upRecognizer)
-        swipeUp = upRecognizer
+        swipeUpRecognizer = upRecognizer
 
-        let rightRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(dismissSelf(_:)))
+        let rightRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(dismissSelf))
         rightRecognizer.direction = .right
         view.addGestureRecognizer(rightRecognizer)
-        swipeRight = rightRecognizer
+        swipeRightRecognizer = rightRecognizer
 
-        let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissSelf(_:)))
+        let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(didTap))
         view.addGestureRecognizer(tapRecognizer)
-        tap = tapRecognizer
+        tapViewRecognizer = tapRecognizer
 
         let mainLabelText = " \(weather.kind.rawValue), \(weather.currentTemp)° "
         mainLabel.text = mainLabelText
@@ -77,27 +78,62 @@ class DetailViewControllerWeather: UIViewController, UINavigationControllerDeleg
         maxMinLabel.backgroundColor = Constants.labelColor
 
         infoButton.backgroundColor = Constants.labelColor
-        infoButton.layer.cornerRadius = 8.0
+        infoButton.layer.cornerRadius = 14.0
         infoButton.clipsToBounds = true
-        infoButton.addTarget(self, action: #selector(showInfo(_:)), for: .touchUpInside)
+        infoButton.layer.borderWidth = 1
+        infoButton.layer.borderColor = UIColor.white.cgColor
+        infoButton.addTarget(self, action: #selector(showInfo), for: .touchUpInside)
 
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+
+        let infoFrame = CGRect(x: 8.0, y: -108.0, width: view.frame.width - 16.0, height: 100)
+        let info = InfoView(frame: infoFrame)
+        info.textView.text = weatherImage.detail
+        view.addSubview(info)
+
+        infoView = info
     }
 
-    func showInfo(_ sender: UIButton) {
+    func showInfo() {
         print("INFO")
         print(weatherImage)
+
+        if infoView?.isPresented == false {
+            UIView.animate(withDuration: 0.5, animations: {
+                self.infoView?.frame.origin.y = 88.0
+            }, completion: { (complete) in
+                self.infoView?.isPresented = true
+            })
+        } else {
+            UIView.animate(withDuration: 0.5, animations: {
+                self.infoView?.frame.origin.y = -88.0
+            }, completion: { (complete) in
+                self.infoView?.isPresented = false
+            })
+        }
     }
 
     func hideInfo() {
 
     }
 
-    func dismissSelf(_ sender: UIGestureRecognizer) {
+    func didTap() {
+        if let presented = infoView?.isPresented {
+            if presented {
+                showInfo()
+            } else {
+                dismissSelf()
+            }
+        } else {
+            dismissSelf()
+        }
+    }
+    
+    func dismissSelf() {
         navigationController?.popViewController(animated: true)
     }
-
+    
 }

@@ -10,6 +10,7 @@ import UIKit
 
 struct Constants {
     static let labelColor = UIColor.black.withAlphaComponent(0.45)
+    static let labelColorDark = Constants.labelColor.withAlphaComponent(0.66)
     static let cornerRadius = CGFloat(5.0)
-    static let backgroundColor = UIColor(red: 55/255, green: 0, blue: 0, alpha: 1.0)
+    static let redColor = UIColor(red: 55/255, green: 0, blue: 0, alpha: 1.0)
 }
