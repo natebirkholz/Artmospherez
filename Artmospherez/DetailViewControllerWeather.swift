@@ -123,10 +123,6 @@ class DetailViewControllerWeather: UIViewController, UINavigationControllerDeleg
         }
     }
 
-    func hideInfo() {
-
-    }
-
     func didTap() {
         if let presented = infoView?.isPresented {
             if presented {
