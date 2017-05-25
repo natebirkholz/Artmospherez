@@ -59,7 +59,7 @@ class DetailViewControllerWeather: UIViewController, UINavigationControllerDeleg
 
         imageView.image = image
 
-        let mainLabelText = " \(weather.kind.rawValue), \(weather.currentTemp)° "
+        let mainLabelText = " \(weather.kind.rawValue), \(weather.currentTemp)°, \(weather.cityName) "
         mainLabel.text = mainLabelText
         mainLabel.sizeToFit()
         mainLabel.frame.size.width += 6.0
@@ -116,9 +116,6 @@ class DetailViewControllerWeather: UIViewController, UINavigationControllerDeleg
 
     /// Display the infoView if not shown, otherwise dismiss the infoView
     func showInfo() {
-        print("INFO")
-        print(weatherImage)
-
         if infoView?.isPresented == false {
             UIView.animate(withDuration: 0.5, animations: {
                 self.infoView?.frame.origin.y = 88.0

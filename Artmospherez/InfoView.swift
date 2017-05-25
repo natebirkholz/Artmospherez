@@ -40,6 +40,4 @@ class InfoView: UIView {
         super.draw(rect)
 
     } */
-
-
 }

@@ -1,5 +1,5 @@
 //
-//  Weather.swift
+//  WeatherKind.swift
 //  Artmospherez
 //
 //  Created by Nathan Birkholz on 5/22/17.

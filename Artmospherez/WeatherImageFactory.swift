@@ -136,29 +136,15 @@ class WeatherImageFactory {
     }
 
     private func createBlizzardImages() {
-
+        // For future development
     }
 
     private func createHurricaneImages() {
-
+        // For future development
     }
 
+    /// Volcano, fire, smoke, etc. The API returns some crazy stuff.
     private func createApocalypticImages() {
-
+        // For future development
     }
 }
-
-/*
-case sunny = "Sunny"
-case rainy = "Rainy"
-case windy = "Windy"
-case thunderstorm = "Thunderstorm"
-case tornado = "Tornado"
-case cloudy = "Cloudy"
-case overcast = "Overcast"
-case foggy = "Foggy"
-case snowy = "Snowy"
-case blizzard = "Blizzard"
-case hurricane = "Hurricane"
-case apocalyptic = "Apocalyptic!"
- */
