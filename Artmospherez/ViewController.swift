@@ -22,6 +22,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         super.viewDidLoad()
 
         networkController.locationControllerDelegate = self
+        navigationController?.delegate = self
 
         tableView.dataSource = self
         tableView.delegate = self
@@ -246,6 +247,18 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 extension ViewController: LocationControllerDelegate {
     func refreshLocations() {
         refresh()
+    }
+}
+
+extension ViewController: UINavigationControllerDelegate {
+    func navigationController(_ navigationController: UINavigationController, animationControllerFor operation: UINavigationControllerOperation, from fromVC: UIViewController, to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        if fromVC == self && toVC.isKind(of: DetailViewControllerWeather.self) {
+            let transitionVC = AnimateToWeatherDetailController()
+            return transitionVC
+        } else {
+            return nil
+        }
+
     }
 }
 

@@ -29,6 +29,8 @@
 		4322A7FF1ED6764400F2FD64 /* MasterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4322A7FE1ED6764400F2FD64 /* MasterCell.swift */; };
 		4322A8011ED6820400F2FD64 /* tstorm1.txt in Resources */ = {isa = PBXBuildFile; fileRef = 4322A8001ED6820400F2FD64 /* tstorm1.txt */; };
 		4322A8031ED6820B00F2FD64 /* tstorm2.txt in Resources */ = {isa = PBXBuildFile; fileRef = 4322A8021ED6820B00F2FD64 /* tstorm2.txt */; };
+		4322A8051ED698AA00F2FD64 /* WeatherNavContrller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4322A8041ED698AA00F2FD64 /* WeatherNavContrller.swift */; };
+		4322A8071ED69AAB00F2FD64 /* AnimateToWeatherDetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4322A8061ED69AAB00F2FD64 /* AnimateToWeatherDetailController.swift */; };
 		43F2C0B71ED330A10023567A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43F2C0B61ED330A10023567A /* AppDelegate.swift */; };
 		43F2C0B91ED330A10023567A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43F2C0B81ED330A10023567A /* ViewController.swift */; };
 		43F2C0BC1ED330A10023567A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 43F2C0BA1ED330A10023567A /* Main.storyboard */; };
@@ -83,6 +85,8 @@
 		4322A7FE1ED6764400F2FD64 /* MasterCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MasterCell.swift; sourceTree = "<group>"; };
 		4322A8001ED6820400F2FD64 /* tstorm1.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = tstorm1.txt; sourceTree = "<group>"; };
 		4322A8021ED6820B00F2FD64 /* tstorm2.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = tstorm2.txt; sourceTree = "<group>"; };
+		4322A8041ED698AA00F2FD64 /* WeatherNavContrller.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeatherNavContrller.swift; sourceTree = "<group>"; };
+		4322A8061ED69AAB00F2FD64 /* AnimateToWeatherDetailController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimateToWeatherDetailController.swift; sourceTree = "<group>"; };
 		43F2C0B31ED330A10023567A /* Artmospherez.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Artmospherez.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		43F2C0B61ED330A10023567A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		43F2C0B81ED330A10023567A /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = ViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
@@ -176,6 +180,7 @@
 				43F2C0EA1ED356EA0023567A /* Views */,
 				430C520F1ED55AD800971849 /* Descriptions */,
 				43F2C0C21ED330A10023567A /* Info.plist */,
+				43F2C0B61ED330A10023567A /* AppDelegate.swift */,
 				430C52181ED584CD00971849 /* Constants.swift */,
 				43F2C0D81ED338530023567A /* Secrets.swift */,
 			);
@@ -230,7 +235,7 @@
 		43F2C0EB1ED356F80023567A /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				43F2C0B61ED330A10023567A /* AppDelegate.swift */,
+				4322A8061ED69AAB00F2FD64 /* AnimateToWeatherDetailController.swift */,
 				430C52201ED5FEEC00971849 /* DetailViewControllerForecast.swift */,
 				430C522A1ED6112900971849 /* DetailViewControllerWeather.swift */,
 				43F2C0EC1ED35A900023567A /* JsonParser.swift */,
@@ -238,6 +243,7 @@
 				43F2C0DD1ED33AF80023567A /* NetworkController.swift */,
 				43F2C0B81ED330A10023567A /* ViewController.swift */,
 				430C520D1ED557A400971849 /* WeatherImageFactory.swift */,
+				4322A8041ED698AA00F2FD64 /* WeatherNavContrller.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -366,10 +372,12 @@
 			files = (
 				43F2C0DE1ED33AF80023567A /* NetworkController.swift in Sources */,
 				430C52191ED584CD00971849 /* Constants.swift in Sources */,
+				4322A8071ED69AAB00F2FD64 /* AnimateToWeatherDetailController.swift in Sources */,
 				430C520E1ED557A400971849 /* WeatherImageFactory.swift in Sources */,
 				430C52211ED5FEEC00971849 /* DetailViewControllerForecast.swift in Sources */,
 				43F2C0E81ED33CA50023567A /* WeatherImage.swift in Sources */,
 				4322A7FF1ED6764400F2FD64 /* MasterCell.swift in Sources */,
+				4322A8051ED698AA00F2FD64 /* WeatherNavContrller.swift in Sources */,
 				43F2C0E21ED33B550023567A /* Forecast.swift in Sources */,
 				43F2C0F41ED3CDD70023567A /* WeatherCell.swift in Sources */,
 				43F2C0F01ED3CDAE0023567A /* ForecastCell.swift in Sources */,
