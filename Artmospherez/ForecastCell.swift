@@ -17,7 +17,7 @@ class ForecastCell: UITableViewCell {
         super.awakeFromNib()
 
         weatherLabel.layer.cornerRadius = Constants.cornerRadius
-        weatherLabel.backgroundColor = UIColor.darkGray.withAlphaComponent(Constants.labelAlpha)
+        weatherLabel.backgroundColor = Constants.labelColor
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

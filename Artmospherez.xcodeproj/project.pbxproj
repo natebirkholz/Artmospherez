@@ -22,6 +22,8 @@
 		430C52271ED6093C00971849 /* fog1.txt in Resources */ = {isa = PBXBuildFile; fileRef = 430C52261ED6093C00971849 /* fog1.txt */; };
 		430C52291ED60BA900971849 /* fog2.txt in Resources */ = {isa = PBXBuildFile; fileRef = 430C52281ED60BA900971849 /* fog2.txt */; };
 		430C522B1ED6112900971849 /* DetailViewControllerWeather.swift in Sources */ = {isa = PBXBuildFile; fileRef = 430C522A1ED6112900971849 /* DetailViewControllerWeather.swift */; };
+		430C52331ED6566200971849 /* gray1.txt in Resources */ = {isa = PBXBuildFile; fileRef = 430C52321ED6566200971849 /* gray1.txt */; };
+		430C52351ED6566F00971849 /* gray2.txt in Resources */ = {isa = PBXBuildFile; fileRef = 430C52341ED6566F00971849 /* gray2.txt */; };
 		43F2C0B71ED330A10023567A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43F2C0B61ED330A10023567A /* AppDelegate.swift */; };
 		43F2C0B91ED330A10023567A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43F2C0B81ED330A10023567A /* ViewController.swift */; };
 		43F2C0BC1ED330A10023567A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 43F2C0BA1ED330A10023567A /* Main.storyboard */; };
@@ -69,6 +71,8 @@
 		430C52261ED6093C00971849 /* fog1.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = fog1.txt; sourceTree = "<group>"; };
 		430C52281ED60BA900971849 /* fog2.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = fog2.txt; sourceTree = "<group>"; };
 		430C522A1ED6112900971849 /* DetailViewControllerWeather.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailViewControllerWeather.swift; sourceTree = "<group>"; };
+		430C52321ED6566200971849 /* gray1.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = gray1.txt; sourceTree = "<group>"; };
+		430C52341ED6566F00971849 /* gray2.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = gray2.txt; sourceTree = "<group>"; };
 		43F2C0B31ED330A10023567A /* Artmospherez.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Artmospherez.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		43F2C0B61ED330A10023567A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		43F2C0B81ED330A10023567A /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -120,6 +124,8 @@
 				430C521E1ED5FA6600971849 /* clouds2.txt */,
 				430C52261ED6093C00971849 /* fog1.txt */,
 				430C52281ED60BA900971849 /* fog2.txt */,
+				430C52321ED6566200971849 /* gray1.txt */,
+				430C52341ED6566F00971849 /* gray2.txt */,
 				430C52101ED55B9000971849 /* rain1.txt */,
 				430C52241ED6073100971849 /* rain3.txt */,
 				430C52221ED6058800971849 /* rain4.rtf */,
@@ -312,11 +318,13 @@
 				430C521D1ED5FA4B00971849 /* clouds1.txt in Resources */,
 				430C52291ED60BA900971849 /* fog2.txt in Resources */,
 				430C52131ED5609800971849 /* sun1.txt in Resources */,
+				430C52331ED6566200971849 /* gray1.txt in Resources */,
 				430C52251ED6073100971849 /* rain3.txt in Resources */,
 				43F2C0BE1ED330A10023567A /* Assets.xcassets in Resources */,
 				43F2C0BC1ED330A10023567A /* Main.storyboard in Resources */,
 				430C52111ED55B9000971849 /* rain1.txt in Resources */,
 				430C52231ED6058800971849 /* rain4.rtf in Resources */,
+				430C52351ED6566F00971849 /* gray2.txt in Resources */,
 				430C521F1ED5FA6600971849 /* clouds2.txt in Resources */,
 				430C521B1ED5F67800971849 /* sun2.txt in Resources */,
 				43F2C0F51ED3CDD70023567A /* WeatherCell.xib in Resources */,

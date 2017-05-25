@@ -123,7 +123,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             let high = currentWeather?.maxTemp ?? 70
             let low = currentWeather?.minTemp ?? 55
 
-            let weatherString = " wind \(windSpeed) mph \(windDir), max: \(high)°, min: \(low)° "
+            let weatherString = " wind \(windDir) \(windSpeed) mph, max: \(high)°, min: \(low)° "
             cell.weatherDetailLabel.text = weatherString
             cell.weatherDetailLabel.sizeToFit()
 
@@ -215,6 +215,12 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             return weatherImageController.cloudyImages[row % weatherImageController.cloudyImages.count]
         case .rainy:
             return weatherImageController.rainyImages[row % weatherImageController.rainyImages.count]
+        case .cloudy:
+            return weatherImageController.cloudyImages[row % weatherImageController.cloudyImages.count]
+        case .foggy:
+            return weatherImageController.foggyImages[row % weatherImageController.foggyImages.count]
+        case .overcast:
+            return weatherImageController.overcastImages[row % weatherImageController.overcastImages.count]
         default:
             return weatherImageController.sunnyImages[row % weatherImageController.sunnyImages.count]
         }

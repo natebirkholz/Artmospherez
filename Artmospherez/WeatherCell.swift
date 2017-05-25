@@ -23,11 +23,13 @@ class WeatherCell: UITableViewCell {
         super.awakeFromNib()
 
         weatherLabel.layer.cornerRadius = Constants.cornerRadius
-        weatherLabel.backgroundColor = UIColor.darkGray.withAlphaComponent(Constants.labelAlpha)
+        weatherLabel.backgroundColor = Constants.labelColor
+
         weatherDetailLabel.layer.cornerRadius = Constants.cornerRadius
-        weatherDetailLabel.backgroundColor = UIColor.darkGray.withAlphaComponent(Constants.labelAlpha)
+        weatherDetailLabel.backgroundColor = Constants.labelColor
+        
         weatherTemp.layer.cornerRadius = Constants.cornerRadius
-        weatherTemp.backgroundColor = UIColor.darkGray.withAlphaComponent(Constants.labelAlpha)
+        weatherTemp.backgroundColor = Constants.labelColor
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

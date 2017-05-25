@@ -100,25 +100,44 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="gxK-7S-mtk">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                             </imageView>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Main Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LKe-vp-IkL" customClass="WeatherLabel" customModule="Artmospherez" customModuleProvider="target">
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Main Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LKe-vp-IkL" customClass="WeatherLabel" customModule="Artmospherez" customModuleProvider="target">
                                 <rect key="frame" x="236" y="617" width="123" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="Didot" family="Didot" pointSize="24"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="WindLabel" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="r5W-O8-awf" customClass="WeatherLabel" customModule="Artmospherez" customModuleProvider="target">
+                                <rect key="frame" x="272" y="587" width="87" height="22"/>
+                                <fontDescription key="fontDescription" name="Didot" family="Didot" pointSize="17"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="max min" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CtK-c8-jx6" customClass="WeatherLabel" customModule="Artmospherez" customModuleProvider="target">
+                                <rect key="frame" x="292" y="557" width="67" height="22"/>
+                                <fontDescription key="fontDescription" name="Didot" family="Didot" pointSize="17"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="r5W-O8-awf" firstAttribute="trailing" secondItem="bPS-zC-E78" secondAttribute="trailingMargin" id="Bns-Vi-hL3"/>
+                            <constraint firstItem="LKe-vp-IkL" firstAttribute="top" secondItem="r5W-O8-awf" secondAttribute="bottom" constant="8" id="GQY-Ld-RtV"/>
+                            <constraint firstItem="LKe-vp-IkL" firstAttribute="trailing" secondItem="bPS-zC-E78" secondAttribute="trailingMargin" id="R6u-9h-5Bk"/>
                             <constraint firstItem="bfg-TD-edH" firstAttribute="top" secondItem="gxK-7S-mtk" secondAttribute="bottom" id="aoT-W5-mhe"/>
                             <constraint firstItem="gxK-7S-mtk" firstAttribute="leading" secondItem="bPS-zC-E78" secondAttribute="leading" id="dYO-dQ-1Wu"/>
+                            <constraint firstItem="r5W-O8-awf" firstAttribute="top" secondItem="CtK-c8-jx6" secondAttribute="bottom" constant="8" id="dfv-wD-Y5h"/>
                             <constraint firstAttribute="trailing" secondItem="gxK-7S-mtk" secondAttribute="trailing" id="eau-zc-sN8"/>
+                            <constraint firstItem="CtK-c8-jx6" firstAttribute="trailing" secondItem="bPS-zC-E78" secondAttribute="trailingMargin" id="grf-NP-ZXH"/>
+                            <constraint firstItem="bfg-TD-edH" firstAttribute="top" secondItem="LKe-vp-IkL" secondAttribute="bottom" constant="20" id="khM-p0-fwd"/>
                             <constraint firstItem="gxK-7S-mtk" firstAttribute="top" secondItem="bPS-zC-E78" secondAttribute="top" id="u8O-yE-QUj"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="imageView" destination="gxK-7S-mtk" id="8hH-tt-DDU"/>
                         <outlet property="mainLabel" destination="LKe-vp-IkL" id="PRW-he-U0w"/>
+                        <outlet property="maxMinLabel" destination="CtK-c8-jx6" id="b51-ji-W8Z"/>
+                        <outlet property="windLabel" destination="r5W-O8-awf" id="uSm-hj-ija"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qmc-44-4LK" userLabel="First Responder" sceneMemberID="firstResponder"/>

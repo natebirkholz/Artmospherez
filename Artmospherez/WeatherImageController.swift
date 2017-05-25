@@ -84,7 +84,13 @@ class WeatherImageController {
     }
 
     private func createOvercastImages() {
+        guard let image1 = UIImage(named: "gray1") else { return }
+        let gray1 =  WeatherImage(id: "gray1", image: image1, artist: "Jacob Isaacksz. van Ruisdael", title: "View of Naarden")
+        overcastImages.append(gray1)
 
+        guard let image2 = UIImage(named: "gray2") else { return }
+        let gray2 =  WeatherImage(id: "gray2", image: image2, artist: "El Greco", title: "View of Toledo")
+        overcastImages.append(gray2)
     }
 
     private func createFoggyImages() {
