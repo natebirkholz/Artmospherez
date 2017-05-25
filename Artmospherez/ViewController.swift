@@ -255,10 +255,12 @@ extension ViewController: UINavigationControllerDelegate {
         if fromVC == self && toVC.isKind(of: DetailViewControllerWeather.self) {
             let transitionVC = AnimateToWeatherDetailController()
             return transitionVC
+        } else if fromVC == self && toVC.isKind(of: DetailViewControllerForecast.self) {
+            let transitionVC = AnimateToForecastDetailController()
+            return transitionVC
         } else {
             return nil
         }
-
     }
 }
 

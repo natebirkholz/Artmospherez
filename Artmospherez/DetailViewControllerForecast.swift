@@ -20,6 +20,7 @@ class DetailViewControllerForecast: UIViewController {
     var forecast: Forecast!
     var image: UIImage!
     var swipeDown: UISwipeGestureRecognizer?
+    var swipeRight: UISwipeGestureRecognizer?
     var tap: UITapGestureRecognizer?
 
     override var prefersStatusBarHidden: Bool { return true }
@@ -31,6 +32,11 @@ class DetailViewControllerForecast: UIViewController {
         downRecognizer.direction = .down
         view.addGestureRecognizer(downRecognizer)
         swipeDown = downRecognizer
+
+        let rightRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(dismissSelf(_:)))
+        rightRecognizer.direction = .right
+        view.addGestureRecognizer(rightRecognizer)
+        swipeRight = rightRecognizer
 
         let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissSelf(_:)))
         view.addGestureRecognizer(tapRecognizer)
@@ -62,7 +68,7 @@ class DetailViewControllerForecast: UIViewController {
     
 
     func dismissSelf(_ sender: UIGestureRecognizer) {
-        self.dismiss(animated: true, completion: nil)
+        navigationController?.popViewController(animated: true)
     }
 
 }

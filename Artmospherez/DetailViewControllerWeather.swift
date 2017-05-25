@@ -22,6 +22,7 @@ class DetailViewControllerWeather: UIViewController, UINavigationControllerDeleg
     var weather: CurrentWeather!
     var image: UIImage!
     var swipeDown: UISwipeGestureRecognizer?
+    var swipeRight: UISwipeGestureRecognizer?
     var tap: UITapGestureRecognizer?
 
     override var prefersStatusBarHidden: Bool { return true }
@@ -35,6 +36,11 @@ class DetailViewControllerWeather: UIViewController, UINavigationControllerDeleg
         downRecognizer.direction = .down
         view.addGestureRecognizer(downRecognizer)
         swipeDown = downRecognizer
+
+        let rightRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(dismissSelf(_:)))
+        rightRecognizer.direction = .right
+        view.addGestureRecognizer(rightRecognizer)
+        swipeRight = rightRecognizer
 
         let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissSelf(_:)))
         view.addGestureRecognizer(tapRecognizer)

@@ -1,5 +1,5 @@
 //
-//  AnimateToWeatherDetailController.swift
+//  AnimateToForecastDetailController.swift
 //  Artmospherez
 //
 //  Created by Nathan Birkholz on 5/24/17.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class AnimateToWeatherDetailController: NSObject, UIViewControllerAnimatedTransitioning {
+class AnimateToForecastDetailController: NSObject, UIViewControllerAnimatedTransitioning {
 
     func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
         return 1.0
@@ -16,7 +16,7 @@ class AnimateToWeatherDetailController: NSObject, UIViewControllerAnimatedTransi
 
     func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
         let fromViewController = transitionContext.viewController(forKey: .from) as! ViewController
-        let toViewController = transitionContext.viewController(forKey: .to) as! DetailViewControllerWeather
+        let toViewController = transitionContext.viewController(forKey: .to) as! DetailViewControllerForecast
         let containerView = transitionContext.containerView
         let duration = transitionDuration(using: transitionContext)
 
@@ -24,8 +24,8 @@ class AnimateToWeatherDetailController: NSObject, UIViewControllerAnimatedTransi
             assertionFailure("no row selected in tableview")
             return
         }
-        let selectedCell = fromViewController.tableView.cellForRow(at: selectedRow) as! WeatherCell
-        guard let weatherImage = selectedCell.weatherImageview.image else {
+        let selectedCell = fromViewController.tableView.cellForRow(at: selectedRow) as! ForecastCell
+        guard let weatherImage = selectedCell.weatherImageView.image else {
             assertionFailure("Unable to fetch the selected cell's weatherImageView.image")
             return
         }
@@ -33,7 +33,7 @@ class AnimateToWeatherDetailController: NSObject, UIViewControllerAnimatedTransi
         weatherSnapshot.clipsToBounds = true
         weatherSnapshot.contentMode = .scaleAspectFill
 
-        weatherSnapshot.frame = containerView.convert(selectedCell.weatherImageview.bounds, from: fromViewController.tableView.cellForRow(at: selectedRow))
+        weatherSnapshot.frame = containerView.convert(selectedCell.weatherImageView.bounds, from: fromViewController.tableView.cellForRow(at: selectedRow))
         selectedCell.contentView.isHidden = true
 
         toViewController.view.frame = transitionContext.finalFrame(for: toViewController)
@@ -54,10 +54,10 @@ class AnimateToWeatherDetailController: NSObject, UIViewControllerAnimatedTransi
             toViewController.imageView.alpha = 1.0
 
         }, completion: { (finished) -> Void in
-            UIImageView.animate(withDuration: 0.5, animations: { 
+            UIImageView.animate(withDuration: 0.5, animations: {
                 toViewController.view.isHidden = false
                 toViewController.imageView.isHidden = false
-                selectedCell.weatherImageview.isHidden = false
+                selectedCell.weatherImageView.isHidden = false
                 weatherSnapshot.removeFromSuperview()
                 toViewController.view.setNeedsLayout()
                 toViewController.view.layoutIfNeeded()
@@ -65,10 +65,7 @@ class AnimateToWeatherDetailController: NSObject, UIViewControllerAnimatedTransi
             }, completion: { (complete) in
                 transitionContext.completeTransition(true)
             })
-
-
-
         })
     }
     
-}
+} // End

@@ -1,5 +1,5 @@
 //
-//  WeatherNavContrller.swift
+//  WeatherNavController.swift
 //  Artmospherez
 //
 //  Created by Nathan Birkholz on 5/24/17.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class WeatherNavContrller: UINavigationController {
+class WeatherNavController: UINavigationController {
 
     override func viewDidLoad() {
         super.viewDidLoad()

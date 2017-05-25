@@ -45,7 +45,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <segue destination="YXc-iX-Gx0" kind="presentation" identifier="FORECAST_SEGUE" id="r80-LT-iDa"/>
+                                            <segue destination="YXc-iX-Gx0" kind="show" identifier="FORECAST_SEGUE" id="r80-LT-iDa"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -177,10 +177,10 @@
             </objects>
             <point key="canvasLocation" x="1948" y="-315.29235382308849"/>
         </scene>
-        <!--Weather Nav Contrller-->
+        <!--Weather Nav Controller-->
         <scene sceneID="9Df-S5-cio">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="uBu-Za-jkc" customClass="WeatherNavContrller" customModule="Artmospherez" customModuleProvider="target" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="uBu-Za-jkc" customClass="WeatherNavController" customModule="Artmospherez" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="RmB-PH-ddQ">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
