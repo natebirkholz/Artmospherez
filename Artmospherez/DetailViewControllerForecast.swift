@@ -78,7 +78,7 @@ class DetailViewControllerForecast: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
-        let infoFrame = CGRect(x: 8.0, y: -108.0, width: view.frame.width - 16.0, height: 100)
+        let infoFrame = CGRect(x: 8.0, y: -118.0, width: view.frame.width - 16.0, height: 100)
         let info = InfoView(frame: infoFrame)
         info.textView.text = weatherImage.detail
         view.addSubview(info)
@@ -100,7 +100,7 @@ class DetailViewControllerForecast: UIViewController {
             })
         } else {
             UIView.animate(withDuration: 0.5, animations: {
-                self.infoView?.frame.origin.y = -88.0
+                self.infoView?.frame.origin.y = -118.0
             }, completion: { (complete) in
                 self.infoView?.isPresented = false
             })
