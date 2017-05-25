@@ -18,6 +18,7 @@ class DetailViewControllerWeather: UIViewController, UINavigationControllerDeleg
     @IBOutlet weak var infoButton: UIButton!
 
     var weather: CurrentWeather!
+    var weatherImage: WeatherImage!
     var image: UIImage!
     var swipeDown: UISwipeGestureRecognizer?
     var swipeRight: UISwipeGestureRecognizer?
@@ -88,6 +89,7 @@ class DetailViewControllerWeather: UIViewController, UINavigationControllerDeleg
 
     func showInfo(_ sender: UIButton) {
         print("INFO")
+        print(weatherImage)
     }
 
     func hideInfo() {

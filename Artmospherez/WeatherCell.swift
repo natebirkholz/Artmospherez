@@ -15,10 +15,6 @@ class WeatherCell: MasterCell {
     @IBOutlet weak var weatherDetailLabel: UILabel!
     @IBOutlet weak var weatherTemp: UILabel!
 
-
-
-    
-
     override func awakeFromNib() {
         super.awakeFromNib()
 

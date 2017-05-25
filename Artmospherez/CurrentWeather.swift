@@ -18,6 +18,7 @@ struct CurrentWeather {
     var windSpeed: Int
     var windDirection: Int
     var cityName: String
+    var weatherImage: WeatherImage?
 
     var windCompassDirection: String {
         switch windDirection {

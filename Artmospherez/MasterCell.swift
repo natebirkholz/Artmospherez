@@ -11,6 +11,7 @@ import UIKit
 class MasterCell: UITableViewCell {
 
     var activity: UIActivityIndicatorView?
+    var weatherImage: WeatherImage!
 
     override func awakeFromNib() {
         super.awakeFromNib()

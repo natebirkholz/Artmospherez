@@ -13,14 +13,14 @@ class WeatherImage {
     var image: UIImage
     var artist: String
     var title: String
-    var description: String!
+    var detail: String!
 
     init(id: String, image: UIImage, artist: String, title: String) {
         self.id = id
         self.image = image
         self.artist = artist
         self.title = title
-        self.description = self.getDescriptionStringFromId(id)
+        self.detail = self.getDescriptionStringFromId(id)
     }
 
 
@@ -35,5 +35,11 @@ class WeatherImage {
             print(error.localizedDescription)
             return "(No Description)"
         }
+    }
+}
+
+extension WeatherImage: CustomStringConvertible {
+    var description: String {
+        return detail
     }
 }

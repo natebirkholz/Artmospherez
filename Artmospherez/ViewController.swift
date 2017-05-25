@@ -119,9 +119,9 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             cell.weatherLabel?.text = " \(weatherText) "
             cell.weatherLabel?.sizeToFit()
             if let kind = currentWeather?.kind {
-                let idx = getDay() // use the current day of the year to get the index of the image, ensures variety
-
+                let idx = getDay() // use the current day of the year to get the index of the image, ensures daily variety
                 let weatherImageForCell = generateImageFor(weather: kind, indexOrRow: idx)
+                cell.weatherImage = weatherImageForCell
                 cell.weatherImageview.image = weatherImageForCell.image
             }
 
@@ -145,6 +145,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                 print(forecast.kind)
 
                 let weatherImageForCell = generateImageFor(weather: forecast.kind, indexOrRow: indexPath.row)
+                cell.weatherImage = weatherImageForCell
                 cell.weatherImageView.image = weatherImageForCell.image
 
                 let day = forecast.day
@@ -175,6 +176,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             let cell = tableView.cellForRow(at: indexPathForWeather) as! WeatherCell
             let image = cell.weatherImageview.image
             detailVC.weather = detailWeather
+            detailVC.weatherImage = cell.weatherImage
             detailVC.image = image
         } else if segue.identifier == "FORECAST_SEGUE" {
             guard let indexPathForForecast = tableView.indexPathForSelectedRow else { return }
@@ -183,6 +185,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             let cell = tableView.cellForRow(at: indexPathForForecast) as! ForecastCell
             let image = cell.weatherImageView.image
             detailVC.forecast = detailForecast
+            detailVC.weatherImage = cell.weatherImage
             detailVC.image = image
         }
     }

@@ -19,6 +19,7 @@ class DetailViewControllerForecast: UIViewController {
 
 
     var forecast: Forecast!
+    var weatherImage: WeatherImage!
     var image: UIImage!
     var swipeDown: UISwipeGestureRecognizer?
     var swipeRight: UISwipeGestureRecognizer?
@@ -78,6 +79,7 @@ class DetailViewControllerForecast: UIViewController {
 
     func showInfo(_ sender: UIButton) {
         print("INFO")
+        print(weatherImage)
     }
 
     func hideInfo() {
