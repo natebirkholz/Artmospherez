@@ -67,6 +67,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         for cell in tableView.visibleCells {
             cell.setSelected(false, animated: false)
         }
+
+        refresh()
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -117,7 +119,9 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             cell.weatherLabel?.text = " \(weatherText) "
             cell.weatherLabel?.sizeToFit()
             if let kind = currentWeather?.kind {
-                let weatherImageForCell = generateImageFor(weather: kind, row: indexPath.row)
+                let idx = getDay() // use the current day of the year to get the index of the image, ensures variety
+
+                let weatherImageForCell = generateImageFor(weather: kind, indexOrRow: idx)
                 cell.weatherImageview.image = weatherImageForCell.image
             }
 
@@ -140,7 +144,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                 let forecast = forecasts[indexPath.row + 1]
                 print(forecast.kind)
 
-                let weatherImageForCell = generateImageFor(weather: forecast.kind, row: indexPath.row)
+                let weatherImageForCell = generateImageFor(weather: forecast.kind, indexOrRow: indexPath.row)
                 cell.weatherImageView.image = weatherImageForCell.image
 
                 let day = forecast.day
@@ -187,6 +191,18 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         super.performSegue(withIdentifier: identifier, sender: sender)
     }
 
+    func getDay() -> Int {
+        let date = Date()
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "D"
+
+        let string = dateFormatter.string(from: date)
+
+        let intFor = Int(string) ?? 1
+
+        return intFor
+    }
+
     dynamic func refresh() {
         networkController.getJSONForForecasts { (maybeForecasts, maybeError) in
             guard maybeError == nil else {
@@ -221,24 +237,24 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         }
     }
 
-    func generateImageFor(weather: WeatherKind, row: Int) -> WeatherImage {
+    func generateImageFor(weather: WeatherKind, indexOrRow idx: Int) -> WeatherImage {
         switch weather {
         case .sunny:
-            return weatherImageFactory.sunnyImages[row % weatherImageFactory.sunnyImages.count]
+            return weatherImageFactory.sunnyImages[idx % weatherImageFactory.sunnyImages.count]
         case .cloudy:
-            return weatherImageFactory.cloudyImages[row % weatherImageFactory.cloudyImages.count]
+            return weatherImageFactory.cloudyImages[idx % weatherImageFactory.cloudyImages.count]
         case .rainy:
-            return weatherImageFactory.rainyImages[row % weatherImageFactory.rainyImages.count]
-        case .cloudy:
-            return weatherImageFactory.cloudyImages[row % weatherImageFactory.cloudyImages.count]
+            return weatherImageFactory.rainyImages[idx % weatherImageFactory.rainyImages.count]
+        case .tornado:
+            return weatherImageFactory.tornadoImages[idx % weatherImageFactory.tornadoImages.count]
         case .foggy:
-            return weatherImageFactory.foggyImages[row % weatherImageFactory.foggyImages.count]
+            return weatherImageFactory.foggyImages[idx % weatherImageFactory.foggyImages.count]
         case .overcast:
-            return weatherImageFactory.overcastImages[row % weatherImageFactory.overcastImages.count]
+            return weatherImageFactory.overcastImages[idx % weatherImageFactory.overcastImages.count]
         case .windy:
-            return weatherImageFactory.windyImages[row % weatherImageFactory.windyImages.count]
+            return weatherImageFactory.windyImages[idx % weatherImageFactory.windyImages.count]
         default:
-            return weatherImageFactory.sunnyImages[row % weatherImageFactory.sunnyImages.count]
+            return weatherImageFactory.sunnyImages[idx % weatherImageFactory.sunnyImages.count]
         }
     }
 

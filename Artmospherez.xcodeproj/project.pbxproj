@@ -32,6 +32,10 @@
 		4322A8051ED698AA00F2FD64 /* WeatherNavController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4322A8041ED698AA00F2FD64 /* WeatherNavController.swift */; };
 		4322A8071ED69AAB00F2FD64 /* AnimateToWeatherDetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4322A8061ED69AAB00F2FD64 /* AnimateToWeatherDetailController.swift */; };
 		4322A8091ED6A31100F2FD64 /* AnimateToForecastDetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4322A8081ED6A31100F2FD64 /* AnimateToForecastDetailController.swift */; };
+		438F70591ED730A70093986D /* clouds3.txt in Resources */ = {isa = PBXBuildFile; fileRef = 438F70581ED730A70093986D /* clouds3.txt */; };
+		438F705B1ED730B40093986D /* sun3.txt in Resources */ = {isa = PBXBuildFile; fileRef = 438F705A1ED730B40093986D /* sun3.txt */; };
+		438F705D1ED733310093986D /* snow1.txt in Resources */ = {isa = PBXBuildFile; fileRef = 438F705C1ED733310093986D /* snow1.txt */; };
+		438F705F1ED7333B0093986D /* snow2.txt in Resources */ = {isa = PBXBuildFile; fileRef = 438F705E1ED7333B0093986D /* snow2.txt */; };
 		43F2C0B71ED330A10023567A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43F2C0B61ED330A10023567A /* AppDelegate.swift */; };
 		43F2C0B91ED330A10023567A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43F2C0B81ED330A10023567A /* ViewController.swift */; };
 		43F2C0BC1ED330A10023567A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 43F2C0BA1ED330A10023567A /* Main.storyboard */; };
@@ -89,6 +93,10 @@
 		4322A8041ED698AA00F2FD64 /* WeatherNavController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeatherNavController.swift; sourceTree = "<group>"; };
 		4322A8061ED69AAB00F2FD64 /* AnimateToWeatherDetailController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimateToWeatherDetailController.swift; sourceTree = "<group>"; };
 		4322A8081ED6A31100F2FD64 /* AnimateToForecastDetailController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimateToForecastDetailController.swift; sourceTree = "<group>"; };
+		438F70581ED730A70093986D /* clouds3.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = clouds3.txt; sourceTree = "<group>"; };
+		438F705A1ED730B40093986D /* sun3.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = sun3.txt; sourceTree = "<group>"; };
+		438F705C1ED733310093986D /* snow1.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = snow1.txt; sourceTree = "<group>"; };
+		438F705E1ED7333B0093986D /* snow2.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = snow2.txt; sourceTree = "<group>"; };
 		43F2C0B31ED330A10023567A /* Artmospherez.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Artmospherez.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		43F2C0B61ED330A10023567A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		43F2C0B81ED330A10023567A /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = ViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
@@ -138,6 +146,7 @@
 			children = (
 				430C521C1ED5FA4B00971849 /* clouds1.txt */,
 				430C521E1ED5FA6600971849 /* clouds2.txt */,
+				438F70581ED730A70093986D /* clouds3.txt */,
 				430C52261ED6093C00971849 /* fog1.txt */,
 				430C52281ED60BA900971849 /* fog2.txt */,
 				430C52321ED6566200971849 /* gray1.txt */,
@@ -145,8 +154,11 @@
 				430C52101ED55B9000971849 /* rain1.txt */,
 				430C52241ED6073100971849 /* rain3.txt */,
 				4322A7F81ED66B5800F2FD64 /* rain4.txt */,
+				438F705C1ED733310093986D /* snow1.txt */,
+				438F705E1ED7333B0093986D /* snow2.txt */,
 				430C52121ED5609800971849 /* sun1.txt */,
 				430C521A1ED5F67800971849 /* sun2.txt */,
+				438F705A1ED730B40093986D /* sun3.txt */,
 				4322A8001ED6820400F2FD64 /* tstorm1.txt */,
 				4322A8021ED6820B00F2FD64 /* tstorm2.txt */,
 				4322A7FA1ED66BFD00F2FD64 /* wind1.txt */,
@@ -347,11 +359,15 @@
 				430C52331ED6566200971849 /* gray1.txt in Resources */,
 				430C52251ED6073100971849 /* rain3.txt in Resources */,
 				43F2C0BE1ED330A10023567A /* Assets.xcassets in Resources */,
+				438F70591ED730A70093986D /* clouds3.txt in Resources */,
+				438F705D1ED733310093986D /* snow1.txt in Resources */,
 				4322A7FB1ED66BFD00F2FD64 /* wind1.txt in Resources */,
 				43F2C0BC1ED330A10023567A /* Main.storyboard in Resources */,
 				430C52111ED55B9000971849 /* rain1.txt in Resources */,
+				438F705F1ED7333B0093986D /* snow2.txt in Resources */,
 				4322A7FD1ED66C0600F2FD64 /* wind2.txt in Resources */,
 				430C52351ED6566F00971849 /* gray2.txt in Resources */,
+				438F705B1ED730B40093986D /* sun3.txt in Resources */,
 				4322A8031ED6820B00F2FD64 /* tstorm2.txt in Resources */,
 				430C521F1ED5FA6600971849 /* clouds2.txt in Resources */,
 				430C521B1ED5F67800971849 /* sun2.txt in Resources */,

@@ -13,6 +13,7 @@ class DetailViewControllerForecast: UIViewController {
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var mainLabel: WeatherLabel!
     @IBOutlet weak var maxMinLabel: WeatherLabel!
+    @IBOutlet weak var infoButton: UIButton!
 
 
 
@@ -21,6 +22,7 @@ class DetailViewControllerForecast: UIViewController {
     var image: UIImage!
     var swipeDown: UISwipeGestureRecognizer?
     var swipeRight: UISwipeGestureRecognizer?
+    var swipeUp: UISwipeGestureRecognizer?
     var tap: UITapGestureRecognizer?
 
     override var prefersStatusBarHidden: Bool { return true }
@@ -32,6 +34,11 @@ class DetailViewControllerForecast: UIViewController {
         downRecognizer.direction = .down
         view.addGestureRecognizer(downRecognizer)
         swipeDown = downRecognizer
+
+        let upRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(dismissSelf(_:)))
+        upRecognizer.direction = .up
+        view.addGestureRecognizer(upRecognizer)
+        swipeUp = upRecognizer
 
         let rightRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(dismissSelf(_:)))
         rightRecognizer.direction = .right
@@ -58,12 +65,23 @@ class DetailViewControllerForecast: UIViewController {
         maxMinLabel.backgroundColor = Constants.labelColor
         maxMinLabel.clipsToBounds = true
 
-
+        infoButton.backgroundColor = Constants.labelColor
+        infoButton.layer.cornerRadius = 8.0
+        infoButton.clipsToBounds = true
+        infoButton.addTarget(self, action: #selector(showInfo(_:)), for: .touchUpInside)
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+
+    func showInfo(_ sender: UIButton) {
+        print("INFO")
+    }
+
+    func hideInfo() {
+        
     }
     
 

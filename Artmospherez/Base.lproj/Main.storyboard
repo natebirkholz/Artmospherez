@@ -95,6 +95,14 @@
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ysj-Az-saY">
+                                <rect key="frame" x="16" y="604" width="30" height="43"/>
+                                <fontDescription key="fontDescription" name="Didot-Bold" family="Didot" pointSize="24"/>
+                                <size key="titleShadowOffset" width="0.0" height="1"/>
+                                <state key="normal" title="i">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -106,10 +114,13 @@
                             <constraint firstItem="2a0-60-8td" firstAttribute="top" secondItem="66G-4c-t9s" secondAttribute="top" id="Pyt-18-WhT"/>
                             <constraint firstItem="VdV-vc-cBd" firstAttribute="top" secondItem="7C6-Ck-g0t" secondAttribute="bottom" constant="8" id="Q8M-jK-Tzu"/>
                             <constraint firstItem="mej-r2-dVr" firstAttribute="top" secondItem="2a0-60-8td" secondAttribute="bottom" id="kro-bD-4Wb"/>
+                            <constraint firstItem="ysj-Az-saY" firstAttribute="leading" secondItem="66G-4c-t9s" secondAttribute="leadingMargin" id="l2p-1b-Ws5"/>
+                            <constraint firstItem="mej-r2-dVr" firstAttribute="top" secondItem="ysj-Az-saY" secondAttribute="bottom" constant="20" id="ruh-Ya-jNh"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="imageView" destination="2a0-60-8td" id="5RP-Bo-MEA"/>
+                        <outlet property="infoButton" destination="ysj-Az-saY" id="Afr-Wg-C0Q"/>
                         <outlet property="mainLabel" destination="VdV-vc-cBd" id="xMY-w7-ICw"/>
                         <outlet property="maxMinLabel" destination="7C6-Ck-g0t" id="bj0-Yu-8eu"/>
                     </connections>
@@ -151,9 +162,17 @@
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oiY-YL-avh">
+                                <rect key="frame" x="16" y="604" width="30" height="43"/>
+                                <fontDescription key="fontDescription" name="Didot-Bold" family="Didot" pointSize="24"/>
+                                <state key="normal" title="i">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="bfg-TD-edH" firstAttribute="top" secondItem="oiY-YL-avh" secondAttribute="bottom" constant="20" id="601-kF-6J0"/>
                             <constraint firstItem="r5W-O8-awf" firstAttribute="trailing" secondItem="bPS-zC-E78" secondAttribute="trailingMargin" id="Bns-Vi-hL3"/>
                             <constraint firstItem="LKe-vp-IkL" firstAttribute="top" secondItem="r5W-O8-awf" secondAttribute="bottom" constant="8" id="GQY-Ld-RtV"/>
                             <constraint firstItem="LKe-vp-IkL" firstAttribute="trailing" secondItem="bPS-zC-E78" secondAttribute="trailingMargin" id="R6u-9h-5Bk"/>
@@ -162,12 +181,14 @@
                             <constraint firstItem="r5W-O8-awf" firstAttribute="top" secondItem="CtK-c8-jx6" secondAttribute="bottom" constant="8" id="dfv-wD-Y5h"/>
                             <constraint firstAttribute="trailing" secondItem="gxK-7S-mtk" secondAttribute="trailing" id="eau-zc-sN8"/>
                             <constraint firstItem="CtK-c8-jx6" firstAttribute="trailing" secondItem="bPS-zC-E78" secondAttribute="trailingMargin" id="grf-NP-ZXH"/>
+                            <constraint firstItem="oiY-YL-avh" firstAttribute="leading" secondItem="bPS-zC-E78" secondAttribute="leadingMargin" id="j5h-zc-y2n"/>
                             <constraint firstItem="bfg-TD-edH" firstAttribute="top" secondItem="LKe-vp-IkL" secondAttribute="bottom" constant="20" id="khM-p0-fwd"/>
                             <constraint firstItem="gxK-7S-mtk" firstAttribute="top" secondItem="bPS-zC-E78" secondAttribute="top" id="u8O-yE-QUj"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="imageView" destination="gxK-7S-mtk" id="8hH-tt-DDU"/>
+                        <outlet property="infoButton" destination="oiY-YL-avh" id="S7o-US-kmM"/>
                         <outlet property="mainLabel" destination="LKe-vp-IkL" id="PRW-he-U0w"/>
                         <outlet property="maxMinLabel" destination="CtK-c8-jx6" id="b51-ji-W8Z"/>
                         <outlet property="windLabel" destination="r5W-O8-awf" id="uSm-hj-ija"/>

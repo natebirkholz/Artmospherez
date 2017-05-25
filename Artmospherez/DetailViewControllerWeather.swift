@@ -15,14 +15,13 @@ class DetailViewControllerWeather: UIViewController, UINavigationControllerDeleg
     @IBOutlet weak var mainLabel: WeatherLabel!
     @IBOutlet weak var windLabel: WeatherLabel!
     @IBOutlet weak var maxMinLabel: WeatherLabel!
-
-
-
+    @IBOutlet weak var infoButton: UIButton!
 
     var weather: CurrentWeather!
     var image: UIImage!
     var swipeDown: UISwipeGestureRecognizer?
     var swipeRight: UISwipeGestureRecognizer?
+    var swipeUp: UISwipeGestureRecognizer?
     var tap: UITapGestureRecognizer?
 
     override var prefersStatusBarHidden: Bool { return true }
@@ -36,6 +35,11 @@ class DetailViewControllerWeather: UIViewController, UINavigationControllerDeleg
         downRecognizer.direction = .down
         view.addGestureRecognizer(downRecognizer)
         swipeDown = downRecognizer
+
+        let upRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(dismissSelf(_:)))
+        upRecognizer.direction = .up
+        view.addGestureRecognizer(upRecognizer)
+        swipeUp = upRecognizer
 
         let rightRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(dismissSelf(_:)))
         rightRecognizer.direction = .right
@@ -70,6 +74,23 @@ class DetailViewControllerWeather: UIViewController, UINavigationControllerDeleg
         maxMinLabel.layer.cornerRadius = Constants.cornerRadius
         maxMinLabel.frame.size.width += 24.0
         maxMinLabel.backgroundColor = Constants.labelColor
+
+        infoButton.backgroundColor = Constants.labelColor
+        infoButton.layer.cornerRadius = 8.0
+        infoButton.clipsToBounds = true
+        infoButton.addTarget(self, action: #selector(showInfo(_:)), for: .touchUpInside)
+
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+    }
+
+    func showInfo(_ sender: UIButton) {
+        print("INFO")
+    }
+
+    func hideInfo() {
 
     }
 
