@@ -48,7 +48,7 @@ class AnimateToWeatherDetailController: NSObject, UIViewControllerAnimatedTransi
         containerView.addSubview(toViewController.view)
         containerView.addSubview(cellProxy)
 
-        // Move cellProxy, then fire second animation to blend into final vieww
+        // Move cellProxy, then fire second animation to blend into final view
         UIView.animate(withDuration: duration, animations: { () -> Void in
             // Update layout to set proper target for final frame of animation, Size Classes issue
             toViewController.view.setNeedsLayout()
