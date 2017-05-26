@@ -1,6 +1,6 @@
 # Artmospherez
 
-Weather app using public domain art works to display the current and forthcoming weather. V1.0 currently in review with Apple.
+Weather app using public domain art works to display the current and forthcoming weather. V1.0 currently in review with Apple. V1.1 nearly ready to submit.
 
 Demonstrated skills:
 1. JSONSerialization
