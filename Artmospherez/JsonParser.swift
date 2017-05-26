@@ -46,9 +46,7 @@ class JsonParser {
                             throw ParseError.unableToParse
                         }
                     }
-
                     return arrayOfForecasts
-
                 } else {
                     throw ParseError.unableToParse
                 }
