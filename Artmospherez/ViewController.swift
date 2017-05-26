@@ -18,6 +18,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     var currentWeather: CurrentWeather?
     let networkController = NetworkController()
     let weatherImageFactory = WeatherImageFactory()
+    var loadingIndicator: UIActivityIndicatorView!
+    var reloadButton: UIButton!
 
     override var prefersStatusBarHidden: Bool { return true }
 
@@ -41,29 +43,41 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         tableView.refreshControl = refreshControl
 
         self.view.bringSubview(toFront: tableView)
-
-        tableView.alpha = 0.0
-
-        let date = Date()
-        print(date)
-        UserDefaults.standard.set(date, forKey: Constants.dateKey)
+        tableView.isHidden = true
 
         networkController.locationController.updateLocation {
             self.networkController.getJSONForForecasts { (maybeForecasts, maybeError) in
-                UIView.animate(withDuration: 0.3, animations: { 
-                    self.tableView.alpha = 1.0
-                })
-                guard maybeError == nil else { return }
-                guard let forecasts = maybeForecasts  else { return }
+                self.loadingIndicator.stopAnimating()
+
+                guard maybeError == nil else {
+                    self.handleNetworkError(error: maybeError!)
+                    return
+                }
+                guard let forecasts = maybeForecasts  else {
+                    self.handleNetworkError(error: .noData)
+                    return
+                }
 
                 self.forecasts = forecasts
                 self.tableView.reloadData()
             }
 
             self.networkController.getCurrentWeather { (maybeWeather, maybeError) in
-                guard maybeError == nil else { return }
-                guard let current = maybeWeather else { return }
-                print(current)
+                guard maybeError == nil else {
+                    self.handleNetworkError(error: maybeError!)
+                    return
+                }
+                guard let current = maybeWeather else {
+                    self.handleNetworkError(error: .noData)
+                    return
+                }
+
+                UIView.animate(withDuration: 0.3, animations: {
+                    self.tableView.isHidden = false
+                })
+
+                let date = Date()
+                UserDefaults.standard.set(date, forKey: Constants.dateKey)
 
                 self.currentWeather = current
                 self.tableView.reloadData()
@@ -77,12 +91,41 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             cell.setSelected(false, animated: false)
         }
 
+        view.setNeedsLayout()
+        view.layoutIfNeeded()
+
+        let activity = UIActivityIndicatorView(activityIndicatorStyle: .whiteLarge)
+        activity.hidesWhenStopped = true
+        activity.center = CGPoint(x: view.bounds.width / 2, y: view.bounds.height / 2)
+        view.addSubview(activity)
+        view.bringSubview(toFront: view)
+        loadingIndicator = activity
+
+        if tableView.isHidden {
+            activity.startAnimating()
+        }
+
+        let button = UIButton()
+        button.setTitle("Reload", for: .normal)
+        button.titleLabel?.font = UIFont(name: "Didot", size: 20.0)
+        button.titleLabel?.textColor = UIColor.white
+        button.titleLabel?.textAlignment = .center
+        button.clipsToBounds = true
+        button.layer.cornerRadius = Constants.cornerRadius
+        button.backgroundColor = Constants.labelColor
+        button.addTarget(self, action: #selector(forceRefresh), for: .touchUpInside)
+        button.center = CGPoint(x: view.bounds.width / 2, y: view.bounds.height - 40)
+        button.sizeToFit()
+        button.frame.size.width = button.frame.size.width + 8
+        view.addSubview(button)
+        button.isHidden = true
+        self.reloadButton = button
+
         refresh()
     }
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-
     }
 
     // MARK: - TableView methods
@@ -149,7 +192,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             let cell = tableView.dequeueReusableCell(withIdentifier: "FORECAST_CELL", for: indexPath) as! ForecastCell
             if forecasts.count > 0 {
                 let forecast = forecasts[indexPath.row + 1]
-                print(forecast.kind)
 
                 let weatherImageForCell = generateImageFor(weather: forecast.kind, indexOrRow: indexPath.row)
                 cell.weatherImage = weatherImageForCell
@@ -218,27 +260,44 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         return intFor
     }
 
+    /// Calls refresh() with force: true
+    func forceRefresh() {
+        refresh(force: true)
+    }
+
     /// Check the back end for new data.
-    dynamic func refresh() {
-        // *Only* refesh if it has been more than 15 minutes since last call, this prevents overuse of API.
+    dynamic func refresh(force: Bool = false) {
+        // *Only* refesh if it has been more than 15 minutes since last call, this prevents overuse of API. Unless forced.
         let then = UserDefaults.standard.object(forKey: Constants.dateKey) as! Date
         let now = Date()
-        let secondsBetween = abs(Int(now.timeIntervalSince(then)))
-        guard secondsBetween > 900 else {
-            tableView.refreshControl?.endRefreshing()
-            return
+
+        if !force {
+            let secondsBetween = abs(Int(now.timeIntervalSince(then)))
+            guard secondsBetween > 900 else {
+                tableView.refreshControl?.endRefreshing()
+                return
+            }
         }
-        UserDefaults.standard.set(now, forKey: Constants.dateKey)
+
+        if tableView.isHidden  {
+            loadingIndicator.startAnimating()
+        }
 
         networkController.getJSONForForecasts { (maybeForecasts, maybeError) in
             guard maybeError == nil else {
                 self.tableView.refreshControl?.endRefreshing()
+                self.handleNetworkError(error: maybeError!)
                 return
             }
             guard let forecasts = maybeForecasts  else {
                 self.tableView.refreshControl?.endRefreshing()
+                self.handleNetworkError(error: .noData)
                 return
             }
+
+            self.loadingIndicator.stopAnimating()
+
+            self.reloadButton?.isHidden = true
 
             self.forecasts = forecasts
             self.tableView.reloadData()
@@ -247,15 +306,23 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         networkController.getCurrentWeather { (maybeWeather, maybeError) in
             guard maybeError == nil else {
                 self.tableView.refreshControl?.endRefreshing()
+                self.handleNetworkError(error: maybeError!)
                 return
             }
 
             guard let current = maybeWeather else {
                 self.tableView.refreshControl?.endRefreshing()
+                self.handleNetworkError(error: .noData)
                 return
             }
 
-            print(current)
+            if self.tableView.isHidden {
+                UIView.animate(withDuration: 0.3, animations: {
+                    self.tableView.isHidden = false
+                })
+            }
+
+            UserDefaults.standard.set(now, forKey: Constants.dateKey)
 
             self.currentWeather = current
             self.tableView.reloadData()
@@ -313,6 +380,56 @@ extension ViewController: UINavigationControllerDelegate {
             return transitionVC
         } else {
             return nil
+        }
+    }
+}
+
+// MARK: - Error Handling
+
+extension ViewController {
+
+    /// Factory to build an error string based on the error being handled
+    ///
+    /// - Parameter error: NetworkControllerError to be handled
+    func handleNetworkError(error: NetworkControllerError) {
+        switch error {
+        case .failedResponse:
+            showError(message: "The request to ther server was unrecognized.")
+        case .noData:
+            showError(message: "The server failed to return data.")
+        case .noResponse:
+            showError(message: "The server failed to respond.")
+        case .parseError:
+            showError(message: "The server returned unrecognized data.")
+        case .unknownError:
+            showError(message: "An unknown error occurred.")
+        case .badURL:
+            showError(message: "The request to the server failed to begin.")
+        }
+    }
+
+    /// Show an error message.
+    ///
+    /// - Parameter message: The message to display
+    func showError(message: String) {
+        let alertController = UIAlertController(title: "Error", message: "\(message) Please verify your Internet connection and try again in a moment.", preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "OK", style: .default) { (action) in
+            self.loadingIndicator.stopAnimating()
+            self.showReloadButton()
+        }
+        alertController.addAction(okAction)
+        present(alertController, animated: true, completion: nil)
+    }
+
+    /// If the network request fails and there is no tableView visible, display the 
+    /// reload button.
+    func showReloadButton() {
+        if tableView.isHidden {
+            if reloadButton.isHidden {
+                reloadButton.center = CGPoint(x: view.bounds.width / 2, y: view.bounds.height - 40)
+                view.bringSubview(toFront: reloadButton)
+                reloadButton.isHidden = false
+            }
         }
     }
 }

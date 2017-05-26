@@ -26,10 +26,6 @@ class WeatherCell: MasterCell {
         
         weatherTemp.layer.cornerRadius = Constants.cornerRadius
         weatherTemp.backgroundColor = Constants.labelColor
-
-        if let indicator = activity {
-            contentView.bringSubview(toFront: indicator)
-        }
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

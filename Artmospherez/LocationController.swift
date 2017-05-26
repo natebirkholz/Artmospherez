@@ -80,7 +80,6 @@ class LocationController: NSObject, CLLocationManagerDelegate {
         if let  thisLocation = locationManager.location {
             CLGeocoder().reverseGeocodeLocation(thisLocation, completionHandler: {(places, error) -> Void in
                 if error != nil {
-                    print(error?.localizedDescription as Any)
                     completionHandler()
                     return
                 }

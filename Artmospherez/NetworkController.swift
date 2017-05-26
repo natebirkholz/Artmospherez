@@ -103,7 +103,12 @@ class NetworkController {
             completionHandler(nil, .badURL)
             return
         }
-        let fetchSession = URLSession.shared
+
+        let config = URLSessionConfiguration.default
+        config.timeoutIntervalForRequest = 20
+        config.timeoutIntervalForResource = 20
+        let fetchSession = URLSession(configuration: config)
+
         var request = URLRequest(url: fetchURL)
         request.httpMethod = "GET"
 

@@ -10,21 +10,13 @@ import UIKit
 
 class MasterCell: UITableViewCell {
 
-    var activity: UIActivityIndicatorView?
     var weatherImage: WeatherImage!
 
     override func awakeFromNib() {
         super.awakeFromNib()
-
-        let indicator = UIActivityIndicatorView(activityIndicatorStyle: .white)
-        contentView.addSubview(indicator)
-        indicator.center = contentView.center
-        indicator.hidesWhenStopped = true
-        activity = indicator
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
     }
-
 }
