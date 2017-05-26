@@ -82,8 +82,6 @@ class DetailViewControllerForecast: UIViewController {
         closeButton.setup()
         closeButton.addTarget(self, action: #selector(dismissSelf), for: .touchUpInside)
 
-        print(infoButton.frame.size.height, ", ", closeButton.frame.size.height)
-
         // Has a larger hit area than the visible button
         ghostCloseButton.addTarget(self, action: #selector(dismissSelf), for: .touchUpInside)
     }
