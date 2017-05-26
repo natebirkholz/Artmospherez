@@ -1,19 +1,21 @@
 //
-//  WeatherLabel.swift
+//  UtilityButton.swift
 //  Artmospherez
 //
-//  Created by Nathan Birkholz on 5/24/17.
+//  Created by Nathan Birkholz on 5/26/17.
 //  Copyright © 2017 natebirkholz. All rights reserved.
 //
 
 import UIKit
 
-class WeatherLabel: UILabel {
+class UtilityButton: UIButton {
 
-    /// Utility instance method to set up labels to the proper background color and corner radius
+    /// Utility instance method to set up buttons to the proper background color and corner radius
     func setup() {
         backgroundColor = Constants.labelColor
-        layer.cornerRadius = Constants.cornerRadius
+        layer.cornerRadius = 14.0
+        layer.borderWidth = 1.0
+        layer.borderColor = UIColor.white.cgColor
         clipsToBounds = true
     }
 
@@ -21,7 +23,7 @@ class WeatherLabel: UILabel {
     // edge insets because all labels in the app are set to center justification
     override var intrinsicContentSize: CGSize {
         var size = super.intrinsicContentSize
-        size.width = size.width + 12
+        size.width = size.width + 4
         return size
     }
 }

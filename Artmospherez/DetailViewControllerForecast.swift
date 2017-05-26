@@ -15,9 +15,9 @@ class DetailViewControllerForecast: UIViewController {
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var mainLabel: WeatherLabel!
     @IBOutlet weak var maxMinLabel: WeatherLabel!
-    @IBOutlet weak var infoButton: UIButton!
+    @IBOutlet weak var infoButton: UtilityButton!
     @IBOutlet weak var ghostButton: UIButton!
-    @IBOutlet weak var closeButton: UIButton!
+    @IBOutlet weak var closeButton: UtilityButton!
     @IBOutlet weak var ghostCloseButton: UIButton!
 
     var forecast: Forecast!
@@ -75,18 +75,14 @@ class DetailViewControllerForecast: UIViewController {
         ghostButton.addTarget(self, action: #selector(showInfo), for: .touchUpInside)
 
         infoButton.backgroundColor = Constants.labelColor
-        infoButton.layer.cornerRadius = 14.0
-        infoButton.clipsToBounds = true
-        infoButton.layer.borderWidth = 1
-        infoButton.layer.borderColor = UIColor.white.cgColor
+        infoButton.setup()
         infoButton.addTarget(self, action: #selector(showInfo), for: .touchUpInside)
 
         closeButton.backgroundColor = Constants.labelColor
-        closeButton.layer.cornerRadius = 14.0
-        closeButton.clipsToBounds = true
-        closeButton.layer.borderWidth = 1
-        closeButton.layer.borderColor = UIColor.white.cgColor
+        closeButton.setup()
         closeButton.addTarget(self, action: #selector(dismissSelf), for: .touchUpInside)
+
+        print(infoButton.frame.size.height, ", ", closeButton.frame.size.height)
 
         // Has a larger hit area than the visible button
         ghostCloseButton.addTarget(self, action: #selector(dismissSelf), for: .touchUpInside)

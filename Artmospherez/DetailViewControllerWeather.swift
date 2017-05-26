@@ -16,9 +16,9 @@ class DetailViewControllerWeather: UIViewController, UINavigationControllerDeleg
     @IBOutlet weak var mainLabel: WeatherLabel!
     @IBOutlet weak var windLabel: WeatherLabel!
     @IBOutlet weak var maxMinLabel: WeatherLabel!
-    @IBOutlet weak var infoButton: UIButton!
+    @IBOutlet weak var infoButton: UtilityButton!
     @IBOutlet weak var ghostButton: UIButton!
-    @IBOutlet weak var closeButton: UIButton!
+    @IBOutlet weak var closeButton: UtilityButton!
     @IBOutlet weak var ghostCloseButton: UIButton!
 
     var weather: CurrentWeather!
@@ -81,17 +81,11 @@ class DetailViewControllerWeather: UIViewController, UINavigationControllerDeleg
         ghostButton.addTarget(self, action: #selector(showInfo), for: .touchUpInside)
 
         infoButton.backgroundColor = Constants.labelColor
-        infoButton.layer.cornerRadius = 14.0
-        infoButton.clipsToBounds = true
-        infoButton.layer.borderWidth = 1
-        infoButton.layer.borderColor = UIColor.white.cgColor
+        infoButton.setup()
         infoButton.addTarget(self, action: #selector(showInfo), for: .touchUpInside)
 
         closeButton.backgroundColor = Constants.labelColor
-        closeButton.layer.cornerRadius = 14.0
-        closeButton.clipsToBounds = true
-        closeButton.layer.borderWidth = 1
-        closeButton.layer.borderColor = UIColor.white.cgColor
+        closeButton.setup()
         closeButton.addTarget(self, action: #selector(dismissSelf), for: .touchUpInside)
 
         // Has a larger hit area than the visible button
