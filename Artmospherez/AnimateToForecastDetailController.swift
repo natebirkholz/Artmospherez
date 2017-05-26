@@ -39,6 +39,10 @@ class AnimateToForecastDetailController: NSObject, UIViewControllerAnimatedTrans
         selectedCell.contentView.isHidden = true
         toViewController.view.frame = transitionContext.finalFrame(for: toViewController)
         toViewController.imageView.alpha = 0
+        toViewController.closeButton.alpha = 0
+        toViewController.infoButton.alpha = 0
+        toViewController.mainLabel.alpha = 0
+        toViewController.maxMinLabel.alpha = 0
         toViewController.view.isHidden = true
         // Update layout to clean up begnning positions of labels on detail VC, Size Classes issue
         toViewController.view.setNeedsLayout()
@@ -57,6 +61,7 @@ class AnimateToForecastDetailController: NSObject, UIViewControllerAnimatedTrans
             toViewController.imageView.alpha = 1.0
 
         }, completion: { (finished) -> Void in
+            transitionContext.completeTransition(true)
             UIImageView.animate(withDuration: 0.5, animations: {
                 toViewController.view.isHidden = false
                 toViewController.imageView.isHidden = false
@@ -66,7 +71,12 @@ class AnimateToForecastDetailController: NSObject, UIViewControllerAnimatedTrans
                 toViewController.view.layoutIfNeeded()
                 selectedCell.contentView.isHidden = false
             }, completion: { (complete) in
-                transitionContext.completeTransition(true)
+                UIView.animate(withDuration: 1.0, animations: {
+                    toViewController.mainLabel.alpha = 1.0
+                    toViewController.maxMinLabel.alpha = 1.0
+                    toViewController.closeButton.alpha = 1.0
+                    toViewController.infoButton.alpha = 1.0
+                })
             })
         })
     }
