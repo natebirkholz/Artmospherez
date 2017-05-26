@@ -16,7 +16,7 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="127"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="320" height="127"/>
+                <rect key="frame" x="0.0" y="0.0" width="320" height="126.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Swv-nv-i1T">
@@ -32,7 +32,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Details" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qof-9E-oqM">
-                        <rect key="frame" x="8" y="97.5" width="47.5" height="21"/>
+                        <rect key="frame" x="12" y="97.5" width="47.5" height="21"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="21" id="JBn-NF-mm9"/>
                         </constraints>
@@ -54,7 +54,7 @@
                     <constraint firstItem="Swv-nv-i1T" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="4pl-WT-vGh"/>
                     <constraint firstAttribute="bottom" secondItem="qof-9E-oqM" secondAttribute="bottom" constant="8" id="LNW-y4-ZP2"/>
                     <constraint firstItem="Lg7-7n-Xl2" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="W1i-A6-oll"/>
-                    <constraint firstItem="qof-9E-oqM" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="8" id="kPH-xX-Ojg"/>
+                    <constraint firstItem="qof-9E-oqM" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="12" id="kPH-xX-Ojg"/>
                     <constraint firstAttribute="trailing" secondItem="Swv-nv-i1T" secondAttribute="trailing" id="mKx-Kk-eVm"/>
                     <constraint firstItem="GFQ-ba-tzi" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="ogZ-Bs-qyQ"/>
                     <constraint firstItem="Swv-nv-i1T" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="pvF-Ha-gMN"/>
