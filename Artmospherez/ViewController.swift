@@ -45,6 +45,9 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         self.view.bringSubview(toFront: tableView)
         tableView.isHidden = true
 
+        let date = Date()
+        UserDefaults.standard.set(date, forKey: Constants.dateKey)
+
         networkController.locationController.updateLocation {
             self.networkController.getJSONForForecasts { (maybeForecasts, maybeError) in
                 self.loadingIndicator.stopAnimating()
@@ -75,9 +78,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                 UIView.animate(withDuration: 0.3, animations: {
                     self.tableView.isHidden = false
                 })
-
-                let date = Date()
-                UserDefaults.standard.set(date, forKey: Constants.dateKey)
 
                 self.currentWeather = current
                 self.tableView.reloadData()
@@ -121,7 +121,9 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         button.isHidden = true
         self.reloadButton = button
 
-        refresh()
+        if let _ = UserDefaults.standard.object(forKey: Constants.dateKey) as? Date {
+            refresh()
+        }
     }
 
     override func viewDidAppear(_ animated: Bool) {

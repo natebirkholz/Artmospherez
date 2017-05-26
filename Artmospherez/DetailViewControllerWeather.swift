@@ -79,7 +79,6 @@ class DetailViewControllerWeather: UIViewController, UINavigationControllerDeleg
         let maxMinText = " \(weather.maxTemp)°/\(weather.minTemp)° "
         maxMinLabel.text = maxMinText
         maxMinLabel.sizeToFit()
-
         maxMinLabel.clipsToBounds = true
         maxMinLabel.layer.cornerRadius = Constants.cornerRadius
         maxMinLabel.frame.size.width += 24.0

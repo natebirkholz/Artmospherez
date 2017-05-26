@@ -68,7 +68,7 @@ class DetailViewControllerForecast: UIViewController {
         mainLabel.backgroundColor = Constants.labelColor
         mainLabel.clipsToBounds = true
 
-        let maxMinText = " \(forecast.maxTemp)°/\(forecast.minTemp)° "
+        let maxMinText = " \(forecast.maxTemp)°/\(forecast.minTemp)°  "
         maxMinLabel.text = maxMinText
         maxMinLabel.sizeToFit()
         maxMinLabel.layer.cornerRadius = Constants.cornerRadius
