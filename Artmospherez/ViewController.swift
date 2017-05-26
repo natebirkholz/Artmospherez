@@ -168,7 +168,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         if indexPath.section == 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "WEATHER_CELL", for: indexPath) as! WeatherCell
             let weatherText = self.currentWeather?.kind.rawValue ?? "Unknown"
-            cell.weatherLabel?.text = " \(weatherText) "
+            cell.weatherLabel?.text = "\(weatherText)"
             cell.weatherLabel?.sizeToFit()
             if let kind = currentWeather?.kind {
                 let idx = getDay() // use the current day of the year to get the index of the image, ensures daily variety
@@ -178,14 +178,14 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             }
 
             let temperature = currentWeather?.currentTemp ?? 70
-            cell.weatherTemp.text = " \(temperature)° "
+            cell.weatherTemp.text = "\(temperature)°"
             cell.weatherTemp.sizeToFit()
             let windDir = currentWeather?.windCompassDirection ?? "N"
             let windSpeed = currentWeather?.windSpeed ?? 0
             let high = currentWeather?.maxTemp ?? 70
             let low = currentWeather?.minTemp ?? 55
 
-            let weatherString = " wind \(windDir) \(windSpeed) mph, max: \(high)°, min: \(low)° "
+            let weatherString = "wind \(windDir) \(windSpeed) mph, max: \(high)°, min: \(low)°"
             cell.weatherDetailLabel.text = weatherString
             cell.weatherDetailLabel.sizeToFit()
 
@@ -202,7 +202,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                 let day = forecast.day
                 let weatherType = forecast.kind.rawValue
                 let max = forecast.maxTemp
-                let weatherString = " \(day): \(weatherType), \(max)° "
+                let weatherString = "\(day): \(weatherType), \(max)°"
                 cell.weatherLabel.text = weatherString
                 cell.weatherLabel.sizeToFit()
             }

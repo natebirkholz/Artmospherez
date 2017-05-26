@@ -10,9 +10,18 @@ import UIKit
 
 class WeatherLabel: UILabel {
 
-    override func drawText(in rect: CGRect) {
-        let insets: UIEdgeInsets = UIEdgeInsets(top: 0.0, left: 0.0, bottom: 0.0, right: 4.0)
-        super.drawText(in: UIEdgeInsetsInsetRect(rect, insets))
+    /// Utility instance method to set up labels to the proper background color and corner radius
+    func setup() {
+        backgroundColor = Constants.labelColor
+        layer.cornerRadius = Constants.cornerRadius
+        clipsToBounds = true
     }
 
+    // Overrides the width of the label to privide some padding on each side. Works without
+    // edge insets because all labels in the app are set to center justification
+    override var intrinsicContentSize: CGSize {
+        var size = super.intrinsicContentSize
+        size.width = size.width + 8
+        return size
+    }
 }

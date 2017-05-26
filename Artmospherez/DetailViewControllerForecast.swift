@@ -61,19 +61,15 @@ class DetailViewControllerForecast: UIViewController {
         
         imageView.image = image
 
-        let mainText = " \(forecast.day), \(forecast.kind.rawValue) "
+        let mainText = "\(forecast.day), \(forecast.kind.rawValue)"
         mainLabel.text = mainText
         mainLabel.sizeToFit()
-        mainLabel.layer.cornerRadius = 8.0
-        mainLabel.backgroundColor = Constants.labelColor
-        mainLabel.clipsToBounds = true
+        mainLabel.setup()
 
-        let maxMinText = " \(forecast.maxTemp)°/\(forecast.minTemp)°  "
+        let maxMinText = "\(forecast.maxTemp)°/\(forecast.minTemp)°"
         maxMinLabel.text = maxMinText
         maxMinLabel.sizeToFit()
-        maxMinLabel.layer.cornerRadius = Constants.cornerRadius
-        maxMinLabel.backgroundColor = Constants.labelColor
-        maxMinLabel.clipsToBounds = true
+        maxMinLabel.setup()
 
         // Has a larger hit area than the visible button
         ghostButton.addTarget(self, action: #selector(showInfo), for: .touchUpInside)

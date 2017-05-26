@@ -11,17 +11,11 @@ import UIKit
 class ForecastCell: MasterCell {
 
     @IBOutlet weak var weatherImageView: UIImageView!
-    @IBOutlet weak var weatherLabel: UILabel!
+    @IBOutlet weak var weatherLabel: WeatherLabel!
 
     override func awakeFromNib() {
         super.awakeFromNib()
 
-        weatherLabel.layer.cornerRadius = Constants.cornerRadius
-        weatherLabel.backgroundColor = Constants.labelColor
+        weatherLabel.setup()
     }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-    }
-    
 }
