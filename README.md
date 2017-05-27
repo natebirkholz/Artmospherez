@@ -2,7 +2,13 @@
 
 Weather app using public domain art works to display the current and forthcoming weather. 
 
-V1.0 currently in review with Apple. V1.1 ready to submit.
+V1.0 currently in the iTunes App Store. Working on V1.1:
+1. Adding Close button to the detail screens - _done_
+2. Moving Info button on detail screens - _done_
+3. Improving display and initialization of all labels and buttons in the app - _done_
+4. Handling rejected location authorization - _TODO_
+5. Reducing refresh timeout - _TODO_
+6. Providing info while downloading - _TODO_
 
 Demonstrated skills:
 1. JSONSerialization
