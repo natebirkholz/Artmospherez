@@ -18,6 +18,10 @@ enum NetworkControllerError {
     case parseError
 }
 
+protocol NetworkControllerDelegate: class {
+    func showStillWorking()
+}
+
 class NetworkController {
 
     // MARK: - Properties
@@ -25,14 +29,24 @@ class NetworkController {
     /// Dynamically returns the url for the forecasts API call by adding the current zip code.
     /// Only works in USA
     var apiURLForecasts: String {
-        let location = locationController.currentZipCode
+        let location: String
+        if locationControllerDelegate?.didRejectLocationAuthorization == false {
+            location = locationController.currentZipCode
+        } else {
+            location = "92102"
+        }
         return "http://api.openweathermap.org/data/2.5/forecast/daily?zip=\(location),us&units=imperial&cnt=7&APPID=\(APIKey)"
     }
 
     /// Dynamically returns the url for the current weather API call by adding the current zip code.
     /// Only works in USA
     var apiURLWeather: String {
-        let location = locationController.currentZipCode
+        let location: String
+        if locationControllerDelegate?.didRejectLocationAuthorization == false {
+            location = locationController.currentZipCode
+        } else {
+            location = "92102"
+        }
         return "http://api.openweathermap.org/data/2.5/weather?zip=\(location),us&units=imperial&APPID=\(APIKey)"
     }
 
@@ -44,6 +58,8 @@ class NetworkController {
             locationController.delegate = locationControllerDelegate
         }
     }
+
+    weak var delegate: NetworkControllerDelegate?
 
     // MARK: - Methods
 
@@ -105,8 +121,8 @@ class NetworkController {
         }
 
         let config = URLSessionConfiguration.default
-        config.timeoutIntervalForRequest = 20
-        config.timeoutIntervalForResource = 20
+        config.timeoutIntervalForRequest = 15
+        config.timeoutIntervalForResource = 15
         let fetchSession = URLSession(configuration: config)
 
         var request = URLRequest(url: fetchURL)

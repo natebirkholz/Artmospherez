@@ -18,8 +18,9 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     var currentWeather: CurrentWeather?
     let networkController = NetworkController()
     let weatherImageFactory = WeatherImageFactory()
-    var loadingIndicator: UIActivityIndicatorView!
+    var loadingIndicator: UIActivityIndicatorView?
     var reloadButton: UIButton!
+    var didRejectLocationAuthorization: Bool!
 
     override var prefersStatusBarHidden: Bool { return true }
 
@@ -29,6 +30,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         super.viewDidLoad()
 
         networkController.locationControllerDelegate = self
+        networkController.delegate = self
         navigationController?.delegate = self
 
         tableView.dataSource = self
@@ -50,7 +52,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 
         networkController.locationController.updateLocation {
             self.networkController.getJSONForForecasts { (maybeForecasts, maybeError) in
-                self.loadingIndicator.stopAnimating()
+                self.loadingIndicator?.stopAnimating()
 
                 guard maybeError == nil else {
                     self.handleNetworkError(error: maybeError!)
@@ -128,6 +130,10 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+
+        if didRejectLocationAuthorization {
+            let alert = UIAlertController(title: "Location", message: "You can turn on location awareness for Artmospherez in the Settingss app. We nveer collect this data off the device. For now, showing you the weather in sunny San Diego.", preferredStyle: .alert)
+        }
     }
 
     // MARK: - TableView methods
@@ -281,7 +287,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             }
         }
 
-        if tableView.isHidden { loadingIndicator.startAnimating() }
+        if tableView.isHidden { loadingIndicator?.startAnimating() }
 
         networkController.getJSONForForecasts { (maybeForecasts, maybeError) in
             guard maybeError == nil else {
@@ -295,7 +301,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                 return
             }
 
-            self.loadingIndicator.stopAnimating()
+            self.loadingIndicator?.stopAnimating()
 
             self.reloadButton?.isHidden = true
 
@@ -359,14 +365,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
 }
 
-// MARK: - LocationControllerDelegate
-
-extension ViewController: LocationControllerDelegate {
-    func refreshLocations() {
-        refresh()
-    }
-}
-
 // MARK: - UINavigationControllerDelegate
 
 extension ViewController: UINavigationControllerDelegate {
@@ -413,7 +411,7 @@ extension ViewController {
     func showError(message: String) {
         let alertController = UIAlertController(title: "Error", message: "\(message) Please verify your Internet connection and try again in a moment.", preferredStyle: .alert)
         let okAction = UIAlertAction(title: "OK", style: .default) { (action) in
-            self.loadingIndicator.stopAnimating()
+            self.loadingIndicator?.stopAnimating()
             self.showReloadButton()
         }
         alertController.addAction(okAction)
@@ -430,6 +428,22 @@ extension ViewController {
                 reloadButton.isHidden = false
             }
         }
+    }
+}
+
+// MARK: - LocationControllerDelegate
+
+extension ViewController: LocationControllerDelegate {
+    func refreshLocations() {
+        refresh()
+    }
+}
+
+// MARK: - NetworkControllerDelegate
+
+extension ViewController: NetworkControllerDelegate {
+    func showStillWorking() {
+        
     }
 }
 

@@ -11,6 +11,7 @@ import CoreLocation
 
 /// Calls delegate when location has changed
 protocol LocationControllerDelegate: class {
+    var didRejectLocationAuthorization: Bool! { get set }
     func refreshLocations()
 }
 
@@ -66,6 +67,8 @@ class LocationController: NSObject, CLLocationManagerDelegate {
         case .authorizedWhenInUse:
             locationManager.startUpdatingLocation()
             delegate?.refreshLocations()
+        case .denied:
+            delegate?.didRejectLocationAuthorization = true
         default:
             break
         }
