@@ -24,6 +24,8 @@ protocol NetworkControllerDelegate: class {
 
 class NetworkController {
 
+    var loadingTimer: Timer?
+
     // MARK: - Properties
 
     /// Dynamically returns the url for the forecasts API call by adding the current zip code.
@@ -128,7 +130,19 @@ class NetworkController {
         var request = URLRequest(url: fetchURL)
         request.httpMethod = "GET"
 
-        fetchSession.dataTask(with: request, completionHandler: { (maybeData, response, error) -> Void in
+        let timer = Timer.scheduledTimer(withTimeInterval: 8.0, repeats: false) { [weak self] (timerRef) in
+            guard let strongSelf = self else { return }
+            if let timerIs = strongSelf.loadingTimer, timerIs.isValid {
+                strongSelf.delegate?.showStillWorking()
+            }
+
+            timerRef.invalidate()
+        }
+
+        loadingTimer = timer
+
+        fetchSession.dataTask(with: request, completionHandler: { [weak self] (maybeData, response, error) -> Void in
+            self?.loadingTimer?.invalidate()
             guard let dataFromRequest = maybeData else {
                 completionHandler(nil, .noData)
                 return

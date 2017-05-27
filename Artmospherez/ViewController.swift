@@ -20,7 +20,17 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     let weatherImageFactory = WeatherImageFactory()
     var loadingIndicator: UIActivityIndicatorView?
     var reloadButton: UIButton!
-    var didRejectLocationAuthorization: Bool!
+    var loadingInfoView: InfoView!
+    var didRejectLocationAuthorization: Bool? {
+        didSet {
+            if let old = oldValue, old == true && didRejectLocationAuthorization == false {
+                forceRefresh()
+                showLoadingInfo()
+            } else {
+                checkAlertForRejectedAuthorization()
+            }
+        }
+    }
 
     override var prefersStatusBarHidden: Bool { return true }
 
@@ -44,45 +54,45 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         refreshControl.addTarget(self, action: #selector(refresh), for: .valueChanged)
         tableView.refreshControl = refreshControl
 
-        self.view.bringSubview(toFront: tableView)
+        view.bringSubview(toFront: tableView)
         tableView.isHidden = true
 
         let date = Date()
         UserDefaults.standard.set(date, forKey: Constants.dateKey)
 
-        networkController.locationController.updateLocation {
-            self.networkController.getJSONForForecasts { (maybeForecasts, maybeError) in
-                self.loadingIndicator?.stopAnimating()
+        networkController.locationController.updateLocation { [weak self] in
+            self?.networkController.getJSONForForecasts { [weak self] (maybeForecasts, maybeError) in
+                self?.loadingIndicator?.stopAnimating()
 
                 guard maybeError == nil else {
-                    self.handleNetworkError(error: maybeError!)
+                    self?.handleNetworkError(error: maybeError!)
                     return
                 }
                 guard let forecasts = maybeForecasts  else {
-                    self.handleNetworkError(error: .noData)
+                    self?.handleNetworkError(error: .noData)
                     return
                 }
 
-                self.forecasts = forecasts
-                self.tableView.reloadData()
+                self?.forecasts = forecasts
+                self?.tableView.reloadData()
             }
 
-            self.networkController.getCurrentWeather { (maybeWeather, maybeError) in
+            self?.networkController.getCurrentWeather { [weak self] (maybeWeather, maybeError) in
                 guard maybeError == nil else {
-                    self.handleNetworkError(error: maybeError!)
+                    self?.handleNetworkError(error: maybeError!)
                     return
                 }
                 guard let current = maybeWeather else {
-                    self.handleNetworkError(error: .noData)
+                    self?.handleNetworkError(error: .noData)
                     return
                 }
 
                 UIView.animate(withDuration: 0.3, animations: {
-                    self.tableView.isHidden = false
+                    self?.tableView.isHidden = false
                 })
 
-                self.currentWeather = current
-                self.tableView.reloadData()
+                self?.currentWeather = current
+                self?.tableView.reloadData()
             }
         }
     }
@@ -121,7 +131,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         button.frame.size.width = button.frame.size.width + 8
         view.addSubview(button)
         button.isHidden = true
-        self.reloadButton = button
+        reloadButton = button
 
         if let _ = UserDefaults.standard.object(forKey: Constants.dateKey) as? Date {
             refresh()
@@ -131,9 +141,22 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
 
-        if didRejectLocationAuthorization {
-            let alert = UIAlertController(title: "Location", message: "You can turn on location awareness for Artmospherez in the Settingss app. We nveer collect this data off the device. For now, showing you the weather in sunny San Diego.", preferredStyle: .alert)
+        // infoView needs more room on iPad because it displayes at 1x dimensions
+        let heightForInfoView: CGFloat
+        if UIDevice.current.model.hasPrefix("iPad") {
+            heightForInfoView = 50
+        } else {
+            heightForInfoView = 50
         }
+
+        let infoFrame = CGRect(x: 8.0, y: -138.0, width: view.frame.width - 16.0, height: heightForInfoView)
+        let info = InfoView(frame: infoFrame)
+        info.textView.text = "Still working on forecasts..."
+        view.addSubview(info)
+
+        loadingInfoView = info
+
+        checkAlertForRejectedAuthorization()
     }
 
     // MARK: - TableView methods
@@ -173,7 +196,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.section == 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "WEATHER_CELL", for: indexPath) as! WeatherCell
-            let weatherText = self.currentWeather?.kind.rawValue ?? "Unknown"
+            let weatherText = currentWeather?.kind.rawValue ?? "Unknown"
             cell.weatherLabel?.text = "\(weatherText)"
             cell.weatherLabel?.sizeToFit()
             if let kind = currentWeather?.kind {
@@ -289,50 +312,50 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 
         if tableView.isHidden { loadingIndicator?.startAnimating() }
 
-        networkController.getJSONForForecasts { (maybeForecasts, maybeError) in
+        networkController.getJSONForForecasts { [weak self] (maybeForecasts, maybeError) in
             guard maybeError == nil else {
-                self.tableView.refreshControl?.endRefreshing()
-                self.handleNetworkError(error: maybeError!)
+                self?.tableView.refreshControl?.endRefreshing()
+                self?.handleNetworkError(error: maybeError!)
                 return
             }
             guard let forecasts = maybeForecasts  else {
-                self.tableView.refreshControl?.endRefreshing()
-                self.handleNetworkError(error: .noData)
+                self?.tableView.refreshControl?.endRefreshing()
+                self?.handleNetworkError(error: .noData)
                 return
             }
 
-            self.loadingIndicator?.stopAnimating()
+            self?.loadingIndicator?.stopAnimating()
 
-            self.reloadButton?.isHidden = true
+            self?.reloadButton?.isHidden = true
 
-            self.forecasts = forecasts
-            self.tableView.reloadData()
+            self?.forecasts = forecasts
+            self?.tableView.reloadData()
         }
 
-        networkController.getCurrentWeather { (maybeWeather, maybeError) in
+        networkController.getCurrentWeather { [weak self] (maybeWeather, maybeError) in
             guard maybeError == nil else {
-                self.tableView.refreshControl?.endRefreshing()
-                self.handleNetworkError(error: maybeError!)
+                self?.tableView.refreshControl?.endRefreshing()
+                self?.handleNetworkError(error: maybeError!)
                 return
             }
 
             guard let current = maybeWeather else {
-                self.tableView.refreshControl?.endRefreshing()
-                self.handleNetworkError(error: .noData)
+                self?.tableView.refreshControl?.endRefreshing()
+                self?.handleNetworkError(error: .noData)
                 return
             }
 
-            if self.tableView.isHidden {
+            if let table = self?.tableView, table.isHidden {
                 UIView.animate(withDuration: 0.3, animations: {
-                    self.tableView.isHidden = false
+                    self?.tableView.isHidden = false
                 })
             }
 
             UserDefaults.standard.set(now, forKey: Constants.dateKey)
 
-            self.currentWeather = current
-            self.tableView.reloadData()
-            self.tableView.refreshControl?.endRefreshing()
+            self?.currentWeather = current
+            self?.tableView.reloadData()
+            self?.tableView.refreshControl?.endRefreshing()
         }
     }
 
@@ -361,6 +384,36 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             return weatherImageFactory.windyImages[idx % weatherImageFactory.windyImages.count]
         default:
             return weatherImageFactory.sunnyImages[idx % weatherImageFactory.sunnyImages.count]
+        }
+    }
+
+    func checkAlertForRejectedAuthorization() {
+        if let rejection = didRejectLocationAuthorization, rejection == true  {
+            let alert = UIAlertController(title: "Location", message: "You can turn on location awareness for Artmospherez in the Settingss app. We nveer collect this data off the device. For now, showing you the weather in sunny San Diego.", preferredStyle: .alert)
+            let action  = UIAlertAction(title: "OK", style: .default, handler: nil)
+            alert.addAction(action)
+            present(alert, animated: true, completion: nil)
+        } else {
+//            showLoadingInfo()
+        }
+    }
+
+    func showLoadingInfo() {
+        if loadingInfoView?.isPresented == false && loadingIndicator!.isAnimating {
+            UIView.animate(withDuration: 0.5, animations: { [weak self] in
+                self?.loadingInfoView?.frame.origin.y = 38.0
+                self?.loadingInfoView?.isPresented = true
+            }, completion: { [weak self] (complete) in
+                UIView.animate(withDuration: 0.5, delay: 3.0, options: [], animations: {
+                    self?.loadingInfoView?.frame.origin.y = -138.0
+                    self?.loadingInfoView?.isPresented = false
+                }, completion: nil)
+            })
+        } else {
+            UIView.animate(withDuration: 0.5, animations: { [weak self] in
+                self?.loadingInfoView?.frame.origin.y = -138.0
+                self?.loadingInfoView?.isPresented = false
+            })
         }
     }
 }
@@ -410,9 +463,9 @@ extension ViewController {
     /// - Parameter message: The message to display
     func showError(message: String) {
         let alertController = UIAlertController(title: "Error", message: "\(message) Please verify your Internet connection and try again in a moment.", preferredStyle: .alert)
-        let okAction = UIAlertAction(title: "OK", style: .default) { (action) in
-            self.loadingIndicator?.stopAnimating()
-            self.showReloadButton()
+        let okAction = UIAlertAction(title: "OK", style: .default) { [weak self] (action) in
+            self?.loadingIndicator?.stopAnimating()
+            self?.showReloadButton()
         }
         alertController.addAction(okAction)
         present(alertController, animated: true, completion: nil)
@@ -443,7 +496,7 @@ extension ViewController: LocationControllerDelegate {
 
 extension ViewController: NetworkControllerDelegate {
     func showStillWorking() {
-        
+        showLoadingInfo()
     }
 }
 

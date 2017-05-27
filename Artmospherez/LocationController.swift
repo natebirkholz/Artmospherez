@@ -11,7 +11,7 @@ import CoreLocation
 
 /// Calls delegate when location has changed
 protocol LocationControllerDelegate: class {
-    var didRejectLocationAuthorization: Bool! { get set }
+    var didRejectLocationAuthorization: Bool? { get set }
     func refreshLocations()
 }
 
@@ -50,11 +50,11 @@ class LocationController: NSObject, CLLocationManagerDelegate {
     // MARK: - CLLocationManagerDelegate
 
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        CLGeocoder().reverseGeocodeLocation(locations[0], completionHandler: {(places, error) -> Void in
+        CLGeocoder().reverseGeocodeLocation(locations[0], completionHandler: { [weak self] (places, error) -> Void in
             if error != nil { return }
             if let count = places?.count, count > 0 {
                 if let place = places?[0], let code = place.postalCode {
-                    self.currentZipCode = code
+                    self?.currentZipCode = code
                 }
             }
         })
@@ -66,6 +66,7 @@ class LocationController: NSObject, CLLocationManagerDelegate {
             locationManager.requestWhenInUseAuthorization()
         case .authorizedWhenInUse:
             locationManager.startUpdatingLocation()
+            delegate?.didRejectLocationAuthorization = false
             delegate?.refreshLocations()
         case .denied:
             delegate?.didRejectLocationAuthorization = true
@@ -81,7 +82,7 @@ class LocationController: NSObject, CLLocationManagerDelegate {
     /// - Parameter completionHandler: callback upon completion
     func updateLocation(completionHandler: @escaping ()->()) {
         if let  thisLocation = locationManager.location {
-            CLGeocoder().reverseGeocodeLocation(thisLocation, completionHandler: {(places, error) -> Void in
+            CLGeocoder().reverseGeocodeLocation(thisLocation, completionHandler: { [weak self] (places, error) -> Void in
                 if error != nil {
                     completionHandler()
                     return
@@ -89,7 +90,7 @@ class LocationController: NSObject, CLLocationManagerDelegate {
 
                 if let count = places?.count, count > 0 {
                     if let place = places?[0], let code = place.postalCode {
-                        self.currentZipCode = code
+                        self?.currentZipCode = code
                         completionHandler()
                     }
                 } else {

@@ -110,16 +110,16 @@ class DetailViewControllerForecast: UIViewController {
     /// Display the infoView if not shown, otherwise dismiss the infoView
     func showInfo() {
         if infoView?.isPresented == false {
-            UIView.animate(withDuration: 0.5, animations: {
-                self.infoView?.frame.origin.y = 88.0
-            }, completion: { (complete) in
-                self.infoView?.isPresented = true
+            UIView.animate(withDuration: 0.5, animations: { [weak self] in
+                self?.infoView?.frame.origin.y = 88.0
+            }, completion: { [weak self] (complete) in
+                self?.infoView?.isPresented = true
             })
         } else {
-            UIView.animate(withDuration: 0.5, animations: {
-                self.infoView?.frame.origin.y = -138.0
-            }, completion: { (complete) in
-                self.infoView?.isPresented = false
+            UIView.animate(withDuration: 0.5, animations: { [weak self] in
+                self?.infoView?.frame.origin.y = -138.0
+            }, completion: { [weak self] (complete) in
+                self?.infoView?.isPresented = false
             })
         }
     }
