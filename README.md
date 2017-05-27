@@ -23,4 +23,7 @@ Demonstrated skills:
 16. File system
 17. UserDefaults
 18. Apple submission
-19. Probaly forgot several things, take a look!
+19. Enums (no associated values though)
+20. Switch statements
+21. Protocols/delegates
+22. Probably forgot several things, take a look!
