@@ -281,9 +281,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             }
         }
 
-        if tableView.isHidden  {
-            loadingIndicator.startAnimating()
-        }
+        if tableView.isHidden { loadingIndicator.startAnimating() }
 
         networkController.getJSONForForecasts { (maybeForecasts, maybeError) in
             guard maybeError == nil else {
@@ -359,7 +357,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             return weatherImageFactory.sunnyImages[idx % weatherImageFactory.sunnyImages.count]
         }
     }
-
 }
 
 // MARK: - LocationControllerDelegate
