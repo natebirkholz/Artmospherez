@@ -23,4 +23,4 @@ Demonstrated skills:
 16. File system
 17. UserDefaults
 18. Apple submission
-19... Probaly forgot several things, take a look!
+19. Probaly forgot several things, take a look!
