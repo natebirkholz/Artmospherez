@@ -16,6 +16,7 @@ enum NetworkControllerError {
     case failedResponse
     case unknownError
     case parseError
+    case failedLocation
 }
 
 protocol NetworkControllerDelegate: class {
@@ -33,7 +34,7 @@ class NetworkController {
     var apiURLForecasts: String {
         let location: String
         if locationControllerDelegate?.didRejectLocationAuthorization == false {
-            location = locationController.currentZipCode
+            location = locationController.currentZipCode ?? "92102"
         } else {
             location = "92102"
         }
@@ -45,7 +46,7 @@ class NetworkController {
     var apiURLWeather: String {
         let location: String
         if locationControllerDelegate?.didRejectLocationAuthorization == false {
-            location = locationController.currentZipCode
+            location = locationController.currentZipCode ?? "92102"
         } else {
             location = "92102"
         }
@@ -90,7 +91,7 @@ class NetworkController {
 
     /// Fetches current weather JSON from the apiURLWeather property
     ///
-    /// - Parameter completionHandler: <#completionHandler description#>
+    /// - Parameter completionHandler: callback when complete, pass current weather or error
     func getCurrentWeather(_ completionHandler: @escaping (_ currentWeather: CurrentWeather?, _ error: NetworkControllerError?) -> ()) {
         fetchJSONFromURL(apiURLWeather) { (maybeData, maybeError) in
             DispatchQueue.main.async {
@@ -123,17 +124,21 @@ class NetworkController {
         }
 
         let config = URLSessionConfiguration.default
-        config.timeoutIntervalForRequest = 15
-        config.timeoutIntervalForResource = 15
+        config.timeoutIntervalForRequest = 16
+        config.timeoutIntervalForResource = 16
         let fetchSession = URLSession(configuration: config)
 
         var request = URLRequest(url: fetchURL)
         request.httpMethod = "GET"
 
+        // Shows amessage on the ho,e screen if the network call is taking a while.
         let timer = Timer.scheduledTimer(withTimeInterval: 8.0, repeats: false) { [weak self] (timerRef) in
-            guard let strongSelf = self else { return }
-            if let timerIs = strongSelf.loadingTimer, timerIs.isValid {
-                strongSelf.delegate?.showStillWorking()
+            if let isTimer = self?.loadingTimer, isTimer.isValid {
+                isTimer.invalidate()
+                DispatchQueue.main.async {
+                    self?.delegate?.showStillWorking()
+
+                }
             }
 
             timerRef.invalidate()

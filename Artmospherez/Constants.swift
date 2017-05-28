@@ -10,8 +10,7 @@ import UIKit
 
 struct Constants {
     static let dateKey = "DateKeyForDefaults"
-    static let helpKeyDidShowInfoHelp = "HelpKeyDidShowInfoHelpForDefaults"
-    static let helpKeyDidShowCloseHelp = "HelpKeyDidShowCloseHelpForDefaults"
+    static let defaultLocationKey = "DefaultLocationKeyForDefaults"
     static let labelColor = UIColor.black.withAlphaComponent(0.45)
     static let labelColorDark = Constants.labelColor.withAlphaComponent(0.66)
     static let cornerRadius = CGFloat(6.0)

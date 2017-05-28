@@ -15,12 +15,22 @@ protocol LocationControllerDelegate: class {
     func refreshLocations()
 }
 
+enum LocationError {
+    case failed
+}
+
 class LocationController: NSObject, CLLocationManagerDelegate {
 
     // MARK: - Properties
 
-    var currentZipCode: String = ""
+    var currentZipCode: String? {
+        didSet {
+            delegate?.refreshLocations()
+        }
+    }
     var locationManager = CLLocationManager()
+    var geocoder = CLGeocoder()
+    var geocodeTimeoutTimer: Timer?
 
     weak var delegate: LocationControllerDelegate?
 
@@ -32,6 +42,17 @@ class LocationController: NSObject, CLLocationManagerDelegate {
         locationManager.distanceFilter = kCLDistanceFilterNone
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         delegate = nil
+
+        if let location = locationManager.location {
+            geocoder.reverseGeocodeLocation(location) { [weak self] (maybePlaces, maybeError) in
+                if let count = maybePlaces?.count, count > 0 {
+                    if let place = maybePlaces?[0], let code = place.postalCode {
+                        self?.currentZipCode = code
+                    }
+                }
+            }
+        }
+
         switch CLLocationManager.authorizationStatus() {
         case .notDetermined:
             locationManager.requestWhenInUseAuthorization()
@@ -50,10 +71,11 @@ class LocationController: NSObject, CLLocationManagerDelegate {
     // MARK: - CLLocationManagerDelegate
 
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        CLGeocoder().reverseGeocodeLocation(locations[0], completionHandler: { [weak self] (places, error) -> Void in
+        guard !geocoder.isGeocoding else { return }
+        geocoder.reverseGeocodeLocation(locations[0], completionHandler: { [weak self] (places, error) -> Void in
             if error != nil { return }
             if let count = places?.count, count > 0 {
-                if let place = places?[0], let code = place.postalCode {
+                if let place = places?[0], let code = place.postalCode, let oldCode = self?.currentZipCode, oldCode != code {
                     self?.currentZipCode = code
                 }
             }
@@ -80,21 +102,46 @@ class LocationController: NSObject, CLLocationManagerDelegate {
     /// Updates the currentZipCode by explicit call instead of in locationManager: didUpdateLocations:
     ///
     /// - Parameter completionHandler: callback upon completion
-    func updateLocation(completionHandler: @escaping ()->()) {
-        if let  thisLocation = locationManager.location {
-            CLGeocoder().reverseGeocodeLocation(thisLocation, completionHandler: { [weak self] (places, error) -> Void in
+    func updateLocation(completionHandler: @escaping (LocationError?) -> ()) {
+        if geocoder.isGeocoding { return }
+
+        if let didReject = delegate?.didRejectLocationAuthorization, didReject {
+            completionHandler(nil)
+            return
+        } else if CLLocationManager.authorizationStatus() == .denied {
+            completionHandler(nil)
+            return
+        }
+
+        if let thisLocation = locationManager.location {
+
+            // Times the request out if it is taking too long.
+            let timer = Timer.scheduledTimer(withTimeInterval: 15, repeats: false, block: { [weak self] (timerRef) in
+                if let isTimer = self?.geocodeTimeoutTimer, isTimer.isValid {
+                    completionHandler(.failed)
+                    self?.geocoder.cancelGeocode()
+                }
+            })
+
+            self.geocodeTimeoutTimer = timer
+
+            geocoder.reverseGeocodeLocation(thisLocation, completionHandler: { [weak self] (maybePlaces, error) -> Void in
                 if error != nil {
-                    completionHandler()
+                    self?.geocoder.cancelGeocode()
+                    self?.geocodeTimeoutTimer?.invalidate()
+                    completionHandler(.failed)
                     return
                 }
 
-                if let count = places?.count, count > 0 {
-                    if let place = places?[0], let code = place.postalCode {
+                if let count = maybePlaces?.count, count > 0 {
+                    if let place = maybePlaces?[0], let code = place.postalCode {
+                        self?.geocodeTimeoutTimer?.invalidate()
                         self?.currentZipCode = code
-                        completionHandler()
+                        completionHandler(nil)
                     }
                 } else {
-                    completionHandler()
+                    self?.geocodeTimeoutTimer?.invalidate()
+                    completionHandler(.failed)
                 }
             })
         }

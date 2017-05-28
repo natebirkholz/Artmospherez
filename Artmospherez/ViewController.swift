@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreLocation
 
 class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
@@ -26,12 +27,14 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             if let old = oldValue, old == true && didRejectLocationAuthorization == false {
                 forceRefresh()
                 showLoadingInfo()
+            } else if didRejectLocationAuthorization == false {
+                forceRefresh()
             } else {
                 checkAlertForRejectedAuthorization()
             }
         }
     }
-
+    
     override var prefersStatusBarHidden: Bool { return true }
 
     // MARK: - Lifecycle
@@ -60,39 +63,47 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         let date = Date()
         UserDefaults.standard.set(date, forKey: Constants.dateKey)
 
-        networkController.locationController.updateLocation { [weak self] in
-            self?.networkController.getJSONForForecasts { [weak self] (maybeForecasts, maybeError) in
-                self?.loadingIndicator?.stopAnimating()
+        if CLLocationManager.authorizationStatus() == .authorizedWhenInUse  {
 
-                guard maybeError == nil else {
-                    self?.handleNetworkError(error: maybeError!)
-                    return
-                }
-                guard let forecasts = maybeForecasts  else {
-                    self?.handleNetworkError(error: .noData)
+            networkController.locationController.updateLocation { [weak self] (maybeError) in
+                guard maybeError ==  nil else {
+                    self?.handleNetworkError(error: .failedLocation)
                     return
                 }
 
-                self?.forecasts = forecasts
-                self?.tableView.reloadData()
-            }
+                self?.networkController.getJSONForForecasts { [weak self] (maybeForecasts, maybeError) in
+                    self?.loadingIndicator?.stopAnimating()
 
-            self?.networkController.getCurrentWeather { [weak self] (maybeWeather, maybeError) in
-                guard maybeError == nil else {
-                    self?.handleNetworkError(error: maybeError!)
-                    return
+                    guard maybeError == nil else {
+                        self?.handleNetworkError(error: maybeError!)
+                        return
+                    }
+                    guard let forecasts = maybeForecasts  else {
+                        self?.handleNetworkError(error: .noData)
+                        return
+                    }
+
+                    self?.forecasts = forecasts
+                    self?.tableView.reloadData()
                 }
-                guard let current = maybeWeather else {
-                    self?.handleNetworkError(error: .noData)
-                    return
+
+                self?.networkController.getCurrentWeather { [weak self] (maybeWeather, maybeError) in
+                    guard maybeError == nil else {
+                        self?.handleNetworkError(error: maybeError!)
+                        return
+                    }
+                    guard let current = maybeWeather else {
+                        self?.handleNetworkError(error: .noData)
+                        return
+                    }
+
+                    UIView.animate(withDuration: 0.3, animations: {
+                        self?.tableView.isHidden = false
+                    })
+
+                    self?.currentWeather = current
+                    self?.tableView.reloadData()
                 }
-
-                UIView.animate(withDuration: 0.3, animations: {
-                    self?.tableView.isHidden = false
-                })
-
-                self?.currentWeather = current
-                self?.tableView.reloadData()
             }
         }
     }
@@ -134,7 +145,9 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         reloadButton = button
 
         if let _ = UserDefaults.standard.object(forKey: Constants.dateKey) as? Date {
-            refresh()
+            if CLLocationManager.authorizationStatus() == .authorizedWhenInUse {
+                refresh()
+            }
         }
     }
 
@@ -293,11 +306,15 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 
     /// Calls refresh() with force: true
     func forceRefresh() {
-        refresh(force: true)
+        if networkController.locationController.currentZipCode != nil {
+            refresh(force: true)
+        }
+
     }
 
     /// Check the back end for new data.
     dynamic func refresh(force: Bool = false) {
+        guard CLLocationManager.authorizationStatus() != .notDetermined else { return }
         // *Only* refesh if it has been more than 15 minutes since last call, this prevents overuse of API. Unless forced.
         let then = UserDefaults.standard.object(forKey: Constants.dateKey) as! Date
         let now = Date()
@@ -311,6 +328,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         }
 
         if tableView.isHidden { loadingIndicator?.startAnimating() }
+
+        print("refreshing...")
 
         networkController.getJSONForForecasts { [weak self] (maybeForecasts, maybeError) in
             guard maybeError == nil else {
@@ -387,14 +406,21 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         }
     }
 
+    /// Displays a notification if the user has rejected location services and the notification has
+    /// not been shown before.
     func checkAlertForRejectedAuthorization() {
+        guard UserDefaults.standard.bool(forKey: Constants.defaultLocationKey) != true else { return }
+
         if let rejection = didRejectLocationAuthorization, rejection == true  {
-            let alert = UIAlertController(title: "Location", message: "You can turn on location awareness for Artmospherez in the Settingss app. We nveer collect this data off the device. For now, showing you the weather in sunny San Diego.", preferredStyle: .alert)
-            let action  = UIAlertAction(title: "OK", style: .default, handler: nil)
+            let alert = UIAlertController(title: "Location", message: "You can turn on location awareness for Artmospherez in the Settingss app. We never collect data from your device. For now, showing you the weather in sunny San Diego.", preferredStyle: .alert)
+            let action  = UIAlertAction(title: "OK", style: .default, handler: { [weak self] (action) in
+                UserDefaults.standard.set(true, forKey: Constants.defaultLocationKey)
+                self?.forceRefresh()
+            })
             alert.addAction(action)
             present(alert, animated: true, completion: nil)
         } else {
-//            showLoadingInfo()
+            //            showLoadingInfo()
         }
     }
 
@@ -403,11 +429,11 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             UIView.animate(withDuration: 0.5, animations: { [weak self] in
                 self?.loadingInfoView?.frame.origin.y = 38.0
                 self?.loadingInfoView?.isPresented = true
-            }, completion: { [weak self] (complete) in
-                UIView.animate(withDuration: 0.5, delay: 3.0, options: [], animations: {
-                    self?.loadingInfoView?.frame.origin.y = -138.0
-                    self?.loadingInfoView?.isPresented = false
-                }, completion: nil)
+                }, completion: { [weak self] (complete) in
+                    UIView.animate(withDuration: 0.5, delay: 3.0, options: [], animations: {
+                        self?.loadingInfoView?.frame.origin.y = -138.0
+                        self?.loadingInfoView?.isPresented = false
+                    }, completion: nil)
             })
         } else {
             UIView.animate(withDuration: 0.5, animations: { [weak self] in
@@ -455,6 +481,8 @@ extension ViewController {
             showError(message: "An unknown error occurred.")
         case .badURL:
             showError(message: "The request to the server failed to begin.")
+        case .failedLocation:
+            showError(message: "Unable to determine your location.")
         }
     }
 
@@ -470,7 +498,7 @@ extension ViewController {
         alertController.addAction(okAction)
         present(alertController, animated: true, completion: nil)
     }
-
+    
     /// If the network request fails and there is no tableView visible, display the 
     /// reload button.
     func showReloadButton() {
@@ -488,7 +516,13 @@ extension ViewController {
 
 extension ViewController: LocationControllerDelegate {
     func refreshLocations() {
-        refresh()
+        if networkController.locationController.currentZipCode != nil {
+            if forecasts.count == 0 && currentWeather == nil {
+                forceRefresh()
+            } else {
+                refresh()
+            }
+        }
     }
 }
 
