@@ -49,6 +49,10 @@ class WeatherImageFactory {
         guard let image3 = UIImage(named: "sun3") else { return }
         let sunny3 = WeatherImage(id: "sun3", image: image3, artist: "William Merritt Chase", title: "At the Seaside")
         sunnyImages.append(sunny3)
+
+        guard let image4 = UIImage(named: "sun4") else { return }
+        let sunny4 = WeatherImage(id: "sun4", image: image4, artist: "Alfred Sisley", title: "Sahurs Meadows in Morning Sun")
+        sunnyImages.append(sunny4)
     }
 
     private func createRainyImages() {
@@ -63,6 +67,10 @@ class WeatherImageFactory {
         guard let image4 = UIImage(named: "rain4") else { return }
         let rainy4 = WeatherImage(id: "rain4", image: image4, artist: "Anton Mauve", title: "Changing Pasture")
         rainyImages.append(rainy4)
+
+        guard let image6 = UIImage(named: "rain6") else { return }
+        let rainy6 = WeatherImage(id: "rain6", image: image6, artist: "Alexander H. Wyant", title: "Tennessee")
+        rainyImages.append(rainy6)
     }
 
     private func createWindyImages() {
@@ -103,6 +111,10 @@ class WeatherImageFactory {
         guard let image3 = UIImage(named: "clouds3") else { return }
         let cloudy3 = WeatherImage(id: "clouds3", image: image3, artist: "Philips Koninck", title: "An Extensive Wooded Landscape")
         cloudyImages.append(cloudy3)
+
+        guard let image4 = UIImage(named: "clouds4") else { return }
+        let cloudy4 = WeatherImage(id: "clouds4", image: image4, artist: "Aelbert Cuyp", title: "Young Herdsmen with Cows")
+        cloudyImages.append(cloudy4)
     }
 
     private func createOvercastImages() {
