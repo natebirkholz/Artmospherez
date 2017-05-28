@@ -24,13 +24,16 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     var loadingInfoView: InfoView!
     var didRejectLocationAuthorization: Bool? {
         didSet {
+            // If going from unauthorized to authroized, should force update
             if let old = oldValue, old == true && didRejectLocationAuthorization == false {
                 forceRefresh()
                 showLoadingInfo()
             } else if didRejectLocationAuthorization == false {
+                // Initial set should force refresh due to order of operations
                 forceRefresh()
             } else {
-                checkAlertForRejectedAuthorization()
+                // let the user know what heppens without authorization (shows San Diego)
+                alertForRejectedAuthorization()
             }
         }
     }
@@ -59,9 +62,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 
         view.bringSubview(toFront: tableView)
         tableView.isHidden = true
-
-        let date = Date()
-        UserDefaults.standard.set(date, forKey: Constants.dateKey)
 
         if CLLocationManager.authorizationStatus() == .authorizedWhenInUse  {
 
@@ -100,6 +100,9 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                     UIView.animate(withDuration: 0.3, animations: {
                         self?.tableView.isHidden = false
                     })
+
+                    let date = Date()
+                    UserDefaults.standard.set(date, forKey: Constants.dateKey)
 
                     self?.currentWeather = current
                     self?.tableView.reloadData()
@@ -144,6 +147,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         button.isHidden = true
         reloadButton = button
 
+        // Only bother trying to refresh on viewWillAppear if the weather has previosuly loaded and 
+        // the user has authorized the loaction
         if let _ = UserDefaults.standard.object(forKey: Constants.dateKey) as? Date {
             if CLLocationManager.authorizationStatus() == .authorizedWhenInUse {
                 refresh()
@@ -169,7 +174,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 
         loadingInfoView = info
 
-        checkAlertForRejectedAuthorization()
+        alertForRejectedAuthorization()
     }
 
     // MARK: - TableView methods
@@ -312,10 +317,15 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 
     }
 
-    /// Check the back end for new data.
+
+    /// Check the back end for new weather data. Will only execute once every 15 minutes unless forced.
+    ///
+    /// - Parameter force: Force update in less than 15 minutes. Defaults to false. Convenience method forceRefresh() preferred.
     dynamic func refresh(force: Bool = false) {
+        // If the app hasn;t been authorized one way or another yet we don't want to show the placeholder location of San Diego
         guard CLLocationManager.authorizationStatus() != .notDetermined else { return }
-        // *Only* refesh if it has been more than 15 minutes since last call, this prevents overuse of API. Unless forced.
+
+        // *Only* refesh if it has been more than 15 minutes since last API call, this prevents needless overuse of API. (Unless forced.)
         let then = UserDefaults.standard.object(forKey: Constants.dateKey) as! Date
         let now = Date()
 
@@ -328,8 +338,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         }
 
         if tableView.isHidden { loadingIndicator?.startAnimating() }
-
-        print("refreshing...")
 
         networkController.getJSONForForecasts { [weak self] (maybeForecasts, maybeError) in
             guard maybeError == nil else {
@@ -345,6 +353,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 
             self?.loadingIndicator?.stopAnimating()
 
+            // Hide the reload button here to prevent overlap
             self?.reloadButton?.isHidden = true
 
             self?.forecasts = forecasts
@@ -408,9 +417,11 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 
     /// Displays a notification if the user has rejected location services and the notification has
     /// not been shown before.
-    func checkAlertForRejectedAuthorization() {
+    func alertForRejectedAuthorization() {
+        // Don't show if it has been shown before.
         guard UserDefaults.standard.bool(forKey: Constants.defaultLocationKey) != true else { return }
 
+        // Shouldn't be shown if false, check for future prevention
         if let rejection = didRejectLocationAuthorization, rejection == true  {
             let alert = UIAlertController(title: "Location", message: "You can turn on location awareness for Artmospherez in the Settingss app. We never collect data from your device. For now, showing you the weather in sunny San Diego.", preferredStyle: .alert)
             let action  = UIAlertAction(title: "OK", style: .default, handler: { [weak self] (action) in
@@ -419,8 +430,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             })
             alert.addAction(action)
             present(alert, animated: true, completion: nil)
-        } else {
-            //            showLoadingInfo()
         }
     }
 

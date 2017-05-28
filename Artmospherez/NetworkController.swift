@@ -131,13 +131,12 @@ class NetworkController {
         var request = URLRequest(url: fetchURL)
         request.httpMethod = "GET"
 
-        // Shows amessage on the ho,e screen if the network call is taking a while.
+        // Shows amessage on the home screen if the network call is taking a while (8 seconds).
         let timer = Timer.scheduledTimer(withTimeInterval: 8.0, repeats: false) { [weak self] (timerRef) in
             if let isTimer = self?.loadingTimer, isTimer.isValid {
                 isTimer.invalidate()
                 DispatchQueue.main.async {
                     self?.delegate?.showStillWorking()
-
                 }
             }
 
