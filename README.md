@@ -6,9 +6,9 @@ V1.0 currently in the iTunes App Store. Working on V1.1:
 1. Adding Close button to the detail screens - _done_
 2. Moving Info button on detail screens - _done_
 3. Improving display and initialization of all labels and buttons in the app - _done_
-4. Handling rejected location authorization - _TODO_
-5. Reducing refresh timeout - _TODO_
-6. Providing info while downloading - _TODO_
+4. Handling rejected location authorization - _done_
+5. Reducing refresh timeout, including geocoding - _done_
+6. Providing feedback while downloading - _done_
 
 Demonstrated skills:
 1. JSONSerialization
