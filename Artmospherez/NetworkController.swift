@@ -132,11 +132,11 @@ class NetworkController {
         request.httpMethod = "GET"
 
         // Shows amessage on the home screen if the network call is taking a while (8 seconds).
-        let timer = Timer.scheduledTimer(withTimeInterval: 8.0, repeats: false) { [weak self] (timerRef) in
-            if let isTimer = self?.loadingTimer, isTimer.isValid {
+        let timer = Timer.scheduledTimer(withTimeInterval: 8.0, repeats: false) { [unowned self] (timerRef) in
+            if let isTimer = self.loadingTimer, isTimer.isValid {
                 isTimer.invalidate()
                 DispatchQueue.main.async {
-                    self?.delegate?.showStillWorking()
+                    self.delegate?.showStillWorking()
                 }
             }
 
@@ -145,8 +145,8 @@ class NetworkController {
 
         loadingTimer = timer
 
-        fetchSession.dataTask(with: request, completionHandler: { [weak self] (maybeData, response, error) -> Void in
-            self?.loadingTimer?.invalidate()
+        fetchSession.dataTask(with: request, completionHandler: { [unowned self] (maybeData, response, error) -> Void in
+            self.loadingTimer?.invalidate()
             guard let dataFromRequest = maybeData else {
                 completionHandler(nil, .noData)
                 return

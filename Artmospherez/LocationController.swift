@@ -44,10 +44,10 @@ class LocationController: NSObject, CLLocationManagerDelegate {
         delegate = nil
 
         if let location = locationManager.location {
-            geocoder.reverseGeocodeLocation(location) { [weak self] (maybePlaces, maybeError) in
+            geocoder.reverseGeocodeLocation(location) { [unowned self] (maybePlaces, maybeError) in
                 if let count = maybePlaces?.count, count > 0 {
                     if let place = maybePlaces?[0], let code = place.postalCode {
-                        self?.currentZipCode = code
+                        self.currentZipCode = code
                     }
                 }
             }
@@ -72,11 +72,11 @@ class LocationController: NSObject, CLLocationManagerDelegate {
 
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard !geocoder.isGeocoding else { return }
-        geocoder.reverseGeocodeLocation(locations[0], completionHandler: { [weak self] (places, error) -> Void in
+        geocoder.reverseGeocodeLocation(locations[0], completionHandler: { [unowned self] (places, error) -> Void in
             if error != nil { return }
             if let count = places?.count, count > 0 {
-                if let place = places?[0], let code = place.postalCode, let oldCode = self?.currentZipCode, oldCode != code {
-                    self?.currentZipCode = code
+                if let place = places?[0], let code = place.postalCode, let oldCode = self.currentZipCode, oldCode != code {
+                    self.currentZipCode = code
                 }
             }
         })
@@ -116,11 +116,11 @@ class LocationController: NSObject, CLLocationManagerDelegate {
         if let thisLocation = locationManager.location {
 
             // Times the request out if it is taking too long (15 seconds.)
-            let timer = Timer.scheduledTimer(withTimeInterval: 15, repeats: false, block: { [weak self] (timerRef) in
-                if let isTimer = self?.geocodeTimeoutTimer, isTimer.isValid {
+            let timer = Timer.scheduledTimer(withTimeInterval: 15, repeats: false, block: { [unowned self] (timerRef) in
+                if let isTimer = self.geocodeTimeoutTimer, isTimer.isValid {
                     isTimer.invalidate()
                     completionHandler(.failed)
-                    self?.geocoder.cancelGeocode()
+                    self.geocoder.cancelGeocode()
                 }
 
                 timerRef.invalidate()
@@ -128,22 +128,22 @@ class LocationController: NSObject, CLLocationManagerDelegate {
 
             self.geocodeTimeoutTimer = timer
 
-            geocoder.reverseGeocodeLocation(thisLocation, completionHandler: { [weak self] (maybePlaces, error) -> Void in
+            geocoder.reverseGeocodeLocation(thisLocation, completionHandler: { [unowned self] (maybePlaces, error) -> Void in
                 if error != nil {
-                    self?.geocoder.cancelGeocode()
-                    self?.geocodeTimeoutTimer?.invalidate()
+                    self.geocoder.cancelGeocode()
+                    self.geocodeTimeoutTimer?.invalidate()
                     completionHandler(.failed)
                     return
                 }
 
                 if let count = maybePlaces?.count, count > 0 {
                     if let place = maybePlaces?[0], let code = place.postalCode {
-                        self?.geocodeTimeoutTimer?.invalidate()
-                        self?.currentZipCode = code
+                        self.geocodeTimeoutTimer?.invalidate()
+                        self.currentZipCode = code
                         completionHandler(nil)
                     }
                 } else {
-                    self?.geocodeTimeoutTimer?.invalidate()
+                    self.geocodeTimeoutTimer?.invalidate()
                     completionHandler(.failed)
                 }
             })
