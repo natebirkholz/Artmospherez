@@ -64,7 +64,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         tableView.isHidden = true
 
         if CLLocationManager.authorizationStatus() == .authorizedWhenInUse  {
-
             networkController.locationController.updateLocation { [weak self] (maybeError) in
                 guard maybeError ==  nil else {
                     self?.handleNetworkError(error: .failedLocation)
