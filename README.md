@@ -3,12 +3,12 @@
 Weather app using public domain art works to display the current and forthcoming weather. 
 
 V1.1 currently in the iTunes App Store. Added the following features in first revision:
-1. Added `Close` button to the detail screens.
-2. Moved `Info` button on detail screens to make way for `Close` button.
+1. Added *Close* button to the detail screens. (User feedback that it was confusing.)
+2. Moved *Info* button on detail screens to make way for the new *Close* button.
 3. Improved display and initialization of all labels and buttons in the app.
-4. Handled rejected location authorization.
-5. Reduced refresh timeout, including geocoding.
-6. Provided feedback while downloading.
+4. Handled rejected location authorization better. (User feedback that it was confusing.)
+5. Reduced refresh timeout, including geocoding. (User feedback that it could get hung up in geocoding phase.)
+6. Provided user-facing feedback while downloading. (User feedback that it seemed to hang.)
 7. New images for Rainy, Sunny, and Cloudy days (most common weather types).
 
 Demonstrated skills:
