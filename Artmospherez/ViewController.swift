@@ -241,7 +241,9 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             if forecasts.count > 0 {
                 let forecast = forecasts[indexPath.row + 1]
 
-                let weatherImageForCell = generateImageFor(weather: forecast.kind, indexOrRow: indexPath.row)
+                // keeps images in sequence (prevents forecast ad first cell from having the same image)
+                let idx = getDay() + indexPath.row + 1
+                let weatherImageForCell = generateImageFor(weather: forecast.kind, indexOrRow: idx)
                 cell.weatherImage = weatherImageForCell
                 cell.weatherImageView.image = weatherImageForCell.image
 
