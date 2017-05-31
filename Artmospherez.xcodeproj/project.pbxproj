@@ -35,6 +35,7 @@
 		433266581EDB3583002641B2 /* rain6.txt in Resources */ = {isa = PBXBuildFile; fileRef = 433266571EDB3583002641B2 /* rain6.txt */; };
 		4332665C1EDB37DA002641B2 /* clouds4.txt in Resources */ = {isa = PBXBuildFile; fileRef = 4332665B1EDB37DA002641B2 /* clouds4.txt */; };
 		4332665E1EDB37E9002641B2 /* sun4.txt in Resources */ = {isa = PBXBuildFile; fileRef = 4332665D1EDB37E9002641B2 /* sun4.txt */; };
+		433266B81EDF10C7002641B2 /* DateController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 433266B71EDF10C7002641B2 /* DateController.swift */; };
 		438F70591ED730A70093986D /* clouds3.txt in Resources */ = {isa = PBXBuildFile; fileRef = 438F70581ED730A70093986D /* clouds3.txt */; };
 		438F705B1ED730B40093986D /* sun3.txt in Resources */ = {isa = PBXBuildFile; fileRef = 438F705A1ED730B40093986D /* sun3.txt */; };
 		438F705D1ED733310093986D /* snow1.txt in Resources */ = {isa = PBXBuildFile; fileRef = 438F705C1ED733310093986D /* snow1.txt */; };
@@ -100,6 +101,7 @@
 		433266571EDB3583002641B2 /* rain6.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = rain6.txt; sourceTree = "<group>"; };
 		4332665B1EDB37DA002641B2 /* clouds4.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = clouds4.txt; sourceTree = "<group>"; };
 		4332665D1EDB37E9002641B2 /* sun4.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = sun4.txt; sourceTree = "<group>"; };
+		433266B71EDF10C7002641B2 /* DateController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateController.swift; sourceTree = "<group>"; };
 		438F70581ED730A70093986D /* clouds3.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = clouds3.txt; sourceTree = "<group>"; };
 		438F705A1ED730B40093986D /* sun3.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = sun3.txt; sourceTree = "<group>"; };
 		438F705C1ED733310093986D /* snow1.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = snow1.txt; sourceTree = "<group>"; };
@@ -271,6 +273,7 @@
 				43F2C0DD1ED33AF80023567A /* NetworkController.swift */,
 				43F2C0B81ED330A10023567A /* ViewController.swift */,
 				4322A8041ED698AA00F2FD64 /* WeatherNavController.swift */,
+				433266B71EDF10C7002641B2 /* DateController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -405,6 +408,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				43F2C0DE1ED33AF80023567A /* NetworkController.swift in Sources */,
+				433266B81EDF10C7002641B2 /* DateController.swift in Sources */,
 				430C52191ED584CD00971849 /* Constants.swift in Sources */,
 				4322A8071ED69AAB00F2FD64 /* AnimateToWeatherDetailController.swift in Sources */,
 				430C520E1ED557A400971849 /* WeatherImageFactory.swift in Sources */,

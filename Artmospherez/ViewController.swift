@@ -18,6 +18,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     var forecasts = [Forecast]()
     var currentWeather: CurrentWeather?
     let networkController = NetworkController()
+    let dateController = DateController()
     let weatherImageFactory = WeatherImageFactory()
     var loadingIndicator: UIActivityIndicatorView?
     var reloadButton: UIButton!
@@ -213,11 +214,19 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.section == 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "WEATHER_CELL", for: indexPath) as! WeatherCell
-            let weatherText = currentWeather?.kind.rawValue ?? "Unknown"
+
+            var weatherText = currentWeather?.kind.rawValue ?? "Unknown"
+
+            // If time of day is *not* between 7am and 6pm, show "Clear" instead of "Sunny" for weather type.
+            let timeOfDay = dateController.getTimeOfDay()
+            if timeOfDay == .night && currentWeather?.kind == .sunny {
+                weatherText = "Clear"
+            }
             cell.weatherLabel?.text = "\(weatherText)"
             cell.weatherLabel?.sizeToFit()
             if let kind = currentWeather?.kind {
-                let idx = getDay() // use the current day of the year to get the index of the image, ensures daily variety
+                // use the current day of the year to get the index of the image, ensures daily variety
+                let idx = dateController.getDay()
                 let weatherImageForCell = generateImageFor(weather: kind, indexOrRow: idx)
                 cell.weatherImage = weatherImageForCell
                 cell.weatherImageView.image = weatherImageForCell.image
@@ -241,8 +250,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             if forecasts.count > 0 {
                 let forecast = forecasts[indexPath.row + 1]
 
-                // keeps images in sequence (prevents forecast ad first cell from having the same image)
-                let idx = getDay() + indexPath.row + 1
+                // keeps images in sequence (prevents forecast and first cell from having the same image)
+                let idx = dateController.getDay() + indexPath.row + 1
                 let weatherImageForCell = generateImageFor(weather: forecast.kind, indexOrRow: idx)
                 cell.weatherImage = weatherImageForCell
                 cell.weatherImageView.image = weatherImageForCell.image
@@ -308,6 +317,24 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         let intFor = Int(string) ?? 1
 
         return intFor
+    }
+
+    func getTimeOfDay() -> TimeOfDay {
+        let date = Date()
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "HH"
+        let hourString = dateFormatter.string(from: date)
+        let maybeHour = Int(hourString)
+
+        if let hour = maybeHour {
+            if hour >= 7 && hour < 18 {
+                return .day
+            } else {
+                return .night
+            }
+        } else {
+            return .day
+        }
     }
 
     /// Calls refresh() with force: true
