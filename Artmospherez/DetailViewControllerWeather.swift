@@ -110,9 +110,11 @@ class DetailViewControllerWeather: UIViewController, UINavigationControllerDeleg
 
         infoView = info
     }
+}
 
-    // MARK: - Actions
+    // MARK: - DetailViewController
 
+extension DetailViewControllerWeather: InfoDisplay {
     /// Display the infoView if not shown, otherwise dismiss the infoView
     func showInfo() {
         if infoView?.isPresented == false {

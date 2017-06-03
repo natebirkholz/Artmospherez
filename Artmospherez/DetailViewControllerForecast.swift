@@ -8,7 +8,19 @@
 
 import UIKit
 
-class DetailViewControllerForecast: UIViewController {
+/// Specifies a set of properties and methods for implementing info buttons and info views 
+/// on detail view controllers. Despite the implementations all being the same, the methods
+/// are dynamically dispatched via #selector() calls, and Swift protocols cannot have default
+/// methods that are dynamically dispatched. `Yet`, I assume.
+protocol InfoDisplay {
+    weak var infoButton: UtilityButton! { get set }
+    var infoView: InfoView? { get set }
+    func showInfo()
+    func didTap()
+    func dismissSelf()
+}
+
+class DetailViewControllerForecast: UIViewController, UINavigationControllerDelegate {
 
     // MARK: - Properties
 
@@ -104,9 +116,11 @@ class DetailViewControllerForecast: UIViewController {
 
         infoView = info
     }
+}
 
-    // MARK: - Actions
+    // MARK: - DetailViewController
 
+extension DetailViewControllerForecast: InfoDisplay {
     /// Display the infoView if not shown, otherwise dismiss the infoView
     func showInfo() {
         if infoView?.isPresented == false {
