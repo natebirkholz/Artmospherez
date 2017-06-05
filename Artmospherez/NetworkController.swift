@@ -124,15 +124,15 @@ class NetworkController {
         }
 
         let config = URLSessionConfiguration.default
-        config.timeoutIntervalForRequest = 16
-        config.timeoutIntervalForResource = 16
+        config.timeoutIntervalForRequest = 15
+        config.timeoutIntervalForResource = 15
         let fetchSession = URLSession(configuration: config)
 
         var request = URLRequest(url: fetchURL)
         request.httpMethod = "GET"
 
-        // Shows amessage on the home screen if the network call is taking a while (8 seconds).
-        let timer = Timer.scheduledTimer(withTimeInterval: 8.0, repeats: false) { [unowned self] (timerRef) in
+        // Shows a message on the home screen if the network call is taking a while (7 seconds).
+        let timer = Timer.scheduledTimer(withTimeInterval: 7.0, repeats: false) { [unowned self] (timerRef) in
             if let isTimer = self.loadingTimer, isTimer.isValid {
                 isTimer.invalidate()
                 DispatchQueue.main.async {

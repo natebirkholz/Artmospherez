@@ -8,6 +8,54 @@
 
 import UIKit
 
+/// Specifies a set of properties and methods for implementing info buttons and info views
+/// on detail view controllers.
+protocol InfoDisplay: class {
+    weak var infoButton: UtilityButton! { get set }
+    weak var navController: UINavigationController? { get }
+    var infoView: InfoView? { get set }
+    func showInfo()
+    func didTap()
+    func dismissSelf()
+}
+
+extension InfoDisplay {
+    /// Display the infoView if not shown, otherwise dismiss the infoView
+    func showInfo() {
+        if infoView?.isPresented == false {
+            UIView.animate(withDuration: 0.5, animations: { [weak self] in
+                self?.infoView?.frame.origin.y = 88.0
+                }, completion: { [weak self] (complete) in
+                    self?.infoView?.isPresented = true
+            })
+        } else {
+            UIView.animate(withDuration: 0.5, animations: { [weak self] in
+                self?.infoView?.frame.origin.y = -138.0
+                }, completion: { [weak self] (complete) in
+                    self?.infoView?.isPresented = false
+            })
+        }
+    }
+
+    /// If the infoView is showing, dismiss it. Otherwise dismiss the detail view
+    func didTap() {
+        if let presented = infoView?.isPresented {
+            if presented {
+                showInfo()
+            } else {
+                dismissSelf()
+            }
+        } else {
+            dismissSelf()
+        }
+    }
+
+    /// Dismiss the detail view
+    func dismissSelf() {
+        navController?.popViewController(animated: true)
+    }
+}
+
 class InfoView: UIView {
 
     var textView: UITextView!

@@ -8,19 +8,7 @@
 
 import UIKit
 
-/// Specifies a set of properties and methods for implementing info buttons and info views 
-/// on detail view controllers. Despite the implementations all being the same, the methods
-/// are dynamically dispatched via #selector() calls, and Swift protocols cannot have default
-/// methods that are dynamically dispatched. `Yet`, I assume.
-protocol InfoDisplay {
-    weak var infoButton: UtilityButton! { get set }
-    var infoView: InfoView? { get set }
-    func showInfo()
-    func didTap()
-    func dismissSelf()
-}
-
-class DetailViewControllerForecast: UIViewController, UINavigationControllerDelegate {
+class DetailViewControllerForecast: UIViewController, UINavigationControllerDelegate, InfoDisplay {
 
     // MARK: - Properties
 
@@ -28,18 +16,21 @@ class DetailViewControllerForecast: UIViewController, UINavigationControllerDele
     @IBOutlet weak var mainLabel: WeatherLabel!
     @IBOutlet weak var maxMinLabel: WeatherLabel!
     @IBOutlet weak var infoButton: UtilityButton!
-    @IBOutlet weak var ghostButton: UIButton!
+    @IBOutlet weak var ghostButton: UtilityButton!
     @IBOutlet weak var closeButton: UtilityButton!
-    @IBOutlet weak var ghostCloseButton: UIButton!
+    @IBOutlet weak var ghostCloseButton: UtilityButton!
 
     var forecast: Forecast!
     var weatherImage: WeatherImage!
     var image: UIImage!
-    var swipeDownRecognizer: UISwipeGestureRecognizer?
-    var swipeRightRecognizer: UISwipeGestureRecognizer?
-    var swipeUpRecognizer: UISwipeGestureRecognizer?
-    var tapViewRecognizer: UITapGestureRecognizer?
+    var swipeDownRecognizer: ClosureGestureRecognizer<UISwipeGestureRecognizer>?
+    var swipeRightRecognizer: ClosureGestureRecognizer<UISwipeGestureRecognizer>?
+    var swipeUpRecognizer: ClosureGestureRecognizer<UISwipeGestureRecognizer>?
+    var blockTapViewRecognizer: ClosureGestureRecognizer<UITapGestureRecognizer>?
     var infoView: InfoView?
+    weak var navController: UINavigationController? {
+        return navigationController
+    }
 
     override var prefersStatusBarHidden: Bool { return true }
 
@@ -50,24 +41,32 @@ class DetailViewControllerForecast: UIViewController, UINavigationControllerDele
 
         // Gesture recognizers
 
-        let downRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(dismissSelf))
-        downRecognizer.direction = .down
+        let swipeBlock: (UISwipeGestureRecognizer) -> () = { [weak self] (_) in
+            self?.dismissSelf()
+        }
+
+        let downRecognizer = ClosureGestureRecognizer<UISwipeGestureRecognizer>(onAction: swipeBlock)
+        downRecognizer.setRecognizerDirection(.down)
         view.addGestureRecognizer(downRecognizer)
         swipeDownRecognizer = downRecognizer
 
-        let upRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(dismissSelf))
-        upRecognizer.direction = .up
+        let upRecognizer = ClosureGestureRecognizer<UISwipeGestureRecognizer>(onAction: swipeBlock)
+        upRecognizer.setRecognizerDirection(.up)
         view.addGestureRecognizer(upRecognizer)
         swipeUpRecognizer = upRecognizer
 
-        let rightRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(dismissSelf))
-        rightRecognizer.direction = .right
+        let rightRecognizer = ClosureGestureRecognizer<UISwipeGestureRecognizer>(onAction: swipeBlock)
+        rightRecognizer.setRecognizerDirection(.right)
         view.addGestureRecognizer(rightRecognizer)
         swipeRightRecognizer = rightRecognizer
 
-        let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(didTap))
-        view.addGestureRecognizer(tapRecognizer)
-        tapViewRecognizer = tapRecognizer
+        let tapBlock: (UITapGestureRecognizer) -> () = { [weak self] (_) in
+            self?.didTap()
+        }
+
+        let blockTapRecognizer = ClosureGestureRecognizer<UITapGestureRecognizer>(onAction: tapBlock)
+        view.addGestureRecognizer(blockTapRecognizer)
+        self.blockTapViewRecognizer = blockTapRecognizer
 
         // Views
         
@@ -83,19 +82,27 @@ class DetailViewControllerForecast: UIViewController, UINavigationControllerDele
         maxMinLabel.sizeToFit()
         maxMinLabel.setup()
 
+        let blockForInfo: () -> () = { [weak self] in
+            self?.showInfo()
+        }
+
         // Has a larger hit area than the visible button
-        ghostButton.addTarget(self, action: #selector(showInfo), for: .touchUpInside)
+        ghostButton.addClosure(blockForInfo)
 
         infoButton.backgroundColor = Constants.labelColor
         infoButton.setup()
-        infoButton.addTarget(self, action: #selector(showInfo), for: .touchUpInside)
+        infoButton.addClosure(blockForInfo)
+
+        let blockForClose: () -> () = { [weak self] in
+            self?.dismissSelf()
+        }
 
         closeButton.backgroundColor = Constants.labelColor
         closeButton.setup()
-        closeButton.addTarget(self, action: #selector(dismissSelf), for: .touchUpInside)
+        closeButton.addClosure(blockForClose)
 
         // Has a larger hit area than the visible button
-        ghostCloseButton.addTarget(self, action: #selector(dismissSelf), for: .touchUpInside)
+        ghostCloseButton.addClosure(blockForClose)
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -116,44 +123,4 @@ class DetailViewControllerForecast: UIViewController, UINavigationControllerDele
 
         infoView = info
     }
-}
-
-    // MARK: - DetailViewController
-
-extension DetailViewControllerForecast: InfoDisplay {
-    /// Display the infoView if not shown, otherwise dismiss the infoView
-    func showInfo() {
-        if infoView?.isPresented == false {
-            UIView.animate(withDuration: 0.5, animations: { [weak self] in
-                self?.infoView?.frame.origin.y = 88.0
-            }, completion: { [weak self] (complete) in
-                self?.infoView?.isPresented = true
-            })
-        } else {
-            UIView.animate(withDuration: 0.5, animations: { [weak self] in
-                self?.infoView?.frame.origin.y = -138.0
-            }, completion: { [weak self] (complete) in
-                self?.infoView?.isPresented = false
-            })
-        }
-    }
-
-    /// If the infoView is showing, dismiss it. Otherwise dismiss the detail view
-    func didTap() {
-        if let presented = infoView?.isPresented {
-            if presented {
-                showInfo()
-            } else {
-                dismissSelf()
-            }
-        } else {
-            dismissSelf()
-        }
-    }
-
-    /// Dismiss the detail view
-    func dismissSelf() {
-        navigationController?.popViewController(animated: true)
-    }
-
 }

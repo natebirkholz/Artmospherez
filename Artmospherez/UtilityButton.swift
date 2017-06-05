@@ -9,6 +9,7 @@
 import UIKit
 
 class UtilityButton: UIButton {
+    fileprivate var onAction: (() -> ())?
 
     /// Utility instance method to set up buttons to the proper background color and corner radius
     func setup() {
@@ -26,4 +27,14 @@ class UtilityButton: UIButton {
         size.width = size.width + 4
         return size
     }
+
+    func addClosure(_ closure: @escaping () -> ()) {
+        self.addTarget(self, action: #selector(actionHandler), for: .touchUpInside)
+        self.onAction = closure
+    }
+
+    dynamic fileprivate func actionHandler() {
+        onAction?()
+    }
+    
 }

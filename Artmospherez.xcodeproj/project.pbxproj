@@ -36,6 +36,7 @@
 		4332665C1EDB37DA002641B2 /* clouds4.txt in Resources */ = {isa = PBXBuildFile; fileRef = 4332665B1EDB37DA002641B2 /* clouds4.txt */; };
 		4332665E1EDB37E9002641B2 /* sun4.txt in Resources */ = {isa = PBXBuildFile; fileRef = 4332665D1EDB37E9002641B2 /* sun4.txt */; };
 		433266B81EDF10C7002641B2 /* DateController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 433266B71EDF10C7002641B2 /* DateController.swift */; };
+		4384296E1EE4662100FA730A /* ClosureGestureRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4384296D1EE4662000FA730A /* ClosureGestureRecognizer.swift */; };
 		438F70591ED730A70093986D /* clouds3.txt in Resources */ = {isa = PBXBuildFile; fileRef = 438F70581ED730A70093986D /* clouds3.txt */; };
 		438F705B1ED730B40093986D /* sun3.txt in Resources */ = {isa = PBXBuildFile; fileRef = 438F705A1ED730B40093986D /* sun3.txt */; };
 		438F705D1ED733310093986D /* snow1.txt in Resources */ = {isa = PBXBuildFile; fileRef = 438F705C1ED733310093986D /* snow1.txt */; };
@@ -102,6 +103,7 @@
 		4332665B1EDB37DA002641B2 /* clouds4.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = clouds4.txt; sourceTree = "<group>"; };
 		4332665D1EDB37E9002641B2 /* sun4.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = sun4.txt; sourceTree = "<group>"; };
 		433266B71EDF10C7002641B2 /* DateController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateController.swift; sourceTree = "<group>"; };
+		4384296D1EE4662000FA730A /* ClosureGestureRecognizer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClosureGestureRecognizer.swift; sourceTree = "<group>"; };
 		438F70581ED730A70093986D /* clouds3.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = clouds3.txt; sourceTree = "<group>"; };
 		438F705A1ED730B40093986D /* sun3.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = sun3.txt; sourceTree = "<group>"; };
 		438F705C1ED733310093986D /* snow1.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = snow1.txt; sourceTree = "<group>"; };
@@ -274,6 +276,7 @@
 				43F2C0B81ED330A10023567A /* ViewController.swift */,
 				4322A8041ED698AA00F2FD64 /* WeatherNavController.swift */,
 				433266B71EDF10C7002641B2 /* DateController.swift */,
+				4384296D1EE4662000FA730A /* ClosureGestureRecognizer.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -415,6 +418,7 @@
 				430C52211ED5FEEC00971849 /* DetailViewControllerForecast.swift in Sources */,
 				43F2C0E81ED33CA50023567A /* WeatherImage.swift in Sources */,
 				4322A7FF1ED6764400F2FD64 /* MasterCell.swift in Sources */,
+				4384296E1EE4662100FA730A /* ClosureGestureRecognizer.swift in Sources */,
 				4322A8051ED698AA00F2FD64 /* WeatherNavController.swift in Sources */,
 				43F2C0E21ED33B550023567A /* Forecast.swift in Sources */,
 				43F2C0F41ED3CDD70023567A /* WeatherCell.swift in Sources */,

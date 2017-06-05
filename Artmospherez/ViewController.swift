@@ -25,7 +25,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     var loadingInfoView: InfoView!
     var didRejectLocationAuthorization: Bool? {
         didSet {
-            // If going from unauthorized to authroized, should force update
+            // If going from unauthorized to authorized, should force update
             if let old = oldValue, old == true && didRejectLocationAuthorization == false {
                 forceRefresh()
                 showLoadingInfo()
