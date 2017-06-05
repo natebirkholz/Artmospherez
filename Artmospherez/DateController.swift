@@ -17,6 +17,8 @@ class DateController {
     let dayFormatter: DateFormatter
     let hourFormatter: DateFormatter
 
+    static let shared = DateController()
+
     init() {
         let day = DateFormatter()
         day.dateFormat = "D"

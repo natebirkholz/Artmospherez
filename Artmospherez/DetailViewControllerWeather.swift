@@ -73,7 +73,15 @@ class DetailViewControllerWeather: UIViewController, UINavigationControllerDeleg
 
         imageView.image = image
 
-        let mainLabelText = "\(weather.kind.rawValue), \(weather.currentTemp)°, \(weather.cityName)"
+        let weatherText: String
+        let timeOfDay = DateController.shared.getTimeOfDay()
+        if timeOfDay == .night && weather.kind == .sunny {
+            weatherText = "Clear"
+        } else {
+            weatherText = weather.kind.rawValue
+        }
+
+        let mainLabelText = "\(weatherText), \(weather.currentTemp)°, \(weather.cityName)"
         mainLabel.text = mainLabelText
         mainLabel.sizeToFit()
         mainLabel.setup()

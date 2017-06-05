@@ -18,7 +18,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     var forecasts = [Forecast]()
     var currentWeather: CurrentWeather?
     let networkController = NetworkController()
-    let dateController = DateController()
     let weatherImageFactory = WeatherImageFactory()
     var loadingIndicator: UIActivityIndicatorView?
     var reloadButton: UIButton!
@@ -218,7 +217,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             var weatherText = currentWeather?.kind.rawValue ?? "Unknown"
 
             // If time of day is *not* between 7am and 6pm, show "Clear" instead of "Sunny" for weather type.
-            let timeOfDay = dateController.getTimeOfDay()
+            let timeOfDay = DateController.shared.getTimeOfDay()
             if timeOfDay == .night && currentWeather?.kind == .sunny {
                 weatherText = "Clear"
             }
@@ -226,7 +225,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             cell.weatherLabel?.sizeToFit()
             if let kind = currentWeather?.kind {
                 // use the current day of the year to get the index of the image, ensures daily variety
-                let idx = dateController.getDay()
+                let idx = DateController.shared.getDay()
                 let weatherImageForCell = generateImageFor(weather: kind, indexOrRow: idx)
                 cell.weatherImage = weatherImageForCell
                 cell.weatherImageView.image = weatherImageForCell.image
@@ -251,7 +250,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                 let forecast = forecasts[indexPath.row + 1]
 
                 // keeps images in sequence (prevents forecast and first cell from having the same image)
-                let idx = dateController.getDay() + indexPath.row + 1
+                let idx = DateController.shared.getDay() + indexPath.row + 1
                 let weatherImageForCell = generateImageFor(weather: forecast.kind, indexOrRow: idx)
                 cell.weatherImage = weatherImageForCell
                 cell.weatherImageView.image = weatherImageForCell.image

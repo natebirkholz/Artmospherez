@@ -268,6 +268,8 @@
 			children = (
 				4322A8081ED6A31100F2FD64 /* AnimateToForecastDetailController.swift */,
 				4322A8061ED69AAB00F2FD64 /* AnimateToWeatherDetailController.swift */,
+				4384296D1EE4662000FA730A /* ClosureGestureRecognizer.swift */,
+				433266B71EDF10C7002641B2 /* DateController.swift */,
 				430C52201ED5FEEC00971849 /* DetailViewControllerForecast.swift */,
 				430C522A1ED6112900971849 /* DetailViewControllerWeather.swift */,
 				43F2C0EC1ED35A900023567A /* JsonParser.swift */,
@@ -275,8 +277,6 @@
 				43F2C0DD1ED33AF80023567A /* NetworkController.swift */,
 				43F2C0B81ED330A10023567A /* ViewController.swift */,
 				4322A8041ED698AA00F2FD64 /* WeatherNavController.swift */,
-				433266B71EDF10C7002641B2 /* DateController.swift */,
-				4384296D1EE4662000FA730A /* ClosureGestureRecognizer.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
