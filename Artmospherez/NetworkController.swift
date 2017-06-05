@@ -34,9 +34,9 @@ class NetworkController {
     var apiURLForecasts: String {
         let location: String
         if locationControllerDelegate?.didRejectLocationAuthorization == false {
-            location = locationController.currentZipCode ?? "92102"
+            location = locationController.currentZipCode ?? "99723"
         } else {
-            location = "92102"
+            location = "99723"
         }
         return "http://api.openweathermap.org/data/2.5/forecast/daily?zip=\(location),us&units=imperial&cnt=7&APPID=\(APIKey)"
     }
@@ -46,9 +46,9 @@ class NetworkController {
     var apiURLWeather: String {
         let location: String
         if locationControllerDelegate?.didRejectLocationAuthorization == false {
-            location = locationController.currentZipCode ?? "92102"
+            location = locationController.currentZipCode ?? "99723"
         } else {
-            location = "92102"
+            location = "99723"
         }
         return "http://api.openweathermap.org/data/2.5/weather?zip=\(location),us&units=imperial&APPID=\(APIKey)"
     }
