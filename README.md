@@ -32,5 +32,9 @@ Demonstrated skills:
 18. Apple submission
 19. Enums (no associated values though)
 20. Switch statements
-21. Protocols/delegates
-22. Probably forgot several things, take a look!
+21. Delegate protocols
+22. Common-functionality protocols
+23. Default protocol implementations
+24. Generics
+25. Class extensions
+26. Probably forgot several things, take a look!
