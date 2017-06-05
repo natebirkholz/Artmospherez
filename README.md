@@ -37,4 +37,5 @@ Demonstrated skills:
 23. Default protocol implementations
 24. Generics
 25. Class extensions
-26. Probably forgot several things, take a look!
+26. Singletons
+27. Probably forgot several things, take a look!
