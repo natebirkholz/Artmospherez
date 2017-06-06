@@ -43,14 +43,14 @@ struct CurrentWeather {
         }
     }
 
-    init(kind: WeatherKind, humidity: Int, maxTemp: Int, minTemp: Int, currentTemp: Int, windSpeed: Int, windDirection: Int, cityName: String) {
+    init(kind: WeatherKind, humidity: Double, maxTemp: Double, minTemp: Double, currentTemp: Double, windSpeed: Double, windDirection: Double, cityName: String) {
         self.kind = kind
-        self.humidity = humidity
-        self.maxTemp = maxTemp
-        self.minTemp = minTemp
-        self.currentTemp = currentTemp
-        self.windSpeed = windSpeed
-        self.windDirection = windDirection
+        self.humidity = Int(humidity)
+        self.maxTemp = Int(maxTemp)
+        self.minTemp = Int(minTemp)
+        self.currentTemp = Int(currentTemp)
+        self.windSpeed = Int(windSpeed)
+        self.windDirection = Int(windDirection)
         self.cityName = cityName
     }
 }

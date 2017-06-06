@@ -337,7 +337,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
 
     /// Calls refresh() with force: true
-    func forceRefresh() {
+    @objc func forceRefresh() {
         if networkController.locationController.currentZipCode != nil {
             refresh(force: true)
         }
@@ -348,12 +348,12 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     /// Check the back end for new weather data. Will only execute once every 15 minutes unless forced.
     ///
     /// - Parameter force: Force update in less than 15 minutes. Defaults to false. Convenience method forceRefresh() preferred.
-    dynamic func refresh(force: Bool = false) {
+    @objc func refresh(force: Bool = false) {
         // If the app hasn;t been authorized one way or another yet we don't want to show the placeholder location of San Diego
         guard CLLocationManager.authorizationStatus() != .notDetermined else { return }
 
         // *Only* refesh if it has been more than 15 minutes since last API call, this prevents needless overuse of API. (Unless forced.)
-        let then = UserDefaults.standard.object(forKey: Constants.dateKey) as! Date
+        let then = UserDefaults.standard.object(forKey: Constants.dateKey) as? Date ?? Date()
         let now = Date()
 
         if !force {

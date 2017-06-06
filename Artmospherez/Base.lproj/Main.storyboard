@@ -1,29 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12120" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="uBu-Za-jkc">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13122.17" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="uBu-Za-jkc">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13104.14"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <array key="Didot.ttc">
+            <string>Didot</string>
+            <string>Didot-Bold</string>
+        </array>
+    </customFonts>
     <scenes>
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
                 <viewController automaticallyAdjustsScrollViewInsets="NO" id="BYZ-38-t0r" customClass="ViewController" customModule="Artmospherez" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
-                        <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
-                    </layoutGuides>
+                    <layoutGuides/>
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="0UO-ZR-AbI">
-                                <rect key="frame" x="-4" y="64" width="383" height="603"/>
+                                <rect key="frame" x="-4" y="-30" width="383" height="697"/>
                                 <color key="backgroundColor" red="0.21639536149999999" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="WEATHER_CELL" id="nb1-xO-KBF" customClass="WeatherCell" customModule="Artmospherez" customModuleProvider="target">
@@ -53,11 +57,12 @@
                         </subviews>
                         <color key="backgroundColor" red="0.21639536149999999" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="0UO-ZR-AbI" secondAttribute="bottom" id="KY3-KM-Qs7"/>
+                            <constraint firstItem="0UO-ZR-AbI" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" constant="-30" id="9wB-u8-Ltq"/>
+                            <constraint firstItem="aSr-YS-Wuv" firstAttribute="bottom" secondItem="0UO-ZR-AbI" secondAttribute="bottom" id="KY3-KM-Qs7"/>
                             <constraint firstItem="0UO-ZR-AbI" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="-20" id="d5L-fm-Cpr"/>
                             <constraint firstAttribute="trailingMargin" secondItem="0UO-ZR-AbI" secondAttribute="trailing" constant="-20" id="vJB-fx-U9y"/>
-                            <constraint firstItem="0UO-ZR-AbI" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="yzm-bk-Rw8"/>
                         </constraints>
+                        <viewLayoutGuide key="safeArea" id="aSr-YS-Wuv"/>
                     </view>
                     <navigationItem key="navigationItem" id="fOM-Xk-K8R"/>
                     <connections>
@@ -72,10 +77,7 @@
         <scene sceneID="yVW-3o-mRq">
             <objects>
                 <viewController id="YXc-iX-Gx0" customClass="DetailViewControllerForecast" customModule="Artmospherez" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="GXe-pC-YIS"/>
-                        <viewControllerLayoutGuide type="bottom" id="mej-r2-dVr"/>
-                    </layoutGuides>
+                    <layoutGuides/>
                     <view key="view" contentMode="scaleToFill" id="66G-4c-t9s">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -96,7 +98,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ysj-Az-saY" customClass="UtilityButton" customModule="Artmospherez" customModuleProvider="target">
-                                <rect key="frame" x="16" y="20" width="30" height="43"/>
+                                <rect key="frame" x="16" y="40" width="30" height="43"/>
                                 <fontDescription key="fontDescription" name="Didot-Bold" family="Didot" pointSize="24"/>
                                 <size key="titleShadowOffset" width="0.0" height="1"/>
                                 <state key="normal" title="i">
@@ -104,21 +106,21 @@
                                 </state>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4ff-V5-K59" customClass="UtilityButton" customModule="Artmospherez" customModuleProvider="target">
-                                <rect key="frame" x="16" y="20" width="55" height="55"/>
+                                <rect key="frame" x="16" y="40" width="55" height="55"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="55" id="2hN-kp-WSq"/>
                                     <constraint firstAttribute="height" constant="55" id="syy-d0-frQ"/>
                                 </constraints>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3Lj-ug-WN4" customClass="UtilityButton" customModule="Artmospherez" customModuleProvider="target">
-                                <rect key="frame" x="329" y="20" width="30" height="43"/>
+                                <rect key="frame" x="329" y="40" width="30" height="43"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="25.5"/>
                                 <state key="normal" title="X">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pbN-X1-30K" customClass="UtilityButton" customModule="Artmospherez" customModuleProvider="target">
-                                <rect key="frame" x="304" y="20" width="55" height="55"/>
+                                <rect key="frame" x="304" y="40" width="55" height="55"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="55" id="NOM-X9-DbU"/>
                                     <constraint firstAttribute="width" constant="55" id="XzG-TY-vgz"/>
@@ -127,9 +129,9 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="2a0-60-8td" firstAttribute="leading" secondItem="66G-4c-t9s" secondAttribute="leading" id="36J-7c-YtB"/>
-                            <constraint firstAttribute="trailing" secondItem="2a0-60-8td" secondAttribute="trailing" id="B0o-Xq-KJI"/>
-                            <constraint firstItem="mej-r2-dVr" firstAttribute="top" secondItem="VdV-vc-cBd" secondAttribute="bottom" constant="20" id="BWm-Fc-6j1"/>
+                            <constraint firstItem="2a0-60-8td" firstAttribute="leading" secondItem="Hte-Hx-iyS" secondAttribute="leading" id="36J-7c-YtB"/>
+                            <constraint firstItem="Hte-Hx-iyS" firstAttribute="trailing" secondItem="2a0-60-8td" secondAttribute="trailing" id="B0o-Xq-KJI"/>
+                            <constraint firstItem="Hte-Hx-iyS" firstAttribute="bottom" secondItem="VdV-vc-cBd" secondAttribute="bottom" constant="20" id="BWm-Fc-6j1"/>
                             <constraint firstItem="ysj-Az-saY" firstAttribute="top" secondItem="66G-4c-t9s" secondAttribute="topMargin" constant="20" id="DQb-Uv-IQF"/>
                             <constraint firstItem="VdV-vc-cBd" firstAttribute="trailing" secondItem="66G-4c-t9s" secondAttribute="trailingMargin" id="F4F-Dm-XTW"/>
                             <constraint firstItem="7C6-Ck-g0t" firstAttribute="trailing" secondItem="66G-4c-t9s" secondAttribute="trailingMargin" id="GsU-1b-Lmj"/>
@@ -141,9 +143,10 @@
                             <constraint firstItem="ysj-Az-saY" firstAttribute="leading" secondItem="66G-4c-t9s" secondAttribute="leadingMargin" id="aYi-mx-KAd"/>
                             <constraint firstItem="3Lj-ug-WN4" firstAttribute="trailing" secondItem="66G-4c-t9s" secondAttribute="trailingMargin" id="jum-YF-YSa"/>
                             <constraint firstItem="3Lj-ug-WN4" firstAttribute="top" secondItem="66G-4c-t9s" secondAttribute="topMargin" constant="20" id="kWc-Cf-Dua"/>
-                            <constraint firstItem="mej-r2-dVr" firstAttribute="top" secondItem="2a0-60-8td" secondAttribute="bottom" id="kro-bD-4Wb"/>
+                            <constraint firstItem="Hte-Hx-iyS" firstAttribute="bottom" secondItem="2a0-60-8td" secondAttribute="bottom" id="kro-bD-4Wb"/>
                             <constraint firstItem="pbN-X1-30K" firstAttribute="trailing" secondItem="66G-4c-t9s" secondAttribute="trailingMargin" id="w08-N0-M9k"/>
                         </constraints>
+                        <viewLayoutGuide key="safeArea" id="Hte-Hx-iyS"/>
                     </view>
                     <connections>
                         <outlet property="closeButton" destination="3Lj-ug-WN4" id="lW8-cu-UG5"/>
@@ -163,10 +166,7 @@
         <scene sceneID="PaP-Ng-NPs">
             <objects>
                 <viewController id="XQm-Pl-M3B" customClass="DetailViewControllerWeather" customModule="Artmospherez" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="1Pk-KV-mXq"/>
-                        <viewControllerLayoutGuide type="bottom" id="bfg-TD-edH"/>
-                    </layoutGuides>
+                    <layoutGuides/>
                     <view key="view" contentMode="scaleToFill" id="bPS-zC-E78">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -193,28 +193,28 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oiY-YL-avh" customClass="UtilityButton" customModule="Artmospherez" customModuleProvider="target">
-                                <rect key="frame" x="16" y="20" width="30" height="43"/>
+                                <rect key="frame" x="16" y="40" width="30" height="43"/>
                                 <fontDescription key="fontDescription" name="Didot-Bold" family="Didot" pointSize="24"/>
                                 <state key="normal" title="i">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lh1-fY-9bB" customClass="UtilityButton" customModule="Artmospherez" customModuleProvider="target">
-                                <rect key="frame" x="16" y="20" width="55" height="55"/>
+                                <rect key="frame" x="16" y="40" width="55" height="55"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="55" id="OyP-Cf-geZ"/>
                                     <constraint firstAttribute="width" constant="55" id="uSC-ke-P2l"/>
                                 </constraints>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Wan-zr-KuF" customClass="UtilityButton" customModule="Artmospherez" customModuleProvider="target">
-                                <rect key="frame" x="329" y="20" width="30" height="43"/>
+                                <rect key="frame" x="329" y="40" width="30" height="43"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="25.5"/>
                                 <state key="normal" title="X">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vUX-ey-maz" customClass="UtilityButton" customModule="Artmospherez" customModuleProvider="target">
-                                <rect key="frame" x="304" y="20" width="55" height="55"/>
+                                <rect key="frame" x="304" y="40" width="55" height="55"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="55" id="LWh-aK-Tka"/>
                                     <constraint firstAttribute="height" constant="55" id="WHd-yl-XDO"/>
@@ -231,17 +231,18 @@
                             <constraint firstItem="lh1-fY-9bB" firstAttribute="leading" secondItem="bPS-zC-E78" secondAttribute="leadingMargin" id="Qo9-1b-UwN"/>
                             <constraint firstItem="LKe-vp-IkL" firstAttribute="trailing" secondItem="bPS-zC-E78" secondAttribute="trailingMargin" id="R6u-9h-5Bk"/>
                             <constraint firstItem="Wan-zr-KuF" firstAttribute="trailing" secondItem="bPS-zC-E78" secondAttribute="trailingMargin" id="W0d-Dq-QCI"/>
-                            <constraint firstItem="bfg-TD-edH" firstAttribute="top" secondItem="gxK-7S-mtk" secondAttribute="bottom" id="aoT-W5-mhe"/>
-                            <constraint firstItem="gxK-7S-mtk" firstAttribute="leading" secondItem="bPS-zC-E78" secondAttribute="leading" id="dYO-dQ-1Wu"/>
+                            <constraint firstItem="XgA-dL-obP" firstAttribute="bottom" secondItem="gxK-7S-mtk" secondAttribute="bottom" id="aoT-W5-mhe"/>
+                            <constraint firstItem="gxK-7S-mtk" firstAttribute="leading" secondItem="XgA-dL-obP" secondAttribute="leading" id="dYO-dQ-1Wu"/>
                             <constraint firstItem="r5W-O8-awf" firstAttribute="top" secondItem="CtK-c8-jx6" secondAttribute="bottom" constant="8" id="dfv-wD-Y5h"/>
-                            <constraint firstAttribute="trailing" secondItem="gxK-7S-mtk" secondAttribute="trailing" id="eau-zc-sN8"/>
+                            <constraint firstItem="XgA-dL-obP" firstAttribute="trailing" secondItem="gxK-7S-mtk" secondAttribute="trailing" id="eau-zc-sN8"/>
                             <constraint firstItem="lh1-fY-9bB" firstAttribute="top" secondItem="bPS-zC-E78" secondAttribute="topMargin" constant="20" id="gac-0v-NiY"/>
                             <constraint firstItem="CtK-c8-jx6" firstAttribute="trailing" secondItem="bPS-zC-E78" secondAttribute="trailingMargin" id="grf-NP-ZXH"/>
                             <constraint firstItem="Wan-zr-KuF" firstAttribute="top" secondItem="bPS-zC-E78" secondAttribute="topMargin" constant="20" id="kDV-va-hUL"/>
-                            <constraint firstItem="bfg-TD-edH" firstAttribute="top" secondItem="LKe-vp-IkL" secondAttribute="bottom" constant="20" id="khM-p0-fwd"/>
+                            <constraint firstItem="XgA-dL-obP" firstAttribute="bottom" secondItem="LKe-vp-IkL" secondAttribute="bottom" constant="20" id="khM-p0-fwd"/>
                             <constraint firstItem="oiY-YL-avh" firstAttribute="top" secondItem="bPS-zC-E78" secondAttribute="topMargin" constant="20" id="mW2-Xi-0Rq"/>
                             <constraint firstItem="gxK-7S-mtk" firstAttribute="top" secondItem="bPS-zC-E78" secondAttribute="top" id="u8O-yE-QUj"/>
                         </constraints>
+                        <viewLayoutGuide key="safeArea" id="XgA-dL-obP"/>
                     </view>
                     <connections>
                         <outlet property="closeButton" destination="Wan-zr-KuF" id="2Qy-2t-ddf"/>

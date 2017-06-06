@@ -19,7 +19,7 @@ class ClosureGestureRecognizer<GestureRecognizer: UIGestureRecognizer> {
         self.recognizer.addTarget(self, action: #selector(actionHandler))
     }
 
-    dynamic private func actionHandler() {
+    @objc private func actionHandler() {
         onAction(recognizer)
     }
 

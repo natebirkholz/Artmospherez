@@ -35,9 +35,9 @@ class JsonParser {
                             let tempDictionary = forecastDictionary["temp"] as? [String: Any],
                             let forecastDateCode = forecastDictionary["dt"] as? Double,
                             let forecastIDCode = weatherDictionary["id"] as? Int,
-                            let forecastHumidity = forecastDictionary["humidity"] as? Int,
-                            let forecastMax = tempDictionary["max"] as? Int,
-                            let forecastMin = tempDictionary["min"] as? Int {
+                            let forecastHumidity = forecastDictionary["humidity"] as? Double,
+                            let forecastMax = tempDictionary["max"] as? Double,
+                            let forecastMin = tempDictionary["min"] as? Double {
                             let forecastType = parseWeatherTypeIntoWeatherKind(forecastIDCode)
                             let day = parseDateCodeIntoDay(forecastDateCode)
                             let newForecast = Forecast(dayValue: day, weatherID: forecastType, humidityValue: forecastHumidity, maxTempValue: forecastMax, minTempValue: forecastMin)
@@ -70,15 +70,15 @@ class JsonParser {
                     let weatherDictionary = weatherArray[0] as? [String: Any],
                     let weatherId = weatherDictionary["id"] as? Int,
                     let mainDictionary = dictionaryFromJSON["main"] as? [String: Any],
-                    let currentTemp = mainDictionary["temp"] as? Int,
-                    let humidity = mainDictionary["humidity"] as? Int,
-                    let minTemp = mainDictionary["temp_min"] as? Int,
-                    let maxTemp = mainDictionary["temp_max"] as? Int,
+                    let currentTemp = mainDictionary["temp"] as? Double,
+                    let humidity = mainDictionary["humidity"] as? Double,
+                    let minTemp = mainDictionary["temp_min"] as? Double,
+                    let maxTemp = mainDictionary["temp_max"] as? Double,
                     let windDictionary = dictionaryFromJSON["wind"] as? [String: Any],
-                    let windSpeed = windDictionary["speed"] as? Int,
+                    let windSpeed = windDictionary["speed"] as? Double,
                     let cityName = dictionaryFromJSON["name"] as? String {
                         let type = parseWeatherTypeIntoWeatherKind(weatherId)
-                        let windDirection = windDictionary["deg"] as? Int ?? 0 // Wind direction seems to not always be present
+                        let windDirection = windDictionary["deg"] as? Double ?? 0.0 // Wind direction seems to not always be present
                         let currentWeather = CurrentWeather(kind: type, humidity: humidity, maxTemp: maxTemp, minTemp: minTemp, currentTemp: currentTemp, windSpeed: windSpeed, windDirection: windDirection, cityName: cityName)
                         return currentWeather
                 } else {
