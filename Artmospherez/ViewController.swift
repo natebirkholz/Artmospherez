@@ -353,7 +353,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         guard CLLocationManager.authorizationStatus() != .notDetermined else { return }
 
         // *Only* refesh if it has been more than 15 minutes since last API call, this prevents needless overuse of API. (Unless forced.)
-        let then = UserDefaults.standard.object(forKey: Constants.dateKey) as! Date
+        let then = UserDefaults.standard.object(forKey: Constants.dateKey) as? Date ?? Date.distantPast
         let now = Date()
 
         if !force {
