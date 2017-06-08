@@ -6,6 +6,8 @@
 //  Copyright © 2017 natebirkholz. All rights reserved.
 //
 
+// Thanks to Geordie J and the Swift Users email list for help getting this working.
+
 import UIKit
 
 class ClosureGestureRecognizer<GestureRecognizer: UIGestureRecognizer> {
