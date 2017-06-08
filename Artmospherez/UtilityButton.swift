@@ -36,5 +36,5 @@ class UtilityButton: UIButton {
     dynamic fileprivate func actionHandler() {
         onAction?()
     }
-    
+
 }

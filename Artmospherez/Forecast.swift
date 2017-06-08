@@ -16,11 +16,11 @@ struct Forecast {
     var minTemp : Int
     var weatherImage: WeatherImage?
 
-    init(dayValue: String, weatherID: WeatherKind, humidityValue: Int, maxTempValue: Int, minTempValue: Int) {
+    init(dayValue: String, weatherID: WeatherKind, humidityValue: Double, maxTempValue: Double, minTempValue: Double) {
         day = dayValue
         kind = weatherID
-        humidity = humidityValue
-        maxTemp = maxTempValue
-        minTemp = minTempValue
+        humidity = Int(humidityValue)
+        maxTemp = Int(maxTempValue)
+        minTemp = Int(minTempValue)
     }
 }

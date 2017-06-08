@@ -12,7 +12,7 @@ import UIKit
 /// on detail view controllers.
 protocol InfoDisplay: class {
     weak var infoButton: UtilityButton! { get set }
-    weak var navController: UINavigationController? { get }
+    weak var navController: UINavigationController? { get } // in swift 4, use composition instead
     var infoView: InfoView? { get set }
     func showInfo()
     func didTap()
