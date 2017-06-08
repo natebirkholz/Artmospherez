@@ -2,7 +2,9 @@
 
 Weather app using public domain art works to display the current and forthcoming weather. 
 
-I blogged about some changes I made to this app in version 1.1 and versuion 1.1.1. That blog post can be found at https://iosdevlearnings.wordpress.com/2017/06/04/geocoding-and-timeouts-and-startup/
+I blogged about some changes I made to this app in version 1.1 and version 1.1.1. That blog post can be found at https://iosdevlearnings.wordpress.com/2017/06/04/geocoding-and-timeouts-and-startup/
+
+I blogged about the closure-based buttons and UIGestureRecognizers in version 1.1.1 of the project. That blog post can be found at https://iosdevlearnings.wordpress.com/2017/06/07/closure-buttons-and-gesture-recognizers/
 
 V1.1 currently in the iTunes App Store. Added the following features in first revision:
 1. Added **Close** button to the detail screens. (User feedback that it was confusing.)
@@ -17,7 +19,7 @@ V1.1.1 currently in development and nearing readiness for submission:
 1. Displays current weather as "Clear" instead of "Sunny" at night.
 2. Restructured code to be less repetitive, use more advanced Swift language features.
 3. "Default" weather location moved to Utqiaġvik (Barrow), Alaska, in case of users not approving location services.
-4. Selection of weather images now made for entiree table view instead of per section, prefenting two days in a row with the same image.
+4. Selection of weather images now made taking into acount entire table view instead of per section, prefenting two days in a row with the same image.
 
 Demonstrated skills:
 1. JSONSerialization
