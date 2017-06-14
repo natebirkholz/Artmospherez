@@ -46,22 +46,17 @@ class AnimateToWeatherDetailController: NSObject, UIViewControllerAnimatedTransi
         toViewController.maxMinLabel.alpha = 0
         toViewController.view.isHidden = true
 
+        containerView.addSubview(toViewController.view)
+        containerView.addSubview(cellProxy)
+
         // Update layout to clean up begnning positions of labels on detail VC, Size Classes issue
         toViewController.view.setNeedsLayout()
         toViewController.view.layoutIfNeeded()
 
-        containerView.addSubview(toViewController.view)
-        containerView.addSubview(cellProxy)
-
         // Move cellProxy, then fire second animation to blend into final view
         UIView.animate(withDuration: duration, animations: { () -> Void in
-            // Update layout to set proper target for final frame of animation, Size Classes issue
-            toViewController.view.setNeedsLayout()
-            toViewController.view.layoutIfNeeded()
-
             cellProxy.frame = toViewController.view.frame
             toViewController.imageView.alpha = 1.0
-
         }, completion: { (finished) -> Void in
             UIImageView.animate(withDuration: 0.5, animations: { 
                 toViewController.view.isHidden = false

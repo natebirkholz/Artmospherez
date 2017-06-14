@@ -44,19 +44,16 @@ class AnimateToForecastDetailController: NSObject, UIViewControllerAnimatedTrans
         toViewController.mainLabel.alpha = 0
         toViewController.maxMinLabel.alpha = 0
         toViewController.view.isHidden = true
-        // Update layout to clean up begnning positions of labels on detail VC, Size Classes issue
-        toViewController.view.setNeedsLayout()
-        toViewController.view.layoutIfNeeded()
 
         containerView.addSubview(toViewController.view)
         containerView.addSubview(cellProxy)
 
+        // Update layout to clean up begnning positions of labels on detail VC, Size Classes issue
+        toViewController.view.setNeedsLayout()
+        toViewController.view.layoutIfNeeded()
+
         // Move cellProxy, then fire second animation to blend into final view
         UIView.animate(withDuration: duration, animations: { () -> Void in
-            // Update layout to set proper target for final frame of animation, Size Classes issue
-            toViewController.view.setNeedsLayout()
-            toViewController.view.layoutIfNeeded()
-
             cellProxy.frame = toViewController.view.frame
             toViewController.imageView.alpha = 1.0
 
