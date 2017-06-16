@@ -102,6 +102,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 
                     let date = Date()
                     UserDefaults.standard.set(date, forKey: Constants.dateKey)
+                    UserDefaults.standard.synchronize()
 
                     self.currentWeather = current
                     self.tableView.reloadData()
@@ -407,6 +408,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             }
 
             UserDefaults.standard.set(now, forKey: Constants.dateKey)
+            UserDefaults.standard.synchronize()
 
             self.currentWeather = current
             self.tableView.reloadData()
@@ -453,6 +455,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             let alert = UIAlertController(title: "Location", message: "You can turn on location awareness for Artmospherez in the Settingss app. We never collect data from your device. For now, showing you the weather in sunny San Diego.", preferredStyle: .alert)
             let action  = UIAlertAction(title: "OK", style: .default, handler: { [unowned self] (action) in
                 UserDefaults.standard.set(true, forKey: Constants.defaultLocationKey)
+                UserDefaults.standard.synchronize()
                 self.forceRefresh()
             })
             alert.addAction(action)
