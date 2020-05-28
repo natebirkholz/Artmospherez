@@ -34,7 +34,7 @@ class AnimateToForecastDetailController: NSObject, UIViewControllerAnimatedTrans
         let cellProxy = UIImageView(image: weatherImage)
         cellProxy.clipsToBounds = true
         cellProxy.contentMode = .scaleAspectFill
-        cellProxy.frame = containerView.convert(selectedCell.weatherImageView.bounds, from: fromViewController.tableView.cellForRow(at: selectedRow))
+        cellProxy.frame = containerView.convert(selectedCell.weatherImageView.frame, from: fromViewController.tableView.cellForRow(at: selectedRow))
         
         selectedCell.contentView.isHidden = true
         toViewController.view.frame = transitionContext.finalFrame(for: toViewController)
@@ -54,6 +54,8 @@ class AnimateToForecastDetailController: NSObject, UIViewControllerAnimatedTrans
 
         // Move cellProxy, then fire second animation to blend into final view
         UIView.animate(withDuration: duration, animations: { () -> Void in
+            toViewController.view.setNeedsLayout()
+            toViewController.view.layoutIfNeeded()
             cellProxy.frame = toViewController.view.frame
             toViewController.imageView.alpha = 1.0
 

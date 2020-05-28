@@ -34,11 +34,11 @@ class NetworkController {
     var apiURLForecasts: String {
         let location: String
         if locationControllerDelegate?.didRejectLocationAuthorization == false {
-            location = locationController.currentZipCode ?? "99723"
+            location = locationController?.currentZipCode ?? "99723"
         } else {
             location = "99723"
         }
-        return "http://api.openweathermap.org/data/2.5/forecast/daily?zip=\(location),us&units=imperial&cnt=7&APPID=\(APIKey)"
+        return "http://api.openweathermap.org/data/2.5/forecast/daily?zip=\(location),us&units=imperial&cnt=10&APPID=\(APIKey)"
     }
 
     /// Dynamically returns the url for the current weather API call by adding the current zip code.
@@ -46,7 +46,7 @@ class NetworkController {
     var apiURLWeather: String {
         let location: String
         if locationControllerDelegate?.didRejectLocationAuthorization == false {
-            location = locationController.currentZipCode ?? "99723"
+            location = locationController?.currentZipCode ?? "99723"
         } else {
             location = "99723"
         }
@@ -54,15 +54,19 @@ class NetworkController {
     }
 
     /// Used to determine the device's current location for the API call
-    let locationController = LocationController()
+    let locationController: LocationController?
 
-    weak var locationControllerDelegate: LocationControllerDelegate? {
-        didSet {
-            locationController.delegate = locationControllerDelegate
-        }
-    }
+    weak var locationControllerDelegate: LocationControllerDelegate? 
 
     weak var delegate: NetworkControllerDelegate?
+    
+    // MARK: - Init
+    
+    init(from viewController: ViewController) {
+        self.locationController = LocationController(locationControllerDelegate: viewController as LocationControllerDelegate)
+        self.locationControllerDelegate = viewController
+        self.delegate = viewController
+    }
 
     // MARK: - Methods
 

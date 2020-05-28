@@ -44,6 +44,8 @@ class DetailViewControllerForecast: UIViewController, UINavigationControllerDele
         let swipeBlock: (UISwipeGestureRecognizer) -> () = { [weak self] (_) in
             self?.dismissSelf()
         }
+        
+        self.view.clipsToBounds = true
 
         let downRecognizer = ClosureGestureRecognizer<UISwipeGestureRecognizer>(onAction: swipeBlock)
         downRecognizer.setRecognizerDirection(.down)
@@ -71,6 +73,8 @@ class DetailViewControllerForecast: UIViewController, UINavigationControllerDele
         // Views
         
         imageView.image = image
+        
+        print(imageView.frame)
 
         let mainText = "\(forecast.day), \(forecast.kind.rawValue)"
         mainLabel.text = mainText
@@ -122,5 +126,11 @@ class DetailViewControllerForecast: UIViewController, UINavigationControllerDele
         view.addSubview(info)
 
         infoView = info
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        print(imageView.frame)
     }
 }

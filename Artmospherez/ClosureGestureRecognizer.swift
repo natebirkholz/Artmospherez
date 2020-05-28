@@ -21,11 +21,11 @@ class ClosureGestureRecognizer<GestureRecognizer: UIGestureRecognizer> {
         self.recognizer.addTarget(self, action: #selector(actionHandler))
     }
 
-    dynamic private func actionHandler() {
+    @objc dynamic private func actionHandler() {
         onAction(recognizer)
     }
 
-    func setRecognizerDirection(_ direction: UISwipeGestureRecognizerDirection) {
+    func setRecognizerDirection(_ direction: UISwipeGestureRecognizer.Direction) {
         if let swipe = recognizer as? UISwipeGestureRecognizer {
             swipe.direction = direction
         }

@@ -23,7 +23,7 @@ class LocationController: NSObject, CLLocationManagerDelegate {
 
     // MARK: - Properties
 
-    var currentZipCode: String? {
+    var currentZipCode: String? = nil {
         didSet {
             delegate?.refreshLocations()
         }
@@ -41,23 +41,13 @@ class LocationController: NSObject, CLLocationManagerDelegate {
         locationManager.delegate = self
         locationManager.distanceFilter = kCLDistanceFilterNone
         locationManager.desiredAccuracy = kCLLocationAccuracyKilometer
-        delegate = nil
-
-        if let location = locationManager.location {
-            geocoder.reverseGeocodeLocation(location) { [unowned self] (maybePlaces, maybeError) in
-                if let count = maybePlaces?.count, count > 0 {
-                    if let place = maybePlaces?[0], let code = place.postalCode {
-                        self.currentZipCode = code
-                    }
-                }
-            }
-        }
 
         switch CLLocationManager.authorizationStatus() {
         case .notDetermined:
             locationManager.requestWhenInUseAuthorization()
         case .authorizedWhenInUse:
             locationManager.startUpdatingLocation()
+            delegate?.didRejectLocationAuthorization = false
         default:
             break
         }
@@ -66,6 +56,17 @@ class LocationController: NSObject, CLLocationManagerDelegate {
     convenience init(locationControllerDelegate: LocationControllerDelegate) {
         self.init()
         delegate = locationControllerDelegate
+        
+        if let location = locationManager.location {
+            geocoder.reverseGeocodeLocation(location) { [unowned self] (maybePlaces, maybeError) in
+                if let count = maybePlaces?.count, count > 0 {
+                    if let place = maybePlaces?[0], let code = place.postalCode {
+                        self.currentZipCode = code
+                        self.delegate?.refreshLocations()
+                    }
+                }
+            }
+        }
     }
 
     // MARK: - CLLocationManagerDelegate
@@ -75,8 +76,12 @@ class LocationController: NSObject, CLLocationManagerDelegate {
         geocoder.reverseGeocodeLocation(locations[0], completionHandler: { [unowned self] (places, error) -> Void in
             if error != nil { return }
             if let count = places?.count, count > 0 {
-                if let place = places?[0], let code = place.postalCode, let oldCode = self.currentZipCode, oldCode != code {
-                    self.currentZipCode = code
+                if let place = places?[0], let code = place.postalCode {
+                    if let oldCode = self.currentZipCode, oldCode == code {
+                        return
+                    } else {
+                        self.currentZipCode = code
+                    }
                 }
             }
         })
@@ -115,12 +120,12 @@ class LocationController: NSObject, CLLocationManagerDelegate {
 
         if let thisLocation = locationManager.location {
 
-            // Times the request out if it is taking too long (15 seconds.)
-            let timer = Timer.scheduledTimer(withTimeInterval: 15, repeats: false, block: { [unowned self] (timerRef) in
-                if let isTimer = self.geocodeTimeoutTimer, isTimer.isValid {
+            // Times the request out if it is taking too long (30 seconds.)
+            let timer = Timer.scheduledTimer(withTimeInterval: 60, repeats: false, block: { [weak self] (timerRef) in
+                if let isTimer = self?.geocodeTimeoutTimer, isTimer.isValid {
                     isTimer.invalidate()
                     completionHandler(.failed)
-                    self.geocoder.cancelGeocode()
+                    self?.geocoder.cancelGeocode()
                 }
 
                 timerRef.invalidate()
@@ -128,22 +133,24 @@ class LocationController: NSObject, CLLocationManagerDelegate {
 
             self.geocodeTimeoutTimer = timer
 
-            geocoder.reverseGeocodeLocation(thisLocation, completionHandler: { [unowned self] (maybePlaces, error) -> Void in
+            CLGeocoder().reverseGeocodeLocation(thisLocation, completionHandler: { [weak self] (maybePlaces, error) -> Void in
+                print(maybePlaces)
+                
                 if error != nil {
-                    self.geocoder.cancelGeocode()
-                    self.geocodeTimeoutTimer?.invalidate()
+                    self?.geocoder.cancelGeocode()
+                    self?.geocodeTimeoutTimer?.invalidate()
                     completionHandler(.failed)
                     return
                 }
 
                 if let count = maybePlaces?.count, count > 0 {
                     if let place = maybePlaces?[0], let code = place.postalCode {
-                        self.geocodeTimeoutTimer?.invalidate()
-                        self.currentZipCode = code
+                        self?.geocodeTimeoutTimer?.invalidate()
+                        self?.currentZipCode = code
                         completionHandler(nil)
                     }
                 } else {
-                    self.geocodeTimeoutTimer?.invalidate()
+                    self?.geocodeTimeoutTimer?.invalidate()
                     completionHandler(.failed)
                 }
             })

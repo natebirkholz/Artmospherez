@@ -34,7 +34,7 @@ class AnimateToWeatherDetailController: NSObject, UIViewControllerAnimatedTransi
         let cellProxy = UIImageView(image: weatherImage)
         cellProxy.clipsToBounds = true
         cellProxy.contentMode = .scaleAspectFill
-        cellProxy.frame = containerView.convert(selectedCell.weatherImageView.bounds, from: fromViewController.tableView.cellForRow(at: selectedRow))
+        cellProxy.frame = containerView.convert(selectedCell.weatherImageView.frame, from: fromViewController.tableView.cellForRow(at: selectedRow))
 
         selectedCell.contentView.isHidden = true
         toViewController.view.frame = transitionContext.finalFrame(for: toViewController)
@@ -55,6 +55,8 @@ class AnimateToWeatherDetailController: NSObject, UIViewControllerAnimatedTransi
 
         // Move cellProxy, then fire second animation to blend into final view
         UIView.animate(withDuration: duration, animations: { () -> Void in
+            toViewController.view.setNeedsLayout()
+            toViewController.view.layoutIfNeeded()
             cellProxy.frame = toViewController.view.frame
             toViewController.imageView.alpha = 1.0
         }, completion: { (finished) -> Void in
@@ -68,12 +70,13 @@ class AnimateToWeatherDetailController: NSObject, UIViewControllerAnimatedTransi
                 selectedCell.contentView.isHidden = false
             }, completion: { (complete) in
                 transitionContext.completeTransition(true)
+                toViewController.view.sendSubviewToBack(toViewController.imageView)
                 UIView.animate(withDuration: 1.0, animations: { 
-                    toViewController.closeButton.alpha = 1
-                    toViewController.infoButton.alpha = 1
-                    toViewController.mainLabel.alpha = 1
-                    toViewController.windLabel.alpha = 1
-                    toViewController.maxMinLabel.alpha = 1
+                    toViewController.closeButton.alpha = 1.0
+                    toViewController.infoButton.alpha = 1.0
+                    toViewController.mainLabel.alpha = 1.0
+                    toViewController.windLabel.alpha = 1.0
+                    toViewController.maxMinLabel.alpha = 1.0
                 })
             })
         })

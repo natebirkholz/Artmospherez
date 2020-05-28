@@ -33,7 +33,7 @@ class UtilityButton: UIButton {
         self.onAction = closure
     }
 
-    dynamic fileprivate func actionHandler() {
+    @objc dynamic fileprivate func actionHandler() {
         onAction?()
     }
 

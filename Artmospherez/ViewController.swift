@@ -17,7 +17,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 
     var forecasts = [Forecast]()
     var currentWeather: CurrentWeather?
-    let networkController = NetworkController()
+    var networkController: NetworkController?
     let weatherImageFactory = WeatherImageFactory()
     var loadingIndicator: UIActivityIndicatorView?
     var reloadButton: UIButton!
@@ -32,7 +32,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                 // Initial set should force refresh due to order of operations
                 forceRefresh()
             } else {
-                // let the user know what heppens without authorization (shows San Diego)
+                // let the user know what heppens without authorization (shows Utqiagvik)
                 alertForRejectedAuthorization()
             }
         }
@@ -44,9 +44,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        networkController.locationControllerDelegate = self
-        networkController.delegate = self
+        
+        networkController = NetworkController(from: self)
         navigationController?.delegate = self
 
         tableView.dataSource = self
@@ -60,52 +59,52 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         refreshControl.addTarget(self, action: #selector(refresh), for: .valueChanged)
         tableView.refreshControl = refreshControl
 
-        view.bringSubview(toFront: tableView)
+        view.bringSubviewToFront(tableView)
         tableView.isHidden = true
 
         if CLLocationManager.authorizationStatus() == .authorizedWhenInUse  {
-            networkController.locationController.updateLocation { [unowned self] (maybeError) in
+            networkController?.locationController?.updateLocation { [weak self] (maybeError) in
                 guard maybeError ==  nil else {
-                    self.handleNetworkError(error: .failedLocation)
+                    self?.handleNetworkError(error: .failedLocation)
                     return
                 }
 
-                self.networkController.getJSONForForecasts { [unowned self] (maybeForecasts, maybeError) in
-                    self.loadingIndicator?.stopAnimating()
+                self?.networkController?.getJSONForForecasts { (maybeForecasts, maybeError) in
+                    self?.loadingIndicator?.stopAnimating()
 
                     guard maybeError == nil else {
-                        self.handleNetworkError(error: maybeError!)
+                        self?.handleNetworkError(error: maybeError!)
                         return
                     }
                     guard let forecasts = maybeForecasts  else {
-                        self.handleNetworkError(error: .noData)
+                        self?.handleNetworkError(error: .noData)
                         return
                     }
 
-                    self.forecasts = forecasts
-                    self.tableView.reloadData()
+                    self?.forecasts = forecasts
+                    self?.tableView.reloadData()
                 }
 
-                self.networkController.getCurrentWeather { [unowned self] (maybeWeather, maybeError) in
+                self?.networkController?.getCurrentWeather { [unowned self] (maybeWeather, maybeError) in
                     guard maybeError == nil else {
-                        self.handleNetworkError(error: maybeError!)
+                        self?.handleNetworkError(error: maybeError!)
                         return
                     }
                     guard let current = maybeWeather else {
-                        self.handleNetworkError(error: .noData)
+                        self?.handleNetworkError(error: .noData)
                         return
                     }
 
                     UIView.animate(withDuration: 0.3, animations: {
-                        self.tableView.isHidden = false
+                        self?.tableView.isHidden = false
                     })
 
                     let date = Date()
                     UserDefaults.standard.set(date, forKey: Constants.dateKey)
                     UserDefaults.standard.synchronize()
 
-                    self.currentWeather = current
-                    self.tableView.reloadData()
+                    self?.currentWeather = current
+                    self?.tableView.reloadData()
                 }
             }
         }
@@ -120,11 +119,12 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         view.setNeedsLayout()
         view.layoutIfNeeded()
 
-        let activity = UIActivityIndicatorView(activityIndicatorStyle: .whiteLarge)
+        let activity = UIActivityIndicatorView(style: .large)
+        activity.color = .white
         activity.hidesWhenStopped = true
         activity.center = CGPoint(x: view.bounds.width / 2, y: view.bounds.height / 2)
         view.addSubview(activity)
-        view.bringSubview(toFront: view)
+        view.bringSubviewToFront(view)
         loadingIndicator = activity
 
         if tableView.isHidden {
@@ -151,7 +151,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         // the user has authorized the loaction
         if let _ = UserDefaults.standard.object(forKey: Constants.dateKey) as? Date {
             if CLLocationManager.authorizationStatus() == .authorizedWhenInUse {
-                refresh()
+//                refresh(force: true)
             }
         }
     }
@@ -159,7 +159,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
 
-        // infoView needs more room on iPad because it displayes at 1x dimensions
+        // infoView needs more room on iPad because it displays at 1x dimensions
         let heightForInfoView: CGFloat
         if UIDevice.current.model.hasPrefix("iPad") {
             heightForInfoView = 50
@@ -187,20 +187,14 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         if section == 0 {
             return 1
         } else {
-            return 6
+            return 9
         }
     }
 
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        if section == 1 {
-            let view = UIView()
-            view.frame = CGRect(x: 0, y: 0, width: 500, height: 12)
-            view.backgroundColor = UIColor.lightGray
+        let view = UIView(frame: .zero)
 
-            return view
-        }
-
-        return nil
+        return view
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -210,62 +204,83 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             return 96
         }
     }
+    
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return .leastNormalMagnitude
+    }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return .leastNormalMagnitude
+    }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.section == 0 {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "WEATHER_CELL", for: indexPath) as! WeatherCell
-
-            var weatherText = currentWeather?.kind.rawValue ?? "Unknown"
-
-            // If time of day is *not* between 7am and 6pm, show "Clear" instead of "Sunny" for weather type.
-            let timeOfDay = DateController.shared.getTimeOfDay()
-            if timeOfDay == .night && currentWeather?.kind == .sunny {
-                weatherText = "Clear"
-            }
-            cell.weatherLabel?.text = "\(weatherText)"
-            cell.weatherLabel?.sizeToFit()
-            if let kind = currentWeather?.kind {
-                // use the current day of the year to get the index of the image, ensures daily variety
-                let idx = DateController.shared.getDay()
-                let weatherImageForCell = generateImageFor(weather: kind, indexOrRow: idx)
-                cell.weatherImage = weatherImageForCell
-                cell.weatherImageView.image = weatherImageForCell.image
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: "WEATHER_CELL", for: indexPath) as? WeatherCell else {
+                return UITableViewCell()
             }
 
-            let temperature = currentWeather?.currentTemp ?? 70
-            cell.weatherTemp.text = "\(temperature)°"
-            cell.weatherTemp.sizeToFit()
-            let windDir = currentWeather?.windCompassDirection ?? "N"
-            let windSpeed = currentWeather?.windSpeed ?? 0
-            let high = currentWeather?.maxTemp ?? 70
-            let low = currentWeather?.minTemp ?? 55
-
-            let weatherString = "wind \(windDir) \(windSpeed) mph, max: \(high)°, min: \(low)°"
-            cell.weatherDetailLabel.text = weatherString
-            cell.weatherDetailLabel.sizeToFit()
-
-            return cell
+            return configureWeatherCell(cell)
+            
         } else {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "FORECAST_CELL", for: indexPath) as! ForecastCell
-            if forecasts.count > 0 {
-                let forecast = forecasts[indexPath.row + 1]
-
-                // keeps images in sequence (prevents forecast and first cell from having the same image)
-                let idx = DateController.shared.getDay() + indexPath.row + 1
-                let weatherImageForCell = generateImageFor(weather: forecast.kind, indexOrRow: idx)
-                cell.weatherImage = weatherImageForCell
-                cell.weatherImageView.image = weatherImageForCell.image
-
-                let day = forecast.day
-                let weatherType = forecast.kind.rawValue
-                let max = forecast.maxTemp
-                let weatherString = "\(day): \(weatherType), \(max)°"
-                cell.weatherLabel.text = weatherString
-                cell.weatherLabel.sizeToFit()
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: "FORECAST_CELL", for: indexPath) as? ForecastCell else {
+                return UITableViewCell()
             }
-
-            return cell
+            return configureForecastCell(cell, at: indexPath)
         }
+    }
+    
+    func configureWeatherCell(_ cell: WeatherCell) -> WeatherCell {
+        var weatherText = currentWeather?.kind.rawValue ?? "Unknown"
+
+        // If time of day is *not* between 7am and 6pm, show "Clear" instead of "Sunny" for weather type.
+        let timeOfDay = DateController.shared.getTimeOfDay()
+        if timeOfDay == .night && currentWeather?.kind == .sunny {
+            weatherText = "Clear"
+        }
+        cell.weatherLabel?.text = "\(weatherText)"
+        cell.weatherLabel?.sizeToFit()
+        if let kind = currentWeather?.kind {
+            // use the current day of the year to get the index of the image, ensures daily variety
+            let idx = DateController.shared.getDay()
+            let weatherImageForCell = generateImageFor(weather: kind, indexOrRow: idx)
+            cell.weatherImage = weatherImageForCell
+            cell.weatherImageView.image = weatherImageForCell.image
+        }
+
+        let temperature = currentWeather?.currentTemp ?? 70
+        cell.weatherTemp.text = "\(temperature)°"
+        cell.weatherTemp.sizeToFit()
+        let windDir = currentWeather?.windCompassDirection ?? "N"
+        let windSpeed = currentWeather?.windSpeed ?? 0
+        let high = currentWeather?.maxTemp ?? 70
+        let low = currentWeather?.minTemp ?? 55
+
+        let weatherString = "wind \(windDir) \(windSpeed) mph, max: \(high)°, min: \(low)°"
+        cell.weatherDetailLabel.text = weatherString
+        cell.weatherDetailLabel.sizeToFit()
+
+        return cell
+    }
+    
+    func configureForecastCell(_ cell: ForecastCell, at indexPath: IndexPath) -> ForecastCell {
+        if forecasts.count > 0 {
+            let forecast = forecasts[indexPath.row + 1]
+
+            // keeps images in sequence (prevents forecast and first cell from having the same image)
+            let idx = DateController.shared.getDay() + indexPath.row + 1
+            let weatherImageForCell = generateImageFor(weather: forecast.kind, indexOrRow: idx)
+            cell.weatherImage = weatherImageForCell
+            cell.weatherImageView.image = weatherImageForCell.image
+
+            let day = forecast.day
+            let weatherType = forecast.kind.rawValue
+            let max = forecast.maxTemp
+            let weatherString = "\(day): \(weatherType), \(max)°"
+            cell.weatherLabel.text = weatherString
+            cell.weatherLabel.sizeToFit()
+        }
+
+        return cell
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -338,8 +353,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
 
     /// Calls refresh() with force: true
-    func forceRefresh() {
-        if networkController.locationController.currentZipCode != nil {
+    @objc func forceRefresh() {
+        if networkController?.locationController?.currentZipCode != nil {
             refresh(force: true)
         }
 
@@ -349,8 +364,9 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     /// Check the back end for new weather data. Will only execute once every 15 minutes unless forced.
     ///
     /// - Parameter force: Force update in less than 15 minutes. Defaults to false. Convenience method forceRefresh() preferred.
-    dynamic func refresh(force: Bool = false) {
-        // If the app hasn;t been authorized one way or another yet we don't want to show the placeholder location of San Diego
+    @objc dynamic func refresh(force: Bool = false) {
+        
+        // If the app hasn't been authorized one way or another yet we don't want to show the placeholder location of San Diego
         guard CLLocationManager.authorizationStatus() != .notDetermined else { return }
 
         // *Only* refesh if it has been more than 15 minutes since last API call, this prevents needless overuse of API. (Unless forced.)
@@ -367,7 +383,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 
         if tableView.isHidden { loadingIndicator?.startAnimating() }
 
-        networkController.getJSONForForecasts { [unowned self] (maybeForecasts, maybeError) in
+        networkController?.getJSONForForecasts { [unowned self] (maybeForecasts, maybeError) in
             guard maybeError == nil else {
                 self.tableView.refreshControl?.endRefreshing()
                 self.handleNetworkError(error: maybeError!)
@@ -388,7 +404,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             self.tableView.reloadData()
         }
 
-        networkController.getCurrentWeather { [unowned self] (maybeWeather, maybeError) in
+        networkController?.getCurrentWeather { [unowned self] (maybeWeather, maybeError) in
             guard maybeError == nil else {
                 self.tableView.refreshControl?.endRefreshing()
                 self.handleNetworkError(error: maybeError!)
@@ -439,6 +455,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             return weatherImageFactory.overcastImages[idx % weatherImageFactory.overcastImages.count]
         case .windy:
             return weatherImageFactory.windyImages[idx % weatherImageFactory.windyImages.count]
+        case .snowy:
+            return weatherImageFactory.snowyImages[idx % weatherImageFactory.snowyImages.count]
         default:
             return weatherImageFactory.sunnyImages[idx % weatherImageFactory.sunnyImages.count]
         }
@@ -452,7 +470,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 
         // Shouldn't be shown if false, check for future prevention
         if let rejection = didRejectLocationAuthorization, rejection == true  {
-            let alert = UIAlertController(title: "Location", message: "You can turn on location awareness for Artmospherez in the Settingss app. We never collect data from your device. For now, showing you the weather in sunny San Diego.", preferredStyle: .alert)
+            let alert = UIAlertController(title: "Location", message: "You can turn on location awareness for Artmospherez in the Settingss app. We never collect data from your device. For now, showing you the weather in Barrow (Utqiagvik), Alaska.", preferredStyle: .alert)
             let action  = UIAlertAction(title: "OK", style: .default, handler: { [unowned self] (action) in
                 UserDefaults.standard.set(true, forKey: Constants.defaultLocationKey)
                 UserDefaults.standard.synchronize()
@@ -486,7 +504,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 // MARK: - UINavigationControllerDelegate
 
 extension ViewController: UINavigationControllerDelegate {
-    func navigationController(_ navigationController: UINavigationController, animationControllerFor operation: UINavigationControllerOperation, from fromVC: UIViewController, to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+    func navigationController(_ navigationController: UINavigationController, animationControllerFor operation: UINavigationController.Operation, from fromVC: UIViewController, to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         if fromVC == self && toVC.isKind(of: DetailViewControllerWeather.self) {
             let transitionVC = AnimateToWeatherDetailController()
             return transitionVC
@@ -544,7 +562,7 @@ extension ViewController {
         if tableView.isHidden {
             if reloadButton.isHidden {
                 reloadButton.center = CGPoint(x: view.bounds.width / 2, y: view.bounds.height - 40)
-                view.bringSubview(toFront: reloadButton)
+                view.bringSubviewToFront(reloadButton)
                 reloadButton.isHidden = false
             }
         }
@@ -555,12 +573,8 @@ extension ViewController {
 
 extension ViewController: LocationControllerDelegate {
     func refreshLocations() {
-        if networkController.locationController.currentZipCode != nil {
-            if forecasts.count == 0 && currentWeather == nil {
-                forceRefresh()
-            } else {
-                refresh()
-            }
+        if networkController?.locationController?.currentZipCode != nil {
+            forceRefresh()
         }
     }
 }
