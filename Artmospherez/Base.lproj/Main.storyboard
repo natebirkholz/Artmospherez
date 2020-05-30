@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="uBu-Za-jkc">
-    <device id="retina4_7" orientation="portrait" appearance="light"/>
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -12,18 +12,18 @@
             <objects>
                 <viewController automaticallyAdjustsScrollViewInsets="NO" id="BYZ-38-t0r" customClass="ViewController" customModule="Artmospherez" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="0UO-ZR-AbI">
-                                <rect key="frame" x="-4" y="44" width="383" height="623"/>
+                                <rect key="frame" x="0.0" y="88" width="414" height="808"/>
                                 <color key="backgroundColor" red="0.21639536149999999" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="WEATHER_CELL" id="nb1-xO-KBF" customClass="WeatherCell" customModule="Artmospherez" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="28" width="383" height="44"/>
+                                        <rect key="frame" x="0.0" y="28" width="414" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="nb1-xO-KBF" id="yQj-PB-rha">
-                                            <rect key="frame" x="0.0" y="0.0" width="383" height="44"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                         <connections>
@@ -31,10 +31,10 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="FORECAST_CELL" id="ABp-s7-voR" customClass="ForecastCell" customModule="Artmospherez" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="72" width="383" height="44"/>
+                                        <rect key="frame" x="0.0" y="72" width="414" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ABp-s7-voR" id="nCo-Ej-HHg">
-                                            <rect key="frame" x="0.0" y="0.0" width="383" height="44"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                         <connections>
@@ -67,26 +67,26 @@
             <objects>
                 <viewController id="YXc-iX-Gx0" customClass="DetailViewControllerForecast" customModule="Artmospherez" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="66G-4c-t9s">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="2a0-60-8td">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="MainLabel" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VdV-vc-cBd" customClass="WeatherLabel" customModule="Artmospherez" customModuleProvider="target">
-                                <rect key="frame" x="272" y="624.5" width="87" height="22.5"/>
+                                <rect key="frame" x="307" y="819.5" width="87" height="22.5"/>
                                 <fontDescription key="fontDescription" name="Didot" family="Didot" pointSize="18"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="min/max" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7C6-Ck-g0t" customClass="WeatherLabel" customModule="Artmospherez" customModuleProvider="target">
-                                <rect key="frame" x="304" y="599" width="55" height="17.5"/>
+                                <rect key="frame" x="339" y="794" width="55" height="17.5"/>
                                 <fontDescription key="fontDescription" name="Didot" family="Didot" pointSize="14"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ysj-Az-saY" customClass="UtilityButton" customModule="Artmospherez" customModuleProvider="target">
-                                <rect key="frame" x="16" y="64" width="30" height="43"/>
+                                <rect key="frame" x="20" y="108" width="30" height="43"/>
                                 <fontDescription key="fontDescription" name="Didot-Bold" family="Didot" pointSize="24"/>
                                 <size key="titleShadowOffset" width="0.0" height="1"/>
                                 <state key="normal" title="i">
@@ -94,21 +94,21 @@
                                 </state>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3Lj-ug-WN4" customClass="UtilityButton" customModule="Artmospherez" customModuleProvider="target">
-                                <rect key="frame" x="329" y="64" width="30" height="43"/>
+                                <rect key="frame" x="364" y="108" width="30" height="43"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="25.5"/>
                                 <state key="normal" title="X">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pbN-X1-30K" customClass="UtilityButton" customModule="Artmospherez" customModuleProvider="target">
-                                <rect key="frame" x="304" y="64" width="55" height="55"/>
+                                <rect key="frame" x="339" y="108" width="55" height="55"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="55" id="NOM-X9-DbU"/>
                                     <constraint firstAttribute="width" constant="55" id="XzG-TY-vgz"/>
                                 </constraints>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4ff-V5-K59" customClass="UtilityButton" customModule="Artmospherez" customModuleProvider="target">
-                                <rect key="frame" x="16" y="64" width="55" height="55"/>
+                                <rect key="frame" x="20" y="108" width="55" height="55"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="55" id="2hN-kp-WSq"/>
                                     <constraint firstAttribute="height" constant="55" id="syy-d0-frQ"/>
@@ -156,57 +156,57 @@
             <objects>
                 <viewController id="XQm-Pl-M3B" customClass="DetailViewControllerWeather" customModule="Artmospherez" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="bPS-zC-E78">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Main Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LKe-vp-IkL" customClass="WeatherLabel" customModule="Artmospherez" customModuleProvider="target">
-                                <rect key="frame" x="267" y="624.5" width="92" height="22.5"/>
+                                <rect key="frame" x="302" y="819.5" width="92" height="22.5"/>
                                 <fontDescription key="fontDescription" name="Didot" family="Didot" pointSize="18"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="WindLabel" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="r5W-O8-awf" customClass="WeatherLabel" customModule="Artmospherez" customModuleProvider="target">
-                                <rect key="frame" x="282" y="597.5" width="77" height="19"/>
+                                <rect key="frame" x="317" y="792.5" width="77" height="19"/>
                                 <fontDescription key="fontDescription" name="Didot" family="Didot" pointSize="15"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="max min" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CtK-c8-jx6" customClass="WeatherLabel" customModule="Artmospherez" customModuleProvider="target">
-                                <rect key="frame" x="300.5" y="570.5" width="58.5" height="19"/>
+                                <rect key="frame" x="335.5" y="765.5" width="58.5" height="19"/>
                                 <fontDescription key="fontDescription" name="Didot" family="Didot" pointSize="15"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oiY-YL-avh" customClass="UtilityButton" customModule="Artmospherez" customModuleProvider="target">
-                                <rect key="frame" x="16" y="64" width="30" height="43"/>
+                                <rect key="frame" x="20" y="108" width="30" height="43"/>
                                 <fontDescription key="fontDescription" name="Didot-Bold" family="Didot" pointSize="24"/>
                                 <state key="normal" title="i">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lh1-fY-9bB" customClass="UtilityButton" customModule="Artmospherez" customModuleProvider="target">
-                                <rect key="frame" x="16" y="64" width="55" height="55"/>
+                                <rect key="frame" x="20" y="108" width="55" height="55"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="55" id="OyP-Cf-geZ"/>
                                     <constraint firstAttribute="width" constant="55" id="uSC-ke-P2l"/>
                                 </constraints>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Wan-zr-KuF" customClass="UtilityButton" customModule="Artmospherez" customModuleProvider="target">
-                                <rect key="frame" x="329" y="64" width="30" height="43"/>
+                                <rect key="frame" x="364" y="108" width="30" height="43"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="25.5"/>
                                 <state key="normal" title="X">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vUX-ey-maz" customClass="UtilityButton" customModule="Artmospherez" customModuleProvider="target">
-                                <rect key="frame" x="304" y="64" width="55" height="55"/>
+                                <rect key="frame" x="339" y="108" width="55" height="55"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="55" id="LWh-aK-Tka"/>
                                     <constraint firstAttribute="height" constant="55" id="WHd-yl-XDO"/>
                                 </constraints>
                             </button>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="gxK-7S-mtk">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                             </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -253,7 +253,7 @@
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="uBu-Za-jkc" customClass="WeatherNavController" customModule="Artmospherez" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="RmB-PH-ddQ">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>

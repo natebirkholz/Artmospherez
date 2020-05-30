@@ -38,6 +38,9 @@ class DetailViewControllerForecast: UIViewController, UINavigationControllerDele
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        view.setNeedsLayout()
+        view.layoutIfNeeded()
 
         // Gesture recognizers
 
@@ -45,7 +48,7 @@ class DetailViewControllerForecast: UIViewController, UINavigationControllerDele
             self?.dismissSelf()
         }
         
-        self.view.clipsToBounds = true
+        view.clipsToBounds = true
 
         let downRecognizer = ClosureGestureRecognizer<UISwipeGestureRecognizer>(onAction: swipeBlock)
         downRecognizer.setRecognizerDirection(.down)
@@ -74,8 +77,6 @@ class DetailViewControllerForecast: UIViewController, UINavigationControllerDele
         
         imageView.image = image
         
-        print(imageView.frame)
-
         let mainText = "\(forecast.day), \(forecast.kind.rawValue)"
         mainLabel.text = mainText
         mainLabel.sizeToFit()
@@ -126,11 +127,5 @@ class DetailViewControllerForecast: UIViewController, UINavigationControllerDele
         view.addSubview(info)
 
         infoView = info
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        
-        print(imageView.frame)
     }
 }

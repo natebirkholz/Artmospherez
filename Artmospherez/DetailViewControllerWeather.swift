@@ -46,7 +46,7 @@ class DetailViewControllerWeather: UIViewController, UINavigationControllerDeleg
             self?.dismissSelf()
         }
         
-        self.view.clipsToBounds = true
+        view.clipsToBounds = true
 
         let downRecognizer = ClosureGestureRecognizer<UISwipeGestureRecognizer>(onAction: swipeBlock)
         downRecognizer.setRecognizerDirection(.down)

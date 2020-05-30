@@ -85,7 +85,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                     self?.tableView.reloadData()
                 }
 
-                self?.networkController?.getCurrentWeather { [unowned self] (maybeWeather, maybeError) in
+                self?.networkController?.getCurrentWeather { (maybeWeather, maybeError) in
                     guard maybeError == nil else {
                         self?.handleNetworkError(error: maybeError!)
                         return
@@ -147,11 +147,13 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         button.isHidden = true
         reloadButton = button
 
-        // Only bother trying to refresh on viewWillAppear if the weather has previosuly loaded and 
-        // the user has authorized the loaction
+        // Only bother trying to refresh on viewWillAppear if the weather has previously loaded.
+        // If the user has denied location information, only refresh if the forecasts are empty.
         if let _ = UserDefaults.standard.object(forKey: Constants.dateKey) as? Date {
             if CLLocationManager.authorizationStatus() == .authorizedWhenInUse {
-//                refresh(force: true)
+                refresh()
+            } else if CLLocationManager.authorizationStatus() == .denied && forecasts.count == 0 {
+                forceRefresh()
             }
         }
     }
@@ -356,6 +358,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     @objc func forceRefresh() {
         if networkController?.locationController?.currentZipCode != nil {
             refresh(force: true)
+        } else if UserDefaults.standard.bool(forKey: Constants.defaultLocationKey) {
+            refresh(force: true)
         }
 
     }
@@ -383,52 +387,52 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 
         if tableView.isHidden { loadingIndicator?.startAnimating() }
 
-        networkController?.getJSONForForecasts { [unowned self] (maybeForecasts, maybeError) in
+        networkController?.getJSONForForecasts { [weak self] (maybeForecasts, maybeError) in
             guard maybeError == nil else {
-                self.tableView.refreshControl?.endRefreshing()
-                self.handleNetworkError(error: maybeError!)
+                self?.tableView.refreshControl?.endRefreshing()
+                self?.handleNetworkError(error: maybeError!)
                 return
             }
             guard let forecasts = maybeForecasts  else {
-                self.tableView.refreshControl?.endRefreshing()
-                self.handleNetworkError(error: .noData)
+                self?.tableView.refreshControl?.endRefreshing()
+                self?.handleNetworkError(error: .noData)
                 return
             }
 
-            self.loadingIndicator?.stopAnimating()
+            self?.loadingIndicator?.stopAnimating()
 
             // Hide the reload button here to prevent overlap
-            self.reloadButton?.isHidden = true
+            self?.reloadButton?.isHidden = true
 
-            self.forecasts = forecasts
-            self.tableView.reloadData()
+            self?.forecasts = forecasts
+            self?.tableView.reloadData()
         }
 
-        networkController?.getCurrentWeather { [unowned self] (maybeWeather, maybeError) in
+        networkController?.getCurrentWeather { [weak self] (maybeWeather, maybeError) in
             guard maybeError == nil else {
-                self.tableView.refreshControl?.endRefreshing()
-                self.handleNetworkError(error: maybeError!)
+                self?.tableView.refreshControl?.endRefreshing()
+                self?.handleNetworkError(error: maybeError!)
                 return
             }
 
             guard let current = maybeWeather else {
-                self.tableView.refreshControl?.endRefreshing()
-                self.handleNetworkError(error: .noData)
+                self?.tableView.refreshControl?.endRefreshing()
+                self?.handleNetworkError(error: .noData)
                 return
             }
 
-            if let table = self.tableView, table.isHidden {
+            if let table = self?.tableView, table.isHidden {
                 UIView.animate(withDuration: 0.3, animations: {
-                    self.tableView.isHidden = false
+                    self?.tableView.isHidden = false
                 })
             }
 
             UserDefaults.standard.set(now, forKey: Constants.dateKey)
             UserDefaults.standard.synchronize()
 
-            self.currentWeather = current
-            self.tableView.reloadData()
-            self.tableView.refreshControl?.endRefreshing()
+            self?.currentWeather = current
+            self?.tableView.reloadData()
+            self?.tableView.refreshControl?.endRefreshing()
         }
     }
 
@@ -471,10 +475,10 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         // Shouldn't be shown if false, check for future prevention
         if let rejection = didRejectLocationAuthorization, rejection == true  {
             let alert = UIAlertController(title: "Location", message: "You can turn on location awareness for Artmospherez in the Settingss app. We never collect data from your device. For now, showing you the weather in Barrow (Utqiagvik), Alaska.", preferredStyle: .alert)
-            let action  = UIAlertAction(title: "OK", style: .default, handler: { [unowned self] (action) in
+            let action  = UIAlertAction(title: "OK", style: .default, handler: { [weak self] (action) in
                 UserDefaults.standard.set(true, forKey: Constants.defaultLocationKey)
                 UserDefaults.standard.synchronize()
-                self.forceRefresh()
+                self?.forceRefresh()
             })
             alert.addAction(action)
             present(alert, animated: true, completion: nil)
@@ -483,19 +487,19 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 
     func showLoadingInfo() {
         if loadingInfoView?.isPresented == false && loadingIndicator!.isAnimating {
-            UIView.animate(withDuration: 0.5, animations: { [unowned self] in
-                self.loadingInfoView?.frame.origin.y = 38.0
-                self.loadingInfoView?.isPresented = true
-                }, completion: { [unowned self] (complete) in
+            UIView.animate(withDuration: 0.5, animations: { [weak self] in
+                self?.loadingInfoView?.frame.origin.y = 38.0
+                self?.loadingInfoView?.isPresented = true
+                }, completion: { [weak self] complete in
                     UIView.animate(withDuration: 0.5, delay: 3.0, options: [], animations: {
-                        self.loadingInfoView?.frame.origin.y = -138.0
-                        self.loadingInfoView?.isPresented = false
+                        self?.loadingInfoView?.frame.origin.y = -138.0
+                        self?.loadingInfoView?.isPresented = false
                     }, completion: nil)
             })
         } else {
-            UIView.animate(withDuration: 0.5, animations: { [unowned self] in
-                self.loadingInfoView?.frame.origin.y = -138.0
-                self.loadingInfoView?.isPresented = false
+            UIView.animate(withDuration: 0.5, animations: { [weak self] in
+                self?.loadingInfoView?.frame.origin.y = -138.0
+                self?.loadingInfoView?.isPresented = false
             })
         }
     }
@@ -548,9 +552,9 @@ extension ViewController {
     /// - Parameter message: The message to display
     func showError(message: String) {
         let alertController = UIAlertController(title: "Error", message: "\(message) Please verify your Internet connection and try again in a moment.", preferredStyle: .alert)
-        let okAction = UIAlertAction(title: "OK", style: .default) { [unowned self] (action) in
-            self.loadingIndicator?.stopAnimating()
-            self.showReloadButton()
+        let okAction = UIAlertAction(title: "OK", style: .default) { [weak self] (action) in
+            self?.loadingIndicator?.stopAnimating()
+            self?.showReloadButton()
         }
         alertController.addAction(okAction)
         present(alertController, animated: true, completion: nil)

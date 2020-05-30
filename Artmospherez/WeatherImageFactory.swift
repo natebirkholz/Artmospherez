@@ -144,6 +144,11 @@ class WeatherImageFactory {
             let gray2 =  WeatherImage(id: "gray2", image: image2, artist: "El Greco", title: "View of Toledo")
             overcastImages.append(gray2)
         }
+        
+        if let image3 = UIImage(named: "gray3") {
+            let gray3 =  WeatherImage(id: "gray3", image: image3, artist: "Albert Bierstadt", title: "Buffalo Trail: The Impending Storm")
+            overcastImages.append(gray3)
+        }
     }
 
     private func createFoggyImages() {

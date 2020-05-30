@@ -56,31 +56,20 @@ class LocationController: NSObject, CLLocationManagerDelegate {
     convenience init(locationControllerDelegate: LocationControllerDelegate) {
         self.init()
         delegate = locationControllerDelegate
-        
-        if let location = locationManager.location {
-            geocoder.reverseGeocodeLocation(location) { [unowned self] (maybePlaces, maybeError) in
-                if let count = maybePlaces?.count, count > 0 {
-                    if let place = maybePlaces?[0], let code = place.postalCode {
-                        self.currentZipCode = code
-                        self.delegate?.refreshLocations()
-                    }
-                }
-            }
-        }
     }
 
     // MARK: - CLLocationManagerDelegate
 
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard !geocoder.isGeocoding else { return }
-        geocoder.reverseGeocodeLocation(locations[0], completionHandler: { [unowned self] (places, error) -> Void in
+        geocoder.reverseGeocodeLocation(locations[0], completionHandler: { [weak self] (places, error) -> Void in
             if error != nil { return }
             if let count = places?.count, count > 0 {
                 if let place = places?[0], let code = place.postalCode {
-                    if let oldCode = self.currentZipCode, oldCode == code {
+                    if let oldCode = self?.currentZipCode, oldCode == code {
                         return
                     } else {
-                        self.currentZipCode = code
+                        self?.currentZipCode = code
                     }
                 }
             }
@@ -108,7 +97,10 @@ class LocationController: NSObject, CLLocationManagerDelegate {
     ///
     /// - Parameter completionHandler: callback upon completion
     func updateLocation(completionHandler: @escaping (LocationError?) -> ()) {
-        if geocoder.isGeocoding { return }
+        if geocoder.isGeocoding {
+            completionHandler(nil)
+            return
+        }
 
         if let didReject = delegate?.didRejectLocationAuthorization, didReject {
             completionHandler(nil)
@@ -133,8 +125,7 @@ class LocationController: NSObject, CLLocationManagerDelegate {
 
             self.geocodeTimeoutTimer = timer
 
-            CLGeocoder().reverseGeocodeLocation(thisLocation, completionHandler: { [weak self] (maybePlaces, error) -> Void in
-                print(maybePlaces)
+            geocoder.reverseGeocodeLocation(thisLocation, completionHandler: { [weak self] (maybePlaces, error) -> Void in
                 
                 if error != nil {
                     self?.geocoder.cancelGeocode()
