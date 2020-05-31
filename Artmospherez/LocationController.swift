@@ -112,8 +112,8 @@ class LocationController: NSObject, CLLocationManagerDelegate {
 
         if let thisLocation = locationManager.location {
 
-            // Times the request out if it is taking too long (30 seconds.)
-            let timer = Timer.scheduledTimer(withTimeInterval: 60, repeats: false, block: { [weak self] (timerRef) in
+            // Times the request out if it is taking too long (15 seconds.)
+            let timer = Timer.scheduledTimer(withTimeInterval: 15, repeats: false, block: { [weak self] (timerRef) in
                 if let isTimer = self?.geocodeTimeoutTimer, isTimer.isValid {
                     isTimer.invalidate()
                     completionHandler(.failed)
