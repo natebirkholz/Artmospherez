@@ -20,7 +20,8 @@ V1.1.1 currently in development and nearing readiness for submission:
 2. Restructured code to be less repetitive, use more advanced Swift language features.
 3. "Default" weather location moved to Utqiaġvik (Barrow), Alaska, in case of users not approving location services.
 4. Selection of weather images now made taking into acount entire table view instead of per section, preventing two days in a row with the same image.
-5. iPhone X support
+5. Full support for recent iPhones
+6. Increased number of days of forecast to 10
 
 Demonstrated skills:
 1. JSONSerialization
