@@ -22,6 +22,7 @@ V1.1.1 currently in development and nearing readiness for submission:
 4. Selection of weather images now made taking into acount entire table view instead of per section, preventing two days in a row with the same image.
 5. Full support for recent iPhones
 6. Increased number of days of forecast to 10
+7. Added Snow images
 
 Demonstrated skills:
 1. JSONSerialization
