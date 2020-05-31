@@ -20,8 +20,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     var networkController: NetworkController?
     let weatherImageFactory = WeatherImageFactory()
     var loadingIndicator: UIActivityIndicatorView?
-    var reloadButton: UIButton!
-    var loadingInfoView: InfoView!
+    var reloadButton: UIButton?
+    var loadingInfoView: InfoView?
     var didRejectLocationAuthorization: Bool? {
         didSet {
             // If going from unauthorized to authorized, should force update
@@ -72,8 +72,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                 self?.networkController?.getJSONForForecasts { (maybeForecasts, maybeError) in
                     self?.loadingIndicator?.stopAnimating()
 
-                    guard maybeError == nil else {
-                        self?.handleNetworkError(error: maybeError!)
+                    if let error = maybeError {
+                        self?.handleNetworkError(error: error)
                         return
                     }
                     guard let forecasts = maybeForecasts  else {
@@ -86,8 +86,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                 }
 
                 self?.networkController?.getCurrentWeather { (maybeWeather, maybeError) in
-                    guard maybeError == nil else {
-                        self?.handleNetworkError(error: maybeError!)
+                    if let error = maybeError {
+                        self?.handleNetworkError(error: error)
                         return
                     }
                     guard let current = maybeWeather else {
@@ -171,7 +171,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 
         let infoFrame = CGRect(x: 8.0, y: -138.0, width: view.frame.width - 16.0, height: heightForInfoView)
         let info = InfoView(frame: infoFrame)
-        info.textView.text = "Still working on forecasts..."
+        info.textView?.text = "Still working on forecasts..."
         view.addSubview(info)
 
         loadingInfoView = info
@@ -298,18 +298,18 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "WEATHER_SEGUE" {
             guard let indexPathForWeather = tableView.indexPathForSelectedRow else { return }
-            let detailVC = segue.destination as! DetailViewControllerWeather
+            guard let detailVC = segue.destination as? DetailViewControllerWeather else { return }
             let detailWeather = currentWeather
-            let cell = tableView.cellForRow(at: indexPathForWeather) as! WeatherCell
+            guard let cell = tableView.cellForRow(at: indexPathForWeather) as? WeatherCell else { return }
             let image = cell.weatherImageView.image
             detailVC.weather = detailWeather
             detailVC.weatherImage = cell.weatherImage
             detailVC.image = image
         } else if segue.identifier == "FORECAST_SEGUE" {
             guard let indexPathForForecast = tableView.indexPathForSelectedRow else { return }
-            let detailVC = segue.destination as! DetailViewControllerForecast
+            guard let detailVC = segue.destination as? DetailViewControllerForecast else { return }
             let detailForecast = forecasts[indexPathForForecast.row + 1]
-            let cell = tableView.cellForRow(at: indexPathForForecast) as! ForecastCell
+            guard let cell = tableView.cellForRow(at: indexPathForForecast) as? ForecastCell else { return }
             let image = cell.weatherImageView.image
             detailVC.forecast = detailForecast
             detailVC.weatherImage = cell.weatherImage
@@ -370,7 +370,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     /// - Parameter force: Force update in less than 15 minutes. Defaults to false. Convenience method forceRefresh() preferred.
     @objc dynamic func refresh(force: Bool = false) {
         
-        // If the app hasn't been authorized one way or another yet we don't want to show the placeholder location of San Diego
+        // If the app hasn't been authorized one way or another yet we don't want to show the placeholder location of Barrow
         guard CLLocationManager.authorizationStatus() != .notDetermined else { return }
 
         // *Only* refesh if it has been more than 15 minutes since last API call, this prevents needless overuse of API. (Unless forced.)
@@ -388,9 +388,9 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         if tableView.isHidden { loadingIndicator?.startAnimating() }
 
         networkController?.getJSONForForecasts { [weak self] (maybeForecasts, maybeError) in
-            guard maybeError == nil else {
+            if let error = maybeError {
                 self?.tableView.refreshControl?.endRefreshing()
-                self?.handleNetworkError(error: maybeError!)
+                self?.handleNetworkError(error: error)
                 return
             }
             guard let forecasts = maybeForecasts  else {
@@ -409,9 +409,9 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         }
 
         networkController?.getCurrentWeather { [weak self] (maybeWeather, maybeError) in
-            guard maybeError == nil else {
+            if let error = maybeError {
                 self?.tableView.refreshControl?.endRefreshing()
-                self?.handleNetworkError(error: maybeError!)
+                self?.handleNetworkError(error: error)
                 return
             }
 
@@ -474,7 +474,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 
         // Shouldn't be shown if false, check for future prevention
         if let rejection = didRejectLocationAuthorization, rejection == true  {
-            let alert = UIAlertController(title: "Location", message: "You can turn on location awareness for Artmospherez in the Settingss app. We never collect data from your device. For now, showing you the weather in Barrow (Utqiagvik), Alaska.", preferredStyle: .alert)
+            let alert = UIAlertController(title: "Location", message: "You can turn on location awareness for Artmospherez in the Settings app. We never collect data from your device. For now, showing you the weather in Barrow (Utqiagvik), Alaska.", preferredStyle: .alert)
             let action  = UIAlertAction(title: "OK", style: .default, handler: { [weak self] (action) in
                 UserDefaults.standard.set(true, forKey: Constants.defaultLocationKey)
                 UserDefaults.standard.synchronize()
@@ -486,7 +486,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
 
     func showLoadingInfo() {
-        if loadingInfoView?.isPresented == false && loadingIndicator!.isAnimating {
+        if loadingInfoView?.isPresented == false, let loadingIndicator = self.loadingIndicator, loadingIndicator.isAnimating {
             UIView.animate(withDuration: 0.5, animations: { [weak self] in
                 self?.loadingInfoView?.frame.origin.y = 38.0
                 self?.loadingInfoView?.isPresented = true
@@ -564,7 +564,7 @@ extension ViewController {
     /// reload button.
     func showReloadButton() {
         if tableView.isHidden {
-            if reloadButton.isHidden {
+            if let reloadButton = self.reloadButton, reloadButton.isHidden {
                 reloadButton.center = CGPoint(x: view.bounds.width / 2, y: view.bounds.height - 40)
                 view.bringSubviewToFront(reloadButton)
                 reloadButton.isHidden = false

@@ -13,7 +13,7 @@ class WeatherImage {
     var image: UIImage
     var artist: String
     var title: String
-    var detail: String!
+    var detail: String?
 
     init(id: String, image: UIImage, artist: String, title: String) {
         self.id = id
@@ -26,7 +26,7 @@ class WeatherImage {
 
     /// Loads the long descriptions from the file system
     ///
-    /// - Parameter id: the filename for the txxt file associated with the artwork
+    /// - Parameter id: the filename for the text file associated with the artwork
     /// - Returns: The string describing the artwork
     func getDescriptionStringFromId(_ id: String) -> String {
         do {
@@ -43,6 +43,6 @@ class WeatherImage {
 
 extension WeatherImage: CustomStringConvertible {
     var description: String {
-        return detail
+        return detail ?? "(No Description)"
     }
 }

@@ -20,9 +20,9 @@ class DetailViewControllerForecast: UIViewController, UINavigationControllerDele
     @IBOutlet weak var closeButton: UtilityButton!
     @IBOutlet weak var ghostCloseButton: UtilityButton!
 
-    var forecast: Forecast!
-    var weatherImage: WeatherImage!
-    var image: UIImage!
+    var forecast: Forecast?
+    var weatherImage: WeatherImage?
+    var image: UIImage?
     var swipeDownRecognizer: ClosureGestureRecognizer<UISwipeGestureRecognizer>?
     var swipeRightRecognizer: ClosureGestureRecognizer<UISwipeGestureRecognizer>?
     var swipeUpRecognizer: ClosureGestureRecognizer<UISwipeGestureRecognizer>?
@@ -75,17 +75,21 @@ class DetailViewControllerForecast: UIViewController, UINavigationControllerDele
 
         // Views
         
-        imageView.image = image
+        if let image = self.image {
+            imageView.image = image
+        }
         
-        let mainText = "\(forecast.day), \(forecast.kind.rawValue)"
-        mainLabel.text = mainText
-        mainLabel.sizeToFit()
-        mainLabel.setup()
+        if let forecast = self.forecast {
+            let mainText = "\(forecast.day), \(forecast.kind.rawValue)"
+            mainLabel.text = mainText
+            mainLabel.sizeToFit()
+            mainLabel.setup()
 
-        let maxMinText = "\(forecast.maxTemp)°/\(forecast.minTemp)°"
-        maxMinLabel.text = maxMinText
-        maxMinLabel.sizeToFit()
-        maxMinLabel.setup()
+            let maxMinText = "\(forecast.maxTemp)°/\(forecast.minTemp)°"
+            maxMinLabel.text = maxMinText
+            maxMinLabel.sizeToFit()
+            maxMinLabel.setup()
+        }
 
         let blockForInfo: () -> () = { [weak self] in
             self?.showInfo()
@@ -120,12 +124,14 @@ class DetailViewControllerForecast: UIViewController, UINavigationControllerDele
         } else {
             heightForInfoView = 100.0
         }
-
-        let infoFrame = CGRect(x: 8.0, y: -138.0, width: view.frame.width - 16.0, height: heightForInfoView)
-        let info = InfoView(frame: infoFrame)
-        info.textView.text = weatherImage.detail
-        view.addSubview(info)
-
-        infoView = info
+        
+        if let weatherImage = self.weatherImage {
+            let infoFrame = CGRect(x: 8.0, y: -138.0, width: view.frame.width - 16.0, height: heightForInfoView)
+            let info = InfoView(frame: infoFrame)
+            info.textView?.text = weatherImage.detail
+            view.addSubview(info)
+            
+            infoView = info
+        }        
     }
 }

@@ -24,7 +24,7 @@ extension InfoDisplay {
     func showInfo() {
         if infoView?.isPresented == false {
             UIView.animate(withDuration: 0.5, animations: { [weak self] in
-                self?.infoView?.frame.origin.y = 88.0
+                self?.infoView?.frame.origin.y = 138.0
                 }, completion: { [weak self] (complete) in
                     self?.infoView?.isPresented = true
             })
@@ -58,7 +58,7 @@ extension InfoDisplay {
 
 class InfoView: UIView {
 
-    var textView: UITextView!
+    var textView: UITextView?
     var isPresented = false
 
     override init(frame: CGRect) {

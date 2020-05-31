@@ -27,9 +27,9 @@ class JsonParser {
                 var arrayOfForecasts = [Forecast]()
 
                 if let arrayFromJSON = dictionaryFromJSON["list"] as? [Any] {
-                    for JSONDictionary in arrayFromJSON {
+                    for jsonDictionary in arrayFromJSON {
                         // long `let` block, if first two succeed this should all succeed unless the API changes
-                        if let forecastDictionary = JSONDictionary as? [String: Any],
+                        if let forecastDictionary = jsonDictionary as? [String: Any],
                             let weatherArray = forecastDictionary["weather"] as? [Any],
                             let weatherDictionary = weatherArray.first as? [String: Any],
                             let tempDictionary = forecastDictionary["temp"] as? [String: Any],

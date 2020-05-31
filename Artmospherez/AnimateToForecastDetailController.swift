@@ -15,20 +15,14 @@ class AnimateToForecastDetailController: NSObject, UIViewControllerAnimatedTrans
     }
 
     func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
-        let fromViewController = transitionContext.viewController(forKey: .from) as! ViewController
-        let toViewController = transitionContext.viewController(forKey: .to) as! DetailViewControllerForecast
+        guard let fromViewController = transitionContext.viewController(forKey: .from) as? ViewController else { return }
+        guard let toViewController = transitionContext.viewController(forKey: .to) as? DetailViewControllerForecast else { return }
         let containerView = transitionContext.containerView
         let duration = transitionDuration(using: transitionContext)
 
-        guard let selectedRow = fromViewController.tableView.indexPathForSelectedRow else {
-            assertionFailure("no row selected in tableview")
-            return
-        }
-        let selectedCell = fromViewController.tableView.cellForRow(at: selectedRow) as! ForecastCell
-        guard let weatherImage = selectedCell.weatherImageView.image else {
-            assertionFailure("Unable to fetch the selected cell's weatherImageView.image")
-            return
-        }
+        guard let selectedRow = fromViewController.tableView.indexPathForSelectedRow else { return }
+        guard let selectedCell = fromViewController.tableView.cellForRow(at: selectedRow) as? ForecastCell else { return }
+        guard let weatherImage = selectedCell.weatherImageView.image else { return }
 
         // Set up cellProxy, a copy of the selected cell to then animate moving into position and growing into the size of the final image
         let cellProxy = UIImageView(image: weatherImage)

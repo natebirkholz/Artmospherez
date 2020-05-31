@@ -10,7 +10,7 @@ import UIKit
 
 class MasterCell: UITableViewCell {
 
-    var weatherImage: WeatherImage!
+    var weatherImage: WeatherImage?
 
     override func awakeFromNib() {
         super.awakeFromNib()

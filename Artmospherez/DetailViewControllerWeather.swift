@@ -21,9 +21,9 @@ class DetailViewControllerWeather: UIViewController, UINavigationControllerDeleg
     @IBOutlet weak var closeButton: UtilityButton!
     @IBOutlet weak var ghostCloseButton: UtilityButton!
 
-    var weather: CurrentWeather!
-    var weatherImage: WeatherImage!
-    var image: UIImage!
+    var weather: CurrentWeather?
+    var weatherImage: WeatherImage?
+    var image: UIImage?
     var swipeDownRecognizer: ClosureGestureRecognizer<UISwipeGestureRecognizer>?
     var swipeRightRecognizer: ClosureGestureRecognizer<UISwipeGestureRecognizer>?
     var swipeUpRecognizer: ClosureGestureRecognizer<UISwipeGestureRecognizer>?
@@ -75,6 +75,29 @@ class DetailViewControllerWeather: UIViewController, UINavigationControllerDeleg
 
         imageView.image = image
 
+        let blockForInfo: () -> () = { [weak self] in
+            self?.showInfo()
+        }
+
+        // Has a larger hit area than the visible button
+        ghostButton.addClosure(blockForInfo)
+
+        infoButton.setup()
+        infoButton.addClosure(blockForInfo)
+
+        let blockForClose: () -> () = { [weak self] in
+            self?.dismissSelf()
+        }
+
+        closeButton.backgroundColor = Constants.labelColor
+        closeButton.setup()
+        closeButton.addClosure(blockForClose)
+
+        // Has a larger hit area than the visible button
+        ghostCloseButton.addClosure(blockForClose)
+        
+        guard let weather = self.weather else { return }
+
         let weatherText: String
         let timeOfDay = DateController.shared.getTimeOfDay()
         if timeOfDay == .night && weather.kind == .sunny {
@@ -97,27 +120,6 @@ class DetailViewControllerWeather: UIViewController, UINavigationControllerDeleg
         maxMinLabel.text = maxMinText
         maxMinLabel.sizeToFit()
         maxMinLabel.setup()
-
-        let blockForInfo: () -> () = { [weak self] in
-            self?.showInfo()
-        }
-
-        // Has a larger hit area than the visible button
-        ghostButton.addClosure(blockForInfo)
-
-        infoButton.setup()
-        infoButton.addClosure(blockForInfo)
-
-        let blockForClose: () -> () = { [weak self] in
-            self?.dismissSelf()
-        }
-
-        closeButton.backgroundColor = Constants.labelColor
-        closeButton.setup()
-        closeButton.addClosure(blockForClose)
-
-        // Has a larger hit area than the visible button
-        ghostCloseButton.addClosure(blockForClose)
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -131,11 +133,13 @@ class DetailViewControllerWeather: UIViewController, UINavigationControllerDeleg
             heightForInfoView = 100.0
         }
 
-        let infoFrame = CGRect(x: 8.0, y: -138.0, width: view.frame.width - 16.0, height: heightForInfoView)
-        let info = InfoView(frame: infoFrame)
-        info.textView.text = weatherImage.detail
-        view.addSubview(info)
+        if let weatherImage = self.weatherImage {
+            let infoFrame = CGRect(x: 8.0, y: -138.0, width: view.frame.width - 16.0, height: heightForInfoView)
+            let info = InfoView(frame: infoFrame)
+            info.textView?.text = weatherImage.detail
+            view.addSubview(info)
 
-        infoView = info
+            infoView = info
+        }
     }
 }
