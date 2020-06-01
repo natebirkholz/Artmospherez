@@ -10,14 +10,15 @@ import UIKit
 
 class WeatherImage {
     let id: String
-    var image: UIImage
+    var image: UIImage? {
+        return UIImage(named: id)
+    }
     var artist: String
     var title: String
     var detail: String?
 
-    init(id: String, image: UIImage, artist: String, title: String) {
+    init(id: String, artist: String, title: String) {
         self.id = id
-        self.image = image
         self.artist = artist
         self.title = title
         self.detail = getDescriptionStringFromId(id)

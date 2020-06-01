@@ -244,7 +244,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         if let kind = currentWeather?.kind {
             // use the current day of the year to get the index of the image, ensures daily variety
             let idx = DateController.shared.getDay()
-            let weatherImageForCell = generateImageFor(weather: kind, indexOrRow: idx)
+            let weatherImageForCell = selectImageFor(weather: kind, indexOrRow: idx)
             cell.weatherImage = weatherImageForCell
             cell.weatherImageView.image = weatherImageForCell.image
         }
@@ -270,7 +270,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 
             // keeps images in sequence (prevents forecast and first cell from having the same image)
             let idx = DateController.shared.getDay() + indexPath.row + 1
-            let weatherImageForCell = generateImageFor(weather: forecast.kind, indexOrRow: idx)
+            let weatherImageForCell = selectImageFor(weather: forecast.kind, indexOrRow: idx)
             cell.weatherImage = weatherImageForCell
             cell.weatherImageView.image = weatherImageForCell.image
 
@@ -443,7 +443,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     ///   - weather: the WeatherKind for the day
     ///   - idx: Index or tableView row to modulo and return an image from those available.
     /// - Returns: WeatherImage for the WeathrKind
-    func generateImageFor(weather: WeatherKind, indexOrRow idx: Int) -> WeatherImage {
+    func selectImageFor(weather: WeatherKind, indexOrRow idx: Int) -> WeatherImage {
         switch weather {
         case .sunny:
             return weatherImageFactory.sunnyImages[idx % weatherImageFactory.sunnyImages.count]
